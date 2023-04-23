@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/sign.css" />
+    </head>
+    <body>
+        <div class="sign-page">
+            <div class="sign-component">
+                <div class="info-wrap">
+                    <div class="icon">
+                        <img
+                            src="https://www.dongseo.ac.kr/kr/_Img/login01.png"
+                            alt=""
+                        />
+                    </div>
+                    <div class="title">로그인 이용안내</div>
+                    <div class="info">
+                        <ul>
+                            <li>
+                                계정 초기 비밀번호는
+                                <strong>'이름 + !'</strong>입니다. <br />
+                                예) 홍길동 > ghdrlfehd!
+                            </li>
+                            <li>가입은 관리자에게 문의해주세요.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sign-wrap">
+                    <div class="title">연구원 로그인</div>
+                    <div class="subtitle">
+                        출석 현황 및 누적 경고 확인이 가능합니다.
+                    </div>
+                    <div class="form">
+                        <form action="/sign" method="post">
+                            <div class="userdata">
+                                <input
+                                    type="text"
+                                    name="id"
+                                    placeholder="아이디를 입력하세요."
+                                />
+                                <input
+                                    type="password"
+                                    name="pw"
+                                    placeholder="비밀번호를 입력하세요."
+                                />
+                            </div>
+                            <button type="submit">로그인</button>
+                        </form>
+                        <% if (data.errMsg != "") { %>
+                        <span class="err"><%= data.errMsg %></span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

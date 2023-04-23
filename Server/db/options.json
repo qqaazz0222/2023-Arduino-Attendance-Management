@@ -1,0 +1,7 @@
+{
+    "host": "svc.sel3.cloudtype.app",
+    "port": 31896,
+    "user": "admin",
+    "password": "ubse01!",
+    "database": "lab"
+}

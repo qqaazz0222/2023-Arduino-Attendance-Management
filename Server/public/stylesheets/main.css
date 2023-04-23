@@ -1,0 +1,225 @@
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 60px;
+    background: #fff;
+}
+
+header>div {
+    margin: 20px;
+}
+
+header .logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+header .logo img {
+    height: 32px;
+    margin-right: 8px;
+}
+
+header .profile a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    background: #C51230;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 16px;
+}
+
+header .profile span {
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f8f8f8;
+}
+
+.icon {
+    width: 32px;
+}
+
+.main-page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 20px;
+    padding: 8px;
+    width: 100vw;
+    max-width: 1280px;
+
+}
+
+.calander-component {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    border-top: 4px solid #C51230;
+}
+
+.calander-component .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.calander-component .header .info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 12px;
+    color: #666;
+}
+
+.calander-component .header .info .in {
+    display: block;
+    margin-right: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: #C20625;
+}
+
+.calander-component .header .info .out {
+    display: block;
+    margin-left: 8px;
+    margin-right: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: #870319;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.dateHead {
+    margin: 8px 0;
+}
+
+.dateHead div {
+    border-top: none;
+    border-left: none;
+    text-align: left;
+    font-size: 12px;
+}
+
+.dateBoard {
+    background: #fff;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.dateBoard div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #222;
+    font-size: 12px;
+    min-height: 80px;
+    padding: 4px;
+    padding-bottom: 8px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.dateBoard div .in span {
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: #C20625;
+    color: #fff;
+    font-weight: bold;
+}
+
+.dateBoard div .out span {
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: #870319;
+    color: #fff;
+    font-weight: bold;
+}
+
+.noColor {
+    background: #f8f8f8;
+}
+
+.dateTitle {}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.btn .material-icons {
+    color: #666;
+    font-size: 14px;
+}
+
+.func-wrap {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.notice-component {
+    flex: 1;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    border-top: 4px solid #C51230;
+    margin-right: 12px;
+}
+
+.notice-component .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notice-component .header a {
+    font-size: 14px;
+}
+
+.link-component {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    margin-right: 0px;
+}
+
+.link-component .row {
+    display: flex;
+    flex-direction: row;
+}
