@@ -61,10 +61,10 @@ body {
     flex-wrap: wrap;
     align-items: center;
     margin-top: 8px;
+    margin-bottom: 32px;
     padding: 8px;
     width: 100vw;
     max-width: 1280px;
-
 }
 
 .calander-component {
@@ -204,10 +204,34 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 8px;
 }
 
 .notice-component .header a {
     font-size: 14px;
+}
+
+.notice-component .list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ccc;
+}
+
+.notice-component .list .item {
+    padding: 8px 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.notice-component .list .item .title {
+    flex: 1;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .link-component {
@@ -250,7 +274,7 @@ body {
     height: 28px;
 }
 
-.link-component .item button {
+.link-component .item .download {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -260,9 +284,10 @@ body {
     border: 1px solid #ccc;
     outline: none;
     color: #666;
+    font-size: 12px;
 }
 
-.link-component .item button .material-icons {
+.link-component .item .download .material-icons {
     margin-left: 4px;
     font-size: 14px;
 }

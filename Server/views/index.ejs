@@ -69,6 +69,14 @@
                         <h2>공지사항</h2>
                         <a href="">더보기</a>
                     </div>
+                    <div class="list">
+                        <% notice.forEach((e) => { %>
+                        <div class="item">
+                            <a href="" class="title"><%= e.title %></a>
+                            <span class="date"><%= e.wdate %></span>
+                        </div>
+                        <% }); %>
+                    </div>
                 </div>
                 <div class="link-component">
                     <div class="row">
@@ -91,25 +99,27 @@
                     <div class="row">
                         <div class="item item4">
                             <div class="title">융합연구소 규칙</div>
-                            <div class="subtitle">최종수정일 2023.01.01</div>
-                            <button>
-                                융합연구소 규칙 다운로드<span
-                                    class="material-icons"
-                                >
+                            <div class="subtitle">최종수정일 2022.04.11</div>
+                            <a
+                                class="download"
+                                href="/files/2022-1학기_AI+X융합연구소_연구공간규정(안)_v2.hwp"
+                                download
+                            >
+                                융합연구소 규칙 다운로드
+                                <span class="material-icons">
                                     file_download
                                 </span>
-                            </button>
+                            </a>
                         </div>
                         <div class="item item5">
                             <div class="title">자리 배정표</div>
                             <div class="subtitle">최종 수정일 2023.01.01</div>
-                            <button>
-                                자리 배정표 다운로드<span
-                                    class="material-icons"
-                                >
+                            <a class="download" href="" download>
+                                자리 배정표 다운로드
+                                <span class="material-icons">
                                     file_download
                                 </span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

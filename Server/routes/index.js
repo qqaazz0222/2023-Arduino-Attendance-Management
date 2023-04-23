@@ -5,7 +5,7 @@ const pool = require("../db/db");
 const sessionStore = require("../db/session");
 
 let data = {
-    title: "NM246 근태관리 시스템 | 홈",
+    title: "융합연구소 출석관리 시스템 | 홈",
     uid: "",
     uname: "",
 };
@@ -40,7 +40,6 @@ router.get("/", async (req, res, next) => {
         if (m2.length == 1) {
             m2 = "0" + m2;
         }
-        console.log(String(year) + "-" + m1, yy + "-" + m2, req.session.uid);
         const check_in = await pool.query(
             "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m') BETWEEN ? AND ? AND uid = ?;",
             [String(year) + "-" + m1, yy + "-" + m2, req.session.uid]
@@ -49,14 +48,16 @@ router.get("/", async (req, res, next) => {
             "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m') BETWEEN ? AND ? AND uid = ?;",
             [String(year) + "-" + m1, yy + "-" + m2, req.session.uid]
         );
-        console.log(check_in[0]);
-        console.log(check_out[0]);
+        const notice = await pool.query(
+            "SELECT * FROM notice ORDER BY no DESC LIMIT 4;"
+        );
         data.uid = req.session.uid;
         data.uname = req.session.uname;
         res.render("index", {
             data: data,
             check_in: check_in[0],
             check_out: check_out[0],
+            notice: notice[0],
         });
     }
 });
