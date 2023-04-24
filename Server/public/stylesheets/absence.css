@@ -1,0 +1,150 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f8f8f8;
+}
+
+.main-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 32px;
+    padding: 8px;
+    width: 100vw;
+    max-width: 1280px;
+}
+
+/* .create-absence-component {
+    width: 200px;
+    height: 120px;
+    
+} */
+
+.absence-func-component {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+}
+
+.create-absence-component {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 120px;
+    color: #fff;
+    background: #C20625 url(/images/item3.png) no-repeat left bottom;
+}
+
+.create-absence-component .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.create-absence-component .subtitle {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.create-absence-component img {
+    width: 28px;
+    height: 28px;
+}
+
+.create-absence-component .download {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    background: #fff;
+    border: 1px solid #ccc;
+    outline: none;
+    color: #666;
+    font-size: 12px;
+}
+
+.absence-info-component {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.absence-info-component .item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12px;
+    height: 120px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+}
+
+.absence-info-component .item .title {
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+.absence-info-component .item .detail {
+    font-size: 32px;
+    color: #C51230;
+}
+
+.absence-component {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    border-top: 4px solid #C51230;
+}
+
+.absence-component .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.absence-component .header a {
+    font-size: 14px;
+}
+
+.absence-component .list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ccc;
+}
+
+.absence-component .list .item {
+    padding: 8px 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.absence-component .list .item .title {
+    flex: 1;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

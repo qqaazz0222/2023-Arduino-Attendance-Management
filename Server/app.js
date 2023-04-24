@@ -9,6 +9,7 @@ var logger = require("morgan");
 var indexRouter = require("./routes/index");
 var signRouter = require("./routes/sign");
 var checkRouter = require("./routes/check");
+var absenceRouter = require("./routes/absence");
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/sign", signRouter);
 app.use("/check", checkRouter);
+app.use("/absence", absenceRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/absence.css" />
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="/">
+                <img
+                    src="https://www.dongseo.ac.kr/smart/sub_intro/images/intro_15_img02.jpg"
+                />
+                융합연구소출석관리서비스
+            </a>
+            <div class="profile">
+                <a href="/sign">
+                    <span class="material-icons"> settings </span>
+                    <%= data.uname %>
+                </a>
+            </div>
+        </header>
+        <div class="main-page">
+            <div class="absence-func-component">
+                <a class="create-absence-component" href="/absence">
+                    <div class="title">유고결석 사유서</div>
+                    <div class="subtitle">작성하기</div>
+                    <img src="images/btn.png" alt="" srcset="" />
+                </a>
+                <div class="absence-info-component">
+                    <div class="item">
+                        <div class="title">제출</div>
+                        <div class="detail">0</div>
+                    </div>
+                    <div class="item">
+                        <div class="title">승인</div>
+                        <div class="detail">0</div>
+                    </div>
+                    <div class="item">
+                        <div class="title">거부</div>
+                        <div class="detail">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absence-component">
+                <img
+                    src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico04.gif"
+                    alt=""
+                    class="icon"
+                />
+                <div class="header">
+                    <h2>제출한 유고결석</h2>
+                </div>
+                <div class="list">
+                    <div class="header"></div>
+                    <div class="item">
+                        <a href="" class="title">title</a>
+                        <span class="date">dnjf</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
