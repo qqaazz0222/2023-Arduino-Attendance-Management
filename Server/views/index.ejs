@@ -20,11 +20,26 @@
                 />
                 융합연구소출석관리서비스
             </a>
+            <!-- edit by itsjh -->
+            <!-- 버튼 스크롤 -->
             <div class="profile">
-                <a href="/sign">
+                <a href="#" onclick="userPopupShow()">
                     <span class="material-icons"> settings </span>
                     <%= data.uname %>
                 </a>
+                <div class="user_popup">
+                    <ul>
+                        <li><span class="material-icons"> verified_user </span>
+                            <a href="#">관리자페이지</a>
+                        </li>
+                        <li><span class="material-icons"> password </span>
+                            <a href="#" onclick="userPopupEditPwd()">비밀번호변경</a>
+                        </li>
+                        <li><span class="material-icons"> logout </span>
+                            <a href="#">로그아웃</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </header>
         <div class="main-page">
@@ -126,8 +141,41 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <form method="post">
+            <div class="user_popup_edit_password">
+                <h4>비밀번호변경</h4>
+                <div class="user_popup_edit_password_content">
+                    <div class="user_popup_edit_password_pwd">
+                        <div>
+                            <p>현재 비밀번호</p>
+                            <input type="password" id="current_user_pwd" name="current_user_pwd">
+                        </div>
+                        <div>
+                            <p>비밀번호</p>
+                            <input type="password" id="new_user_pwd" name="new_user_pwd">
+                        </div>
+                        <div>
+                            <p>비밀번호 확인</p>
+                            <input type="password" id="new_user_pwd_chk" name="new_user_pwd_chk">
+                        </div>
+                    </div>
+                    <div class="user_popup_edit_password_cont">
+                        <p>▶️개인정보 유출에 유의하시기 바랍니다.</p>
+                        <p>▶️하나 이상의 문자, 숫자, 특수 문자가 포함되어야 합니다.</br>
+                            [8자리이상 15자리이하, 허용특수문자:!@#$%^&*?]
+                        </p>
+                    </div>
+                    <div class="user_popup_edit_password_footer">
+                        <button type="submit" class="user_popup_edit_save" onclick="javascript: form.action='/editpwd';">저장</button>
+                        <button type="button" class="user_popup_edit_close" onclick="userPopupEditPwdClose()">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </body>
     <script>
+        const admin = [20181501, 20181495]
         let check_in = "<%= JSON.stringify(check_in) %>";
         check_in = check_in.replaceAll("&#34;", '"');
         check_in = JSON.parse(check_in);
@@ -192,5 +240,26 @@
         // document.querySelector(`.nextDay`).onclick = () => {
         //     makeCalendar(new Date(date.setMonth(date.getMonth() + 1)));
         // };
+        
+        function userPopupShow() {
+            var target = document.querySelector(`.user_popup`);
+            if (target.style.display == "none" || target.style.display == "") {
+                target.style.display = "block";
+            } else {
+                target.style.display = "none";
+            }
+        }
+
+        function userPopupEditPwd() {
+            var target = document.querySelector(`.user_popup_edit_password`);
+            if (target.style.display == "none" || target.style.display == "") {
+                target.style.display = "block";
+            }
+        }
+
+        function userPopupEditPwdClose() {
+            var target = document.querySelector(`.user_popup_edit_password`).style.display = "none";
+        }
+        
     </script>
 </html>

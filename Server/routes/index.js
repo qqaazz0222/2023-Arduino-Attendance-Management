@@ -62,6 +62,47 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+// 사용자 비밀번호 변경 
+router.post("/editpwd", async (req, res, next) => {
+    // isUserLogined (사용자 로그인 여부 확인 절차)
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        // get elements from body
+        const {
+            body: { current_user_pwd, new_user_pwd, new_user_pwd_chk }
+        } = req;
+        // 비밀번호와 비밀번호 확인을 잘못 입력했을 때,
+        // 해당 부분을 먼저 실행하는 이유는 효율성 측면에서 디비에 접근하기 전에
+        // 서버 측면에서 선처리 하는 것.
+        const special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+        if (new_user_pwd === "" || new_user_pwd_chk === "" || new_user_pwd.length < 8 || new_user_pwd.length > 15 || special_pattern.test(new_user_pwd) === false || new_user_pwd !== new_user_pwd_chk) {
+            return res.send("<script>alert('입력한 비밀번호를 규칙에 맞게 입력해주세요.'); history.go(-1);</script>")
+        }
+        // check if last pwd is correct
+        // 사용자가 입력한 현재 비밀번호와 일치하는 값을 찾는다.
+        const chk_last_pwd = await pool.query(
+            "SELECT * FROM user WHERE uid = ? AND upw = ?",
+            [req.session.uid, current_user_pwd]
+        );
+        // 일치하지 않을 때, alert로 사용자에게 불일치 결과 출력
+        if (chk_last_pwd[0].length === 0) {
+            return res.send("<script>alert('현재 비밀번호가 일치하지 않습니다.'); history.go(-1);</script>")
+        } else {
+            // 바꾸려는 비밀번호와 현재 사용중인 비밀번호가 같을 때,
+            if (new_user_pwd === chk_last_pwd[0][0].upw) {
+                return res.send("<script>alert('현재 사용중인 비밀번호입니다!'); history.go(-1);</script>")
+            }
+            // 모든 예외 통과, DB에 새로운 비밀번호 PUT
+            const update_new_pwd = await pool.query(
+                "UPDATE user SET upw = ? WHERE uid = ?",
+                [new_user_pwd.toLowerCase(), req.session.uid]
+            );
+        }
+        return res.send("<script>alert('비밀번호를 변경했습니다.'); location.href='/';</script>");
+    }
+})
+
 router.get("/error", async (req, res, next) => {
     res.render("error", { data: data });
 });
