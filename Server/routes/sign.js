@@ -4,7 +4,7 @@ const pool = require("../db/db");
 const sessionStore = require("../db/session");
 
 let data = {
-    title: "융합연구소 출석관리 시스템 | 로그인",
+    title: "융합연구소출석관리서비스 | 로그인",
     uid: "",
     uname: "",
     errMsg: "",

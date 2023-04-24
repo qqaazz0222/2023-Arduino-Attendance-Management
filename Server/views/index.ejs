@@ -2,6 +2,7 @@
 <html>
     <head>
         <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
         <!-- Google Materual Icons -->
         <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -13,12 +14,12 @@
     </head>
     <body>
         <header>
-            <div class="logo">
+            <a class="logo" href="/">
                 <img
                     src="https://www.dongseo.ac.kr/smart/sub_intro/images/intro_15_img02.jpg"
                 />
                 융합연구소출석관리서비스
-            </div>
+            </a>
             <div class="profile">
                 <a href="/sign">
                     <span class="material-icons"> settings </span>
@@ -80,21 +81,21 @@
                 </div>
                 <div class="link-component">
                     <div class="row">
-                        <div class="item item1">
+                        <a class="item item1" href="/check">
                             <div class="title">출석조회</div>
                             <div class="subtitle">바로가기</div>
                             <img src="images/btn.png" alt="" srcset="" />
-                        </div>
-                        <div class="item item2">
+                        </a>
+                        <a class="item item2" href="/notice">
                             <div class="title">공지사항</div>
                             <div class="subtitle">바로가기</div>
                             <img src="images/btn.png" alt="" srcset="" />
-                        </div>
-                        <div class="item item3">
+                        </a>
+                        <a class="item item3" href="/excused">
                             <div class="title">유고결석</div>
                             <div class="subtitle">바로가기</div>
                             <img src="images/btn.png" alt="" srcset="" />
-                        </div>
+                        </a>
                     </div>
                     <div class="row">
                         <div class="item item4">
@@ -151,8 +152,8 @@
 
             for (let i = 1; i <= lastDay; i++) {
                 htmlDummy += `<div><p>${i}</p>
-                    <p id=${"in" + i} class="in"></p>
-                    <p id=${"out" + i} class="out"></p></div>`;
+                    <div id=${"in" + i} class="in"></div>
+                    <div id=${"out" + i} class="out"></div></div>`;
             }
 
             for (let i = limitDay; i < nextDay; i++) {

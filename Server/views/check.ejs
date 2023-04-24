@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/check.css" />
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="/">
+                <img
+                    src="https://www.dongseo.ac.kr/smart/sub_intro/images/intro_15_img02.jpg"
+                />
+                융합연구소출석관리서비스
+            </a>
+            <div class="profile">
+                <a href="/sign">
+                    <span class="material-icons"> settings </span>
+                    <%= data.uname %>
+                </a>
+            </div>
+        </header>
+        <div class="main-page">
+            <div class="calander-component">
+                <img
+                    class="icon"
+                    src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico45.gif"
+                    alt=""
+                />
+                <h2>출석현황</h2>
+
+                <div class="header">
+                    <div class="month-wrap">
+                        <div class="btn prevDay">
+                            <span class="material-icons"> arrow_back </span>
+                        </div>
+                        <h3 class="dateTitle"></h3>
+                        <div class="btn nextDay">
+                            <span class="material-icons"> arrow_forward </span>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <span class="in"></span>입실 시간
+                        <span class="out"></span>퇴실 시간
+                    </div>
+                </div>
+                <div class="grid dateHead">
+                    <div>일</div>
+                    <div>월</div>
+                    <div>화</div>
+                    <div>수</div>
+                    <div>목</div>
+                    <div>금</div>
+                    <div>토</div>
+                </div>
+                <div class="grid dateBoard"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+        let check_in = "<%= JSON.stringify(check_in) %>";
+        check_in = check_in.replaceAll("&#34;", '"');
+        check_in = JSON.parse(check_in);
+        let check_out = "<%= JSON.stringify(check_out) %>";
+        check_out = check_out.replaceAll("&#34;", '"');
+        check_out = JSON.parse(check_out);
+
+        const makeCalendar = (date) => {
+            const currentYear = new Date(date).getFullYear();
+            const currentMonth = new Date(date).getMonth() + 1;
+
+            const firstDay = new Date(date.setDate(1)).getDay();
+            const lastDay = new Date(currentYear, currentMonth, 0).getDate();
+
+            const limitDay = firstDay + lastDay;
+            const nextDay = Math.ceil(limitDay / 7) * 7;
+
+            let htmlDummy = "";
+
+            for (let i = 0; i < firstDay; i++) {
+                htmlDummy += `<div class="noColor"></div>`;
+            }
+
+            for (let i = 1; i <= lastDay; i++) {
+                htmlDummy += `<div><p>${i}</p>
+                    <div id=${"in" + i} class="in"></div>
+                    <div id=${"out" + i} class="out"></div></div>`;
+            }
+
+            for (let i = limitDay; i < nextDay; i++) {
+                htmlDummy += `<div class="noColor"></div>`;
+            }
+
+            document.querySelector(`.dateBoard`).innerHTML = htmlDummy;
+            document.querySelector(
+                `.dateTitle`
+            ).innerText = `${currentYear}년 ${currentMonth}월`;
+        };
+
+        const year = "<%= year %>";
+        const month = "<%= month %>";
+        const date = new Date(year + "-" + month + "-01");
+
+        makeCalendar(date);
+
+        check_in.forEach((e) => {
+            d = new Date(e.date);
+            target = document.querySelector("#in" + String(d.getDate()));
+            console.log(target.innerHTML);
+            target.innerHTML += `<span>${d.getHours()}시 ${d.getMinutes()}분</span>`;
+        });
+        check_out.forEach((e) => {
+            d = new Date(e.date);
+            target = document.querySelector("#out" + String(d.getDate()));
+            console.log(target.innerHTML);
+            target.innerHTML += `<span>${d.getHours()}시 ${d.getMinutes()}분</span>`;
+        });
+
+        // 이전달 이동
+        document.querySelector(`.prevDay`).onclick = () => {
+            let yy = parseInt(year);
+            let mm = parseInt(month) - 1;
+            let path = "";
+            if (mm == 0) {
+                yy -= 1;
+                mm = 12;
+            }
+            if (mm / 10 < 1) {
+                mm = "0" + mm;
+            }
+            path = "/check/" + yy + "/" + mm;
+            location.href = path;
+        };
+
+        // 다음달 이동
+        document.querySelector(`.nextDay`).onclick = () => {
+            let yy = parseInt(year);
+            let mm = parseInt(month) + 1;
+            let path = "";
+            if (mm == 13) {
+                yy += 1;
+                mm = 1;
+            }
+            if (mm / 10 < 1) {
+                mm = "0" + mm;
+            }
+            path = "/check/" + yy + "/" + mm;
+            location.href = path;
+        };
+    </script>
+</html>
