@@ -30,7 +30,7 @@
                 <div class="user_popup">
                     <ul>
                         <li><span class="material-icons"> verified_user </span>
-                            <a href="#">관리자페이지</a>
+                            <a href="/admin">관리자페이지</a>
                         </li>
                         <li><span class="material-icons"> password </span>
                             <a href="#" onclick="userPopupEditPwd()">비밀번호변경</a>
@@ -175,7 +175,7 @@
         </form>
     </body>
     <script>
-        const admin = [20181501, 20181495]
+        // const admin = [20181501, 20181495]
         let check_in = "<%= JSON.stringify(check_in) %>";
         check_in = check_in.replaceAll("&#34;", '"');
         check_in = JSON.parse(check_in);

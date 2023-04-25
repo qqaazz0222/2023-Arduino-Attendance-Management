@@ -1,0 +1,372 @@
+<!-- ADmin Page -->
+<!--
+    대시보드: 금일 출석 현황 ( 링 형태 : %), 미출석자 ( TEXT )
+    탭: 사용자 관리, 유고결석 관리, 공지사항 관리, 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/main.css" />
+        <link rel="stylesheet" href="/stylesheets/admin.css" />
+    </head>
+</head>
+<body>
+    <header>
+        <a class="logo" href="/">
+            <img
+                src="https://www.dongseo.ac.kr/smart/sub_intro/images/intro_15_img02.jpg"
+            />
+            융합연구소출석관리서비스
+        </a>
+        <!-- edit by itsjh -->
+        <!-- 버튼 스크롤 -->
+        <div class="profile">
+            <a href="#" onclick="userPopupShow()">
+                <span class="material-icons"> settings </span>
+                <%= data.uname %>
+            </a>
+            <div class="user_popup">
+                <ul>
+                    <li id="panel_1"><span class="material-icons"> verified_user </span>
+                        <a href="#">관리자페이지</a>
+                    </li id=panel_2>
+                    <li><span class="material-icons"> password </span>
+                        <a href="#" onclick="userPopupEditPwd()">비밀번호변경</a>
+                    </li>
+                    <li id="panel_3"><span class="material-icons"> logout </span>
+                        <a href="#">로그아웃</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!-- grid frame -->
+    <div class="admin_frmae_grid">
+        <div class="admin_panel">
+            <div class="admin_panel_top">
+                <span>융합연구소 관리자 페이지</span>
+                <span><span class="material-icons">
+                    verified_user
+                    </span> <%= data.uname %>님, 환영합니다</span>
+            </div>
+            <nav>
+                <ul>
+                    <a href="/admin" id="panel_select_main" onclick="panel_changed(this)"><li><span class="material-icons">
+                        grid_view
+                    </span> 메인</li></a>
+                    <a href="#" id="panel_select_user" onclick="panel_changed(this)"><li><span class="material-icons">
+                        group
+                    </span> 연구원 관리</li></a>
+                    <a href="#" id="panel_select_absent" onclick="panel_changed(this)"><li><span class="material-icons">
+                        menu_book
+                    </span> 유고결석 관리</li></a>
+                    <a href="#" id="panel_select_notice" onclick="panel_changed(this)"><li><span class="material-icons">
+                        notifications
+                    </span> 공지사항 관리</li></a>
+                </ul>
+            </nav>
+        </div>
+        <div class="admin_content">
+            <!-- 메인보드 -->
+            <div class="panel_select_main_hide">
+                <div class="admin_content_main_grid">
+                    <div class="admin_content_main_header">
+                        <div class="header_contents">
+                            <p>전체 연구원 수</p>
+                            <p><%= header_data.users %>명</p>
+                        </div>
+                        <div class="header_contents">
+                            <p>출석 연구원 수</p>
+                            <p><%= header_data.attendedUsers %>명</p>
+                        </div>
+                        <div class="header_contents">
+                            <p>미출석 연구원 수</p>
+                            <p><%= header_data.absentedUsers %>명</p>
+                        </div>
+                        <div class="header_contents">
+                            <p>미승인 유고결석 개수</p>
+                            <p><%= header_data.unapprovedExcused %>개</p>
+                        </div>
+                    </div>
+                    <div class="admin_content_main_cont">
+                        cont
+                    </div>
+                    <div class="admin_content_main_footer">
+                        footer
+                    </div>
+                </div>
+            </div>
+            <!-- 사용자 관리 -->
+            <div class="panel_select_user_hide">
+                <div class="admin_content_user_grid" >
+                    <div class="admin_content_user_header">
+                        <p> Members </p>
+                        <div>
+                            <button onclick="popup_adduser_show()">사용자 추가</button>
+                            <button>엑셀 다운로드(준비중)</button>
+                        </div>
+                        
+                    </div>
+                    <div class="admin_content_user_cont">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        학번
+                                    </th>
+                                    <th>
+                                        이름
+                                    </th>
+                                    <th>
+                                        전화번호
+                                    </th>
+                                    <th>
+                                        누적 경고
+                                    </th>
+                                    <th>
+                                        좌석 번호
+                                    </th>
+                                    <th>
+                                        출석 상태
+                                    </th>
+                                    <th>
+                                        입실
+                                    </th>
+                                    <th>
+                                        퇴실
+                                    </th>
+                                    <th>
+                                        Operation
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (var i = 0; i < panel_user.length; i++){ %>
+                                    <tr>
+                                        <td>
+                                            <%= panel_user[i].uid %>
+                                        </td>
+                                        <td>
+                                            <%= panel_user[i].uname %>
+                                        </td>
+                                        <td>
+                                            010-0000-0000
+                                        </td>
+                                        <td>
+                                            -회
+                                        </td>
+                                        <td>
+                                            <%= panel_user[i].seat %>번
+                                        </td>
+                                        <td class="status_">
+                                            <% if (panel_user[i].in ) { %>
+                                                <div class="status_ok">
+                                                    출석
+                                                </div>
+                                            <% } else { %>
+                                                <div class="status_deny">
+                                                    미출석
+                                                </div>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <%= panel_user[i].in %>
+                                        </td>
+                                        <td>
+                                            <%= panel_user[i].out %>
+                                        </td>
+                                        <td>
+                                            <div class="operation_div">
+                                                <button class="operation_button" onclick="popup_edituser_show('<%= panel_user[i].uid %>', '<%= panel_user[i].uname %>', '<%= panel_user[i].upw %>', '<%= panel_user[i].seat %>')"><span class="material-icons">
+                                                    mode_edit
+                                                    </span></button>
+                                                <button class="operation_button" onclick="popup_deleteuser_show('<%= panel_user[i].uid %>')"><span class="material-icons">
+                                                    delete
+                                                    </span></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 유고결석 관리 -->
+            <div class="panel_select_absent_hide">
+                <div class="admin_content_absent_grid">
+                    
+                </div>
+            </div>
+            <!-- 공지사항 관리 -->
+            <div class="panel_select_notice_hide">
+                <div class="admin_content_notice_grid">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 사용자 추가 -->
+    <div class="popup_background_hide">
+        <div class="popup_adduser_hide">
+            <form method="post">
+                <h4>사용자 추가</h4>
+                <div class="popup_adduser_hide_content">
+                    <div class="user_popup_edit_password_pwd">
+                        <div>
+                            <p>학번</p>
+                            <input type="number" id="studentcode" name="studentcode" autocomplete="off">
+                        </div>
+                        <div>
+                            <p>이름</p>
+                            <input type="text" id="username" name="username" autocomplete="off">
+                        </div>
+                        <div>
+                            <p>비밀번호</p>
+                            <input type="password" id="userupw" name="userupw" autocomplete="off">
+                        </div>
+                        <div>
+                            <p>좌석</p>
+                            <input type="number" id="userseat" name="userseat" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="user_popup_edit_password_footer">
+                        <button type="submit" class="user_popup_edit_save" onclick="javascript: form.action='/admin/adduser';">추가</button>
+                        <button type="button" class="user_popup_edit_close" onclick="popup_adduser_hide()">닫기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 사용자 수정 -->
+    <div class="popup_edit_background_hide">
+        <div class="popup_adduser_hide">
+            <form method="post">
+                <h4>사용자 수정</h4>
+                <div class="popup_adduser_hide_content">
+                    <div class="user_popup_edit_password_pwd">
+                        <div>
+                            <p>학번</p>
+                            <input type="number" id="edit_studentcode" name="studentcode" autocomplete="off">
+                        </div>
+                        <div>
+                            <p>이름</p>
+                            <input type="text" id="edit_username" name="username" autocomplete="off">
+                        </div>
+                        <div>
+                            <p>비밀번호</p>
+                            <input type="text" id="edit_userupw" name="userupw" autocomplete="off">
+                        </div>
+                        <div>
+                            <p>좌석</p>
+                            <input type="number" id="edit_userseat" name="userseat" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="user_popup_edit_password_footer">
+                        <button type="submit" class="user_popup_edit_save" onclick="javascript: form.action='/admin/edituser';">수정</button>
+                        <button type="button" class="user_popup_edit_close" onclick="popup_edituser_hide()">닫기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 사용자 삭제 팝업 -->
+    <div class="popup_okay_background_hide">
+        <form method="post">
+            <div class="popup_okay">
+                <input id = "name_hide" name="studentcode" value = "" style="display:none;">
+                <p>삭제하시겠습니까?</p>
+                <div>
+                    <button type="submit" onclick="javascript: form.action='/admin/deleteuser';">
+                        예
+                    </button>
+                    <button type="button" onclick="popup_deleteuser_hide()">
+                        아니요
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+
+    <script>
+        var hide_array = [
+        "panel_select_main_hide", 
+        "panel_select_user_hide",
+        "panel_select_absent_hide",
+        "panel_select_notice_hide"
+        ];
+        function userPopupShow() {
+            var target = document.querySelector(`.user_popup`);
+            if (target.style.display == "none" || target.style.display == "") {
+                target.style.display = "block";
+            } else {
+                target.style.display = "none";
+            }
+        }
+
+        function userPopupEditPwd() {
+            var target = document.querySelector(`.user_popup_edit_password`);
+            if (target.style.display == "none" || target.style.display == "") {
+                target.style.display = "block";
+            }
+        }
+
+        function userPopupEditPwdClose() {
+            var target = document.querySelector(`.user_popup_edit_password`).style.display = "none";
+        }
+
+        function popup_adduser_show() {
+            var target = document.querySelector(`.popup_background_hide`).style.display = "flex";
+        }
+
+        function popup_adduser_hide() {
+            var target = document.querySelector(`.popup_background_hide`).style.display = "none";
+        }
+
+        function popup_edituser_show(code, name, pw, seat) {
+            var target = document.querySelector(`.popup_edit_background_hide`).style.display = "flex";
+            var code = document.querySelector(`#edit_studentcode`).value = code;
+            var name = document.querySelector(`#edit_username`).value = name;
+            var pw = document.querySelector(`#edit_userupw`).value = pw;
+            var seat = document.querySelector(`#edit_userseat`).value = seat;
+        }
+
+        function popup_edituser_hide() {
+            var target = document.querySelector(`.popup_edit_background_hide`).style.display = "none";
+        }
+
+        function popup_deleteuser_show(studentcode) {
+            var target = document.querySelector(`.popup_okay_background_hide`).style.display = "flex";
+            var hide_name = document.querySelector(`#name_hide`).value = studentcode;
+        }
+
+        function popup_deleteuser_hide() {
+            var target = document.querySelector(`.popup_okay_background_hide`).style.display = "none";
+        }
+
+        function panel_changed(target) {
+            $('.' + target.id + "_hide").css('display', 'block');
+            for (var i = 0; i < hide_array.length; i++) {
+                if (hide_array[i] !== (target.id + "_hide")) {
+                    $('.' + hide_array[i]).css('display', 'none');
+                }
+            }
+        }
+
+    </script>
+    <!-- JQuery -->
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</body>
+</html>
