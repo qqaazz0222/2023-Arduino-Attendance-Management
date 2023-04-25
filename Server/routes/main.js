@@ -53,7 +53,7 @@ router.get("/", async (req, res, next) => {
         );
         data.uid = req.session.uid;
         data.uname = req.session.uname;
-        res.render("index", {
+        res.render("main", {
             data: data,
             check_in: check_in[0],
             check_out: check_out[0],

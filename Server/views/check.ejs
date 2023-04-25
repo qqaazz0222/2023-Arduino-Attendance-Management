@@ -13,20 +13,7 @@
         <link rel="stylesheet" href="/stylesheets/check.css" />
     </head>
     <body>
-        <header>
-            <a class="logo" href="/">
-                <img
-                    src="https://www.dongseo.ac.kr/smart/sub_intro/images/intro_15_img02.jpg"
-                />
-                융합연구소출석관리서비스
-            </a>
-            <div class="profile">
-                <a href="/sign">
-                    <span class="material-icons"> settings </span>
-                    <%= data.uname %>
-                </a>
-            </div>
-        </header>
+        <%- include ./header.ejs %>
         <div class="main-page">
             <div class="calander-component">
                 <img

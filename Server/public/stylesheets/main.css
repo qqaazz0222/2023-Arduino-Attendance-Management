@@ -25,6 +25,7 @@ body {
     width: 100%;
     margin-bottom: 12px;
     padding: 12px;
+    padding-top: 24px;
     background: #fff;
     border: 1px solid #DDDDDD;
     border-top: 4px solid #C51230;
@@ -35,6 +36,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 12px;
+    margin-bottom: 20px;
 }
 
 .calander-component .header .info {
@@ -245,9 +247,10 @@ body {
     font-size: 12px;
 }
 
-.link-component .item .download .material-icons {
+.link-component .item .download img {
     margin-left: 4px;
-    font-size: 14px;
+    width: 10px;
+    height: 10px;
 }
 
 .link-component .item1 {

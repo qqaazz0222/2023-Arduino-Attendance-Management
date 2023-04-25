@@ -107,7 +107,24 @@ header .profile span {
     margin-right: 8px;
 }
 
+header .profile img {
+    margin-right: 8px;
+}
+
 .icon {
     width: 32px;
     margin-bottom: 12px;
+}
+
+#loading {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
 }

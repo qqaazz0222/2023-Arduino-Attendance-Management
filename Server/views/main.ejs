@@ -13,20 +13,7 @@
         <link rel="stylesheet" href="/stylesheets/main.css" />
     </head>
     <body>
-        <header>
-            <a class="logo" href="/">
-                <img
-                    src="https://www.dongseo.ac.kr/smart/sub_intro/images/intro_15_img02.jpg"
-                />
-                융합연구소출석관리서비스
-            </a>
-            <div class="profile">
-                <a href="/sign">
-                    <span class="material-icons"> settings </span>
-                    <%= data.uname %>
-                </a>
-            </div>
-        </header>
+        <%- include ./header.ejs%>
         <div class="main-page">
             <div class="calander-component">
                 <img
@@ -68,12 +55,14 @@
                     />
                     <div class="header">
                         <h2>공지사항</h2>
-                        <a href="">더보기</a>
+                        <a href="/notice">더보기</a>
                     </div>
                     <div class="list">
                         <% notice.forEach((e) => { %>
                         <div class="item">
-                            <a href="" class="title"><%= e.title %></a>
+                            <a href="/notice/<%= e.no %>" class="title"
+                                ><%= e.title %></a
+                            >
                             <span class="date"><%= e.wdate %></span>
                         </div>
                         <% }); %>
@@ -107,19 +96,27 @@
                                 download
                             >
                                 융합연구소 규칙 다운로드
-                                <span class="material-icons">
-                                    file_download
-                                </span>
+                                <img
+                                    src="/images/download.png"
+                                    alt=""
+                                    srcset=""
+                                />
                             </a>
                         </div>
                         <div class="item item5">
                             <div class="title">자리 배정표</div>
                             <div class="subtitle">최종 수정일 2023.01.01</div>
-                            <a class="download" href="" download>
+                            <a
+                                class="download"
+                                href="/files/2023-1학기NM246(AI+X융합연구소) 2차자리배정표.pdf"
+                                download
+                            >
                                 자리 배정표 다운로드
-                                <span class="material-icons">
-                                    file_download
-                                </span>
+                                <img
+                                    src="/images/download.png"
+                                    alt=""
+                                    srcset=""
+                                />
                             </a>
                         </div>
                     </div>

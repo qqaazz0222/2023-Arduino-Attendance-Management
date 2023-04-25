@@ -1,0 +1,168 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f8f8f8;
+}
+
+.main-page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 32px;
+    padding: 8px;
+    width: 100vw;
+    max-width: 1280px;
+}
+
+.notice-component {
+    width: 100%;
+    padding: 12px;
+    padding-top: 24px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    border-top: 4px solid #C51230;
+}
+
+.notice-component .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.notice-component .header a {
+    font-size: 14px;
+}
+
+.notice-component .list {
+    display: flex;
+    flex-direction: column;
+}
+
+.notice-component .list .itemh {
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.notice-component .list .item {
+    padding: 20px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.notice-component .list .title {
+    flex: 1;
+    color: #333;
+}
+
+.notice-component .list .wdate {
+    width: 120px;
+    text-align: center;
+}
+
+.notice-component .list .view {
+    width: 80px;
+    text-align: center;
+}
+
+.notice-component .list .item .wdate,
+.notice-component .list .item .view {
+    color: #999;
+}
+
+.notice-component .list .item .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.notice-component .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.notice-component .content .content-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 20px 12px;
+    width: 100%;
+    border-top: 2px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.notice-component .content .content-header .title {
+    margin-bottom: 12px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.notice-component .content .content-header .info-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.notice-component .content .content-body {
+    padding: 20px;
+}
+
+.notice-component .content .content-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-width: 1px 0px 1px 0px;
+    font-size: 14px;
+    color: #666;
+}
+
+.notice-component .content .content-footer .pre,
+.notice-component .content .content-footer .next {
+    flex: 1;
+    padding: 8px;
+}
+
+.notice-component .content .content-footer .pre .title,
+.notice-component .content .content-footer .next .title {
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #C51230;
+}
+
+
+.notice-component .content .content-footer .pre {
+    text-align: left;
+    border-right: 1px solid #ccc;
+}
+
+.notice-component .content .content-footer .next {
+    text-align: right;
+}
+
+.notice-component .content .goback {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    border: 1px solid #ccc;
+}

@@ -109,42 +109,229 @@ body {
     width: 100%;
     margin-bottom: 12px;
     padding: 12px;
+    padding-top: 24px;
     background: #fff;
     border: 1px solid #DDDDDD;
     border-top: 4px solid #C51230;
 }
 
-.absence-component .header {
+.absence-component>.header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
 }
 
-.absence-component .header a {
+.absence-component>.header a {
     font-size: 14px;
 }
 
 .absence-component .list {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid #ccc;
 }
 
-.absence-component .list .item {
-    padding: 8px 4px;
+.absence-component .list .itemh {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 8px;
     border-bottom: 1px solid #ccc;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.absence-component .list .item .title {
+.absence-component .list .item {
+    display: flex;
+    padding: 16px 12px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+
+.absence-component .list .context {
     flex: 1;
-    max-width: 500px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: start;
+}
+
+.absence-component .list .period {
+    width: 300px;
+    text-align: center;
+    color: #666;
+}
+
+.absence-component .list .wdate {
+    width: 160px;
+    text-align: center;
+    color: #666;
+}
+
+.absence-component .list .status {
+    width: 120px;
+    text-align: center;
+}
+
+.absence-component .list .item .status {
+    color: #C51230;
+    font-weight: bold;
+}
+
+.absence-component .list .no-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 240px;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+
+.absence-component .list .no-item img {
+    margin-bottom: 20px;
+}
+
+.form-absence-component {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    padding-top: 24px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    border-top: 4px solid #C51230;
+}
+
+.form-absence-component>.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-absence-component>.header a {
+    font-size: 14px;
+}
+
+.form-absence-component .form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-absence-component .form .input-wrap {
+    border: 1px solid #ccc;
+    border-width: 1px 0px 0px 1px;
+    margin-bottom: 16px;
+}
+
+.form-absence-component .form .row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-absence-component .form .th,
+.form-absence-component .form .td {
+    padding: 12px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-width: 0px 1px 1px 0px;
+}
+
+.form-absence-component .form .large {
+    flex-direction: column;
+    height: 300px;
+}
+
+.form-absence-component .form .th {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 120px;
+    font-weight: bold;
+}
+
+.form-absence-component .form .th span {
+    width: 100%;
+    text-align: justify;
+}
+
+.form-absence-component .form .td {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-absence-component .form .td-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-absence-component .form .td span {
+    margin: 0px 8px;
+}
+
+.form-absence-component .form .td input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-family: "Pretendard";
+    color: #333;
+}
+
+.form-absence-component .form .td textarea {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    font-family: "Pretendard";
+    outline: none;
+    resize: none;
+}
+
+.form-absence-component .form .td input:focus,
+.form-absence-component .form .td textarea:focus {
+    border: 2px solid #C51230;
+}
+
+.form-absence-component .form .func-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.form-absence-component .form .func-wrap .btn {
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.form-absence-component .form .func-wrap .submit {
+    background: #C51230;
+    color: #fff;
+    margin-right: 8px;
+}
+
+.ql-toolbar,
+#editor {
+    width: 100%;
 }

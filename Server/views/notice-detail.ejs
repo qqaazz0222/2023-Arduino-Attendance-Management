@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/notice.css" />
+    </head>
+    <body>
+        <%- include ./header.ejs%>
+        <div class="main-page">
+            <div class="notice-component">
+                <img
+                    src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico31.gif"
+                    alt=""
+                    class="icon"
+                />
+                <div class="header">
+                    <h2>공지사항</h2>
+                </div>
+                <div class="content">
+                    <div class="content-header">
+                        <div class="title"><%= notice[1].title %></div>
+                        <div class="info-wrap">
+                            <div class="wdate">
+                                작성일 : <%= notice[1].wdate %>
+                            </div>
+                            <div class="view">조회 <%= notice[1].view %></div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <div id="detail"><%= notice[1].detail %></div>
+                    </div>
+                    <div class="content-footer">
+                        <% if(notice[0] === undefined){%>
+                        <div class="pre">
+                            <div class="title">다음글</div>
+                            이전글이 없습니다.
+                        </div>
+                        <% } else { %>
+                        <a
+                            class="pre"
+                            href="/notice/<%= parseInt(notice[1].no) - 1 %>"
+                        >
+                            <div class="title">다음글</div>
+                            <%= notice[0].title %>
+                        </a>
+                        <% }%> <% if(notice[2] === undefined){%>
+                        <div class="next">
+                            <div class="title">다음글</div>
+                            다음글이 없습니다.
+                        </div>
+                        <% } else { %>
+                        <a
+                            class="next"
+                            href="/notice/<%= parseInt(notice[1].no) + 1 %>"
+                        >
+                            <div class="title">다음글</div>
+                            <%= notice[2].title %>
+                        </a>
+                        <% }%>
+                    </div>
+                    <a class="goback" href="/notice">목록</a>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        // var detail = "<%= notice.detail %>";
+        // const parser = new DOMParser();
+        // const doc = parser.parseFromString(unescape(detail), "text/html");
+        // var target = document.getElementById("detail");
+        // target.innerHTML = doc.body;
+        // console.log(doc.body);
+    </script>
+</html>

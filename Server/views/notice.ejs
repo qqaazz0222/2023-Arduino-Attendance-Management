@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/notice.css" />
+    </head>
+    <body>
+        <%- include ./header.ejs%>
+        <div class="main-page">
+            <div class="notice-component">
+                <img
+                    src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico31.gif"
+                    alt=""
+                    class="icon"
+                />
+                <div class="header">
+                    <h2>공지사항</h2>
+                </div>
+                <div class="list">
+                    <div class="itemh">
+                        <span class="title">제목</span>
+                        <span class="wdate">작성일</span>
+                        <span class="view">조회수</span>
+                    </div>
+                    <% notice.forEach((e) => { %>
+                    <div class="item">
+                        <a href="/notice/<%= e.no%>" class="title"
+                            ><%= e.title %></a
+                        >
+                        <span class="wdate"><%= e.wdate %></span>
+                        <span class="view"><%= e.view %></span>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

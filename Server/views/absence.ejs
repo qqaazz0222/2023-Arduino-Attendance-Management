@@ -13,23 +13,10 @@
         <link rel="stylesheet" href="/stylesheets/absence.css" />
     </head>
     <body>
-        <header>
-            <a class="logo" href="/">
-                <img
-                    src="https://www.dongseo.ac.kr/smart/sub_intro/images/intro_15_img02.jpg"
-                />
-                융합연구소출석관리서비스
-            </a>
-            <div class="profile">
-                <a href="/sign">
-                    <span class="material-icons"> settings </span>
-                    <%= data.uname %>
-                </a>
-            </div>
-        </header>
+        <%- include ./header.ejs%>
         <div class="main-page">
             <div class="absence-func-component">
-                <a class="create-absence-component" href="/absence">
+                <a class="create-absence-component" href="/absence/create">
                     <div class="title">유고결석 사유서</div>
                     <div class="subtitle">작성하기</div>
                     <img src="images/btn.png" alt="" srcset="" />
@@ -37,15 +24,21 @@
                 <div class="absence-info-component">
                     <div class="item">
                         <div class="title">제출</div>
-                        <div class="detail">0</div>
+                        <div class="detail"><%= num_absence["제출"]%></div>
                     </div>
                     <div class="item">
-                        <div class="title">승인</div>
-                        <div class="detail">0</div>
+                        <div class="title">승인 대기중</div>
+                        <div class="detail">
+                            <%= num_absence["승인 대기중"]%>
+                        </div>
                     </div>
                     <div class="item">
-                        <div class="title">거부</div>
-                        <div class="detail">0</div>
+                        <div class="title">승인 완료</div>
+                        <div class="detail"><%= num_absence["승인 완료"]%></div>
+                    </div>
+                    <div class="item">
+                        <div class="title">승인 거절</div>
+                        <div class="detail"><%= num_absence["승인 거절"]%></div>
                     </div>
                 </div>
             </div>
@@ -60,11 +53,29 @@
                     <h2>제출한 유고결석</h2>
                 </div>
                 <div class="list">
-                    <div class="header"></div>
-                    <div class="item">
-                        <a href="" class="title">title</a>
-                        <span class="date">dnjf</span>
+                    <div class="itemh">
+                        <span class="context">결석 사유</span>
+                        <span class="period">유고 결석 기간</span>
+                        <span class="wdate">작성일</span>
+                        <span class="status">상태</span>
                     </div>
+                    <% if (absence.length == 0) { %>
+                    <div class="no-item">
+                        <img
+                            src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico21.gif"
+                            alt=""
+                            srcset=""
+                        />
+                        불러올 데이터가 없습니다.
+                    </div>
+                    <% } else { for (var i = 0; i < absence.length; i++) { %>
+                    <div class="item">
+                        <a href="" class="context"><%= absence[i].context %></a>
+                        <span class="period"><%= absence[i].period %></span>
+                        <span class="wdate"><%= absence[i].wdate %></span>
+                        <span class="status"><%= absence[i].status %></span>
+                    </div>
+                    <% }} %>
                 </div>
             </div>
         </div>

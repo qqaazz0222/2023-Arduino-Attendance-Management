@@ -2,103 +2,62 @@ body {
     background: #fff;
 }
 
-.title {
-    font-weight: bold;
-    font-size: 24px;
-}
-
-.sign-page {
+.error-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
+    width: 100vw;
+    height: 90vh;
 }
 
-.sign-component {
+.error-page .logo {
     display: flex;
     flex-direction: row;
-    width: 900px;
-    height: 480px;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
-}
-
-.sign-component .info-wrap {
-    flex: 1;
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #ffffff;
-}
-
-.sign-component .info-wrap div {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    width: 320px;
-    margin-bottom: 12px;
-}
-
-.sign-component .info-wrap .info {
-    flex-direction: column;
-}
-
-.sign-component .info-wrap ul {
-    margin-block-start: 4px;
-    margin-block-end: 0px;
-    margin-inline-start: 4px;
-    margin-inline-end: 0px;
-    padding-inline-start: 16px;
-}
-
-.sign-component .info-wrap li {
-    margin-bottom: 12px;
-}
-
-.sign-component .sign-wrap {
-    flex: 1;
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: #f8f8f8 url(https://www.dongseo.ac.kr/kr/_Img/login02.png)no-repeat 90% 56px;
-}
-
-.sign-component .sign-wrap .title {
-    font-size: 36px;
     margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.sign-component .sign-wrap .subtitle {
+.error-page .logo img {
+    height: 32px;
+    margin-right: 8px;
+}
+
+.error-page .title {
+    margin-bottom: 12px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.error-page .detail {
+    margin-bottom: 40px;
+    font-size: 16px;
     color: #666;
-    font-weight: light;
-    font-size: 14px;
-    margin-bottom: 32px;
+    text-align: center;
 }
 
-.sign-component .sign-wrap a {
+.error-page .func-wrap {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 240px;
-    height: 80px;
-    background: #C51230;
-    color: #ffF;
+}
+
+.error-page .func-wrap a {
+    padding: 16px 24px;
+    font-size: 16px;
     font-weight: bold;
-    font-size: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
 }
 
-.sign-component .sign-wrap a:hover {
-    background: #870319;
-}
-
-.sign-component .sign-wrap .err {
-    margin: 12px;
-    color: #C51230;
-    font-size: 12px;
+.error-page .func-wrap .go-main {
+    background: #C51230;
+    color: #fff;
+    margin-left: 8px;
 }
