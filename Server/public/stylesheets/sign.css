@@ -16,8 +16,8 @@
     flex-direction: row;
     width: 900px;
     height: 480px;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .sign-component .info-wrap {
@@ -27,7 +27,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #ffffff;
+    background: var(--color-white-0);
 }
 
 .sign-component .info-wrap div {
@@ -67,7 +67,7 @@
 }
 
 .sign-component .sign-wrap .subtitle {
-    color: #666;
+    color: var(--color-black-2);
     font-weight: light;
     font-size: 14px;
     margin-bottom: 32px;
@@ -89,7 +89,7 @@
 .sign-component .sign-wrap .form form .userdata {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
 }
 
 .sign-component .sign-wrap .form form .userdata input {
@@ -105,21 +105,21 @@
 }
 
 .sign-component .sign-wrap .form form .userdata input:first-child {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
 }
 
 .sign-component .sign-wrap .form form button {
     width: 100px;
-    background: #C51230;
+    background: var(--color-red-1);
     border: none;
     border-radius: 0px;
-    color: #fff;
+    color: var(--color-white-0);
     font-weight: bold;
     font-size: 16px;
 }
 
 .sign-component .sign-wrap .err {
     margin: 12px;
-    color: #C51230;
+    color: var(--color-red-1);
     font-size: 12px;
 }

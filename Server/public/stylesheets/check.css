@@ -21,9 +21,9 @@ body {
     width: 100%;
     margin-bottom: 12px;
     padding: 12px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .calander-component .header {
@@ -46,7 +46,7 @@ body {
     flex-direction: row;
     align-items: center;
     font-size: 12px;
-    color: #666;
+    color: var(--color-black-2);
 }
 
 .calander-component .header .info .in {
@@ -55,7 +55,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background: #C20625;
+    background: var(--color-red-2);
 }
 
 .calander-component .header .info .out {
@@ -65,7 +65,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background: #870319;
+    background: var(--color-red-4);
 }
 
 .grid {
@@ -85,9 +85,9 @@ body {
 }
 
 .dateBoard {
-    background: #fff;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
+    background: var(--color-white-0);
+    border-top: 1px solid var(--color-white-2);
+    border-left: 1px solid var(--color-white-2);
 }
 
 .dateBoard>div {
@@ -99,8 +99,8 @@ body {
     min-height: 80px;
     padding: 4px;
     padding-bottom: 8px;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-right: 1px solid var(--color-white-2);
+    border-bottom: 1px solid var(--color-white-2);
 }
 
 .dateBoard div .in span {
@@ -108,8 +108,8 @@ body {
     width: 100%;
     padding: 2px 4px;
     border-radius: 4px;
-    background: #C20625;
-    color: #fff;
+    background: var(--color-red-2);
+    color: var(--color-white-0);
     font-weight: bold;
 }
 
@@ -118,8 +118,8 @@ body {
     width: 100%;
     padding: 2px 4px;
     border-radius: 4px;
-    background: #870319;
-    color: #fff;
+    background: var(--color-red-4);
+    color: var(--color-white-0);
     font-weight: bold;
 }
 
@@ -137,13 +137,13 @@ body {
     align-items: center;
     width: 20px;
     height: 20px;
-    background: #fff;
-    border: 1px solid #ccc;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-2);
     border-radius: 16px;
     cursor: pointer;
 }
 
 .btn .material-icons {
-    color: #666;
+    color: var(--color-black-2);
     font-size: 14px;
 }

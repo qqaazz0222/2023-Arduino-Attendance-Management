@@ -26,9 +26,9 @@ body {
     margin-bottom: 12px;
     padding: 12px;
     padding-top: 24px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .calander-component .header {
@@ -44,7 +44,7 @@ body {
     flex-direction: row;
     align-items: center;
     font-size: 12px;
-    color: #666;
+    color: var(--color-black-2);
 }
 
 .calander-component .header .info .in {
@@ -53,7 +53,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background: #C20625;
+    background: var(--color-red-2);
 }
 
 .calander-component .header .info .out {
@@ -63,7 +63,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background: #870319;
+    background: var(--color-red-4);
 }
 
 .grid {
@@ -83,9 +83,9 @@ body {
 }
 
 .dateBoard {
-    background: #fff;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
+    background: var(--color-white-0);
+    border-top: 1px solid var(--color-white-2);
+    border-left: 1px solid var(--color-white-2);
 }
 
 .dateBoard>div {
@@ -97,8 +97,8 @@ body {
     min-height: 80px;
     padding: 4px;
     padding-bottom: 8px;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-right: 1px solid var(--color-white-2);
+    border-bottom: 1px solid var(--color-white-2);
 }
 
 .dateBoard div .in span {
@@ -106,8 +106,8 @@ body {
     width: 100%;
     padding: 2px 4px;
     border-radius: 4px;
-    background: #C20625;
-    color: #fff;
+    background: var(--color-red-2);
+    color: var(--color-white-0);
     font-weight: bold;
 }
 
@@ -116,8 +116,8 @@ body {
     width: 100%;
     padding: 2px 4px;
     border-radius: 4px;
-    background: #870319;
-    color: #fff;
+    background: var(--color-red-4);
+    color: var(--color-white-0);
     font-weight: bold;
 }
 
@@ -133,14 +133,14 @@ body {
     align-items: center;
     width: 20px;
     height: 20px;
-    background: #fff;
-    border: 1px solid #ccc;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-2);
     border-radius: 16px;
     cursor: pointer;
 }
 
 .btn .material-icons {
-    color: #666;
+    color: var(--color-black-2);
     font-size: 14px;
 }
 
@@ -153,9 +153,9 @@ body {
 .notice-component {
     flex: 1;
     padding: 12px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
     margin-right: 12px;
 }
 
@@ -174,7 +174,7 @@ body {
 .notice-component .list {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--color-white-2);
 }
 
 .notice-component .list .item {
@@ -183,7 +183,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
 }
 
 .notice-component .list .item .title {
@@ -198,8 +198,8 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #fff;
-    border: 1px solid #DDDDDD;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
     margin-right: 0px;
 }
 
@@ -215,7 +215,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 120px;
-    color: #fff;
+    color: var(--color-white-0);
 }
 
 .link-component .item .title {
@@ -240,10 +240,10 @@ body {
     justify-content: center;
     align-items: center;
     padding: 4px 8px;
-    background: #fff;
-    border: 1px solid #ccc;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-2);
     outline: none;
-    color: #666;
+    color: var(--color-black-2);
     font-size: 12px;
 }
 
@@ -254,19 +254,19 @@ body {
 }
 
 .link-component .item1 {
-    background: #C51230 url(/images/item1.png) no-repeat center bottom;
+    background: var(--color-red-1) url(/images/item1.png) no-repeat center bottom;
 }
 
 .link-component .item2 {
-    background: #870319 url(/images/item2.png) no-repeat left bottom;
+    background: var(--color-red-4) url(/images/item2.png) no-repeat left bottom;
 }
 
 .link-component .item3 {
-    background: #C20625 url(/images/item3.png) no-repeat left bottom;
+    background: var(--color-red-2) url(/images/item3.png) no-repeat left bottom;
 }
 
 .link-component .item4 {
-    background: #730516 url(/images/item4.png) no-repeat left bottom;
+    background: var(--color-red-3) url(/images/item4.png) no-repeat left bottom;
 }
 
 .link-component .item5 {

@@ -27,9 +27,21 @@
                                 <p>전체 연구원 수</p>
                                 <p><%= header_data.users %>명</p>
                             </div>
-                            <div class="admin_content_main_cont">cont</div>
-                            <div class="admin_content_main_footer">footer</div>
+                            <div class="header_contents">
+                                <p>출석 연구원 수</p>
+                                <p><%= header_data.attendedUsers %>명</p>
+                            </div>
+                            <div class="header_contents">
+                                <p>미출석 연구원 수</p>
+                                <p><%= header_data.absentedUsers %>명</p>
+                            </div>
+                            <div class="header_contents">
+                                <p>미승인 유고결석 개수</p>
+                                <p><%= header_data.unapprovedExcused %>개</p>
+                            </div>
                         </div>
+                        <div class="admin_content_main_cont">cont</div>
+                        <div class="admin_content_main_footer">footer</div>
                     </div>
                 </div>
             </div>

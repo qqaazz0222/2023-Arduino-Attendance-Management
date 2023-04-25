@@ -3,11 +3,10 @@
     padding: 12px;
     border: 1px solid gray;
     border-top: 2px solid red;
-    background:rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.65);
 }
 
-.admin_content_user_cont
-.top-th {
+.admin_content_user_cont .top-th {
     text-align: center;
     font-size: 20px;
     display: grid;
@@ -16,28 +15,24 @@
     color: gray;
 }
 
-.admin_content_user_cont
-.top {
+.admin_content_user_cont .top {
     width: 100%;
     padding: 12px;
     text-align: center;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-.admin_content_user_cont
-.top p a:hover{
+.admin_content_user_cont .top p a:hover {
     color: #3a4d8f;
 }
 
-.admin_content_user_cont
-.top:hover {
+.admin_content_user_cont .top:hover {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.1);
 }
 
-.admin_content_user_cont
-.top p{
+.admin_content_user_cont .top p {
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -81,7 +76,7 @@
     padding: 16px;
     border: 0;
     border-radius: 5px;
-    color: #fff;
+    color: var(--color-white-0);
     background-color: #88011a;
 }
 
@@ -91,8 +86,7 @@
     align-items: center;
 }
 
-.status_
-.status_ok {
+.status_ .status_ok {
     width: max-content;
     height: max-content;
     padding: 8px;
@@ -101,8 +95,7 @@
     background-color: #d2ebd4;
 }
 
-.status_
-.status_deny {
+.status_ .status_deny {
     width: max-content;
     height: max-content;
     padding: 8px;
@@ -150,6 +143,7 @@
     background: rgba(0, 0, 0, 0.65);
 
 }
+
 .popup_edit_background_hide {
     position: fixed;
     display: none;
@@ -162,6 +156,7 @@
     z-index: 1000;
     background: rgba(0, 0, 0, 0.65);
 }
+
 .popup_adduser_hide {
     /* display: none; */
     /* position: absolute; */
@@ -176,14 +171,14 @@
     border-left: 2px solid #3a4d8f;
     border-right: 2px solid #3a4d8f;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: var(--color-white-0);
     transition: 0.5s;
 }
 
 .popup_adduser_hide h4 {
     justify-content: flex-start;
     padding: 20px;
-    color: #fff;
+    color: var(--color-white-0);
     border-radius: 5px 5px 0 0;
     background-color: #3a4d8f;
 }
@@ -235,9 +230,10 @@
     padding: 12px 12px;
     border: 0;
     border-radius: 5px;
-    color: #fff;
+    color: var(--color-white-0);
     background-color: #3a4d8f;
 }
+
 .user_popup_edit_password_footer button:last-child {
     background-color: #848484;
 }
@@ -258,8 +254,7 @@
     background: rgba(0, 0, 0, 0.65);
 }
 
-.popup_okay_background_hide
-.popup_okay {
+.popup_okay_background_hide .popup_okay {
     display: flex;
     flex-direction: column;
     width: max-content;
@@ -269,11 +264,10 @@
     border-left: 2px solid #3a4d8f;
     border-right: 2px solid #3a4d8f;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: var(--color-white-0);
     transition: 0.5s;
 }
 
 .popup_okay div button {
     padding: 12px;
 }
-

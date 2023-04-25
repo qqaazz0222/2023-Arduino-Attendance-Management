@@ -16,7 +16,7 @@ table {
 
 table th,
 table td {
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     padding: 0.4rem;
 }
 
@@ -26,14 +26,14 @@ figure {
 }
 
 figure figcaption {
-    color: #999;
+    color: var(--color-gray-1);
     display: block;
     margin-top: 0.25rem;
     text-align: center;
 }
 
 hr {
-    border-color: #ccc;
+    border-color: var(--color-white-2);
     border-style: solid;
     border-width: 1px 0 0 0;
 }
@@ -45,13 +45,13 @@ code {
 }
 
 .mce-content-body:not([dir=rtl]) blockquote {
-    border-left: 2px solid #ccc;
+    border-left: 2px solid var(--color-white-2);
     margin-left: 1.5rem;
     padding-left: 1rem;
 }
 
 .mce-content-body[dir=rtl] blockquote {
-    border-right: 2px solid #ccc;
+    border-right: 2px solid var(--color-white-2);
     margin-right: 1.5rem;
     padding-right: 1rem;
 }

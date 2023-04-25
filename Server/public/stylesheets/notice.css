@@ -21,9 +21,9 @@ body {
     width: 100%;
     padding: 12px;
     padding-top: 24px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .notice-component .header {
@@ -49,7 +49,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
     font-size: 18px;
     font-weight: bold;
 }
@@ -60,12 +60,12 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
 }
 
 .notice-component .list .title {
     flex: 1;
-    color: #333;
+    color: var(--color-black-1);
 }
 
 .notice-component .list .wdate {
@@ -80,7 +80,7 @@ body {
 
 .notice-component .list .item .wdate,
 .notice-component .list .item .view {
-    color: #999;
+    color: var(--color-black-2);
 }
 
 .notice-component .list .item .title {
@@ -101,8 +101,8 @@ body {
     margin-bottom: 20px;
     padding: 20px 12px;
     width: 100%;
-    border-top: 2px solid #333;
-    border-bottom: 1px solid #333;
+    border-top: 2px solid var(--color-black-1);
+    border-bottom: 1px solid var(--color-black-1);
 }
 
 .notice-component .content .content-header .title {
@@ -117,7 +117,7 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-    color: #666;
+    color: var(--color-black-2);
 }
 
 .notice-component .content .content-body {
@@ -132,16 +132,16 @@ body {
     margin-bottom: 20px;
     padding: 16px;
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     border-width: 1px 0px 1px 0px;
     font-size: 14px;
-    color: #666;
+    color: var(--color-black-2);
 }
 
 .notice-component .content .content-footer .func {
     margin-right: 8px;
     padding: 12px 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     font-size: 14px;
     font-weight: bold;
 }
@@ -157,13 +157,13 @@ body {
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 18px;
-    color: #C51230;
+    color: var(--color-red-1);
 }
 
 
 .notice-component .content .content-footer .pre {
     text-align: left;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid var(--color-white-2);
 }
 
 .notice-component .content .content-footer .next {
@@ -173,7 +173,7 @@ body {
 .notice-component .content .goback {
     margin-bottom: 20px;
     padding: 16px 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
 }
 
 .form-notice-component {
@@ -181,9 +181,9 @@ body {
     margin-bottom: 12px;
     padding: 12px;
     padding-top: 24px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .form-notice-component>.header {
@@ -205,7 +205,7 @@ body {
 }
 
 .form-notice-component .form .input-wrap {
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     border-width: 1px 0px 0px 1px;
     margin-bottom: 16px;
 }
@@ -222,7 +222,7 @@ body {
 .form-notice-component .form .td {
     padding: 12px;
     height: 60px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     border-width: 0px 1px 1px 0px;
 }
 
@@ -265,10 +265,10 @@ body {
 .form-notice-component .form .td input {
     flex: 1;
     padding: 8px 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     outline: none;
     font-family: "Pretendard";
-    color: #333;
+    color: var(--color-black-1);
 }
 
 .form-notice-component .form .td textarea {
@@ -276,7 +276,7 @@ body {
     width: 100%;
     height: 100%;
     padding: 8px 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     font-family: "Pretendard";
     outline: none;
     resize: none;
@@ -288,7 +288,7 @@ body {
 
 .form-notice-component .form .td input:focus,
 .form-notice-component .form .td textarea:focus {
-    border: 2px solid #C51230;
+    border: 2px solid var(--color-red-1);
 }
 
 .form-notice-component .form .func-wrap {
@@ -303,13 +303,13 @@ body {
     padding: 16px 24px;
     font-size: 16px;
     font-weight: bold;
-    background: #fff;
-    border: 1px solid #ccc;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-2);
 }
 
 .form-notice-component .form .func-wrap .submit {
-    background: #C51230;
-    color: #fff;
+    background: var(--color-red-1);
+    color: var(--color-white-0);
     margin-right: 8px;
 }
 
@@ -323,7 +323,7 @@ body {
 .manage-page>.navbar {
     width: 280px;
     min-height: calc(100vh - 60px);
-    background: #C51230;
+    background: var(--color-red-1);
 }
 
 .manage-page>.content {
@@ -340,9 +340,9 @@ body {
     max-width: 1600px;
     padding: 12px;
     padding-top: 24px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .manage-notice-component .header {
@@ -355,9 +355,9 @@ body {
 
 .manage-notice-component .header a {
     padding: 12px 20px;
-    background: #C51230;
-    border: 1px solid #ccc;
-    color: #fff;
+    background: var(--color-red-1);
+    border: 1px solid var(--color-white-2);
+    color: var(--color-white-0);
     font-size: 14px;
     font-weight: bold;
 }
@@ -368,13 +368,13 @@ body {
     align-items: center;
     margin-bottom: 20px;
     background: #F8F8F8;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
 }
 
 .manage-notice-component .option-wrap .title {
     padding: 0 20px;
     font-weight: bold;
-    color: #333;
+    color: var(--color-black-1);
 }
 
 .manage-notice-component .option-wrap .option {
@@ -383,8 +383,8 @@ body {
     flex-direction: row;
     align-items: center;
     padding: 8px 20px;
-    background-color: #fff;
-    border-left: 1px solid #ccc;
+    background-color: var(--color-white-0);
+    border-left: 1px solid var(--color-white-2);
 }
 
 .manage-notice-component .option span {
@@ -399,10 +399,10 @@ body {
 
 .manage-notice-component .option input {
     padding: 8px 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     outline: none;
     font-family: "Pretendard";
-    color: #333;
+    color: var(--color-black-1);
 }
 
 .manage-notice-component .option .ls {
@@ -412,9 +412,9 @@ body {
 .manage-notice-component .option button {
     padding: 8px 12px;
     background: #C51130;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     outline: none;
-    color: #fff;
+    color: var(--color-white-0);
 }
 
 .manage-notice-component .list {
@@ -428,7 +428,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
     font-size: 18px;
     font-weight: bold;
 }
@@ -439,12 +439,12 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
 }
 
 .manage-notice-component .list .title {
     flex: 1;
-    color: #333;
+    color: var(--color-black-1);
 }
 
 .manage-notice-component .list .wdate {
@@ -459,7 +459,7 @@ body {
 
 .manage-notice-component .list .item .wdate,
 .manage-notice-component .list .item .view {
-    color: #999;
+    color: var(--color-gray-1);
 }
 
 .manage-notice-component .list .item .title {
@@ -480,8 +480,8 @@ body {
     margin-bottom: 20px;
     padding: 20px 12px;
     width: 100%;
-    border-top: 2px solid #333;
-    border-bottom: 1px solid #333;
+    border-top: 2px solid var(--color-black-1);
+    border-bottom: 1px solid var(--color-black-1);
 }
 
 .manage-notice-component .content .content-header .title {
@@ -496,12 +496,12 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-    color: #666;
+    color: var(--color-black-2);
 }
 
 .manage-notice-component .content .content-body {
     padding: 20px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
 }
 
 .manage-notice-component .content .content-footer {
@@ -517,7 +517,7 @@ body {
 .manage-notice-component .content .func {
     margin-bottom: 20px;
     padding: 16px 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     margin-right: 8px;
 }
 
@@ -527,8 +527,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 240px;
-    border-bottom: 1px solid #ccc;
-    color: #333;
+    border-bottom: 1px solid var(--color-white-2);
+    color: var(--color-black-1);
 }
 
 .manage-notice-component .list .no-item img {

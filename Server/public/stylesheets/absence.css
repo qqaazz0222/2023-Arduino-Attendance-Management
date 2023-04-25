@@ -37,21 +37,21 @@ body {
     align-items: center;
     width: 200px;
     height: 120px;
-    color: #fff;
-    background: #C20625 url(/images/item3.png) no-repeat left bottom;
+    color: var(--color-white-0);
+    background: var(--color-red-2) url(/images/item3.png) no-repeat left bottom;
 }
 
 .create-absence-component .title {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 4px;
-    color: #fff;
+    color: var(--color-white-0);
 }
 
 .create-absence-component .subtitle {
     font-size: 14px;
     margin-bottom: 12px;
-    color: #fff;
+    color: var(--color-white-0);
 }
 
 .create-absence-component img {
@@ -65,10 +65,10 @@ body {
     justify-content: center;
     align-items: center;
     padding: 4px 8px;
-    background: #fff;
-    border: 1px solid #ccc;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-2);
     outline: none;
-    color: #666;
+    color: var(--color-black-2);
     font-size: 12px;
 }
 
@@ -88,21 +88,21 @@ body {
     align-items: center;
     margin-left: 12px;
     height: 120px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
 }
 
 .absence-info-component .item .title {
     margin-bottom: 8px;
     font-size: 20px;
     font-weight: bold;
-    color: #333;
+    color: var(--color-black-1);
 }
 
 
 .absence-info-component .item .detail {
     font-size: 32px;
-    color: #C51230;
+    color: var(--color-red-1);
 }
 
 .absence-component {
@@ -110,9 +110,9 @@ body {
     margin-bottom: 12px;
     padding: 12px;
     padding-top: 24px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .absence-component>.header {
@@ -138,7 +138,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 8px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-white-2);
     text-align: center;
     font-size: 18px;
     font-weight: bold;
@@ -150,8 +150,8 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
-    color: #333;
+    border-bottom: 1px solid var(--color-white-2);
+    color: var(--color-black-1);
 }
 
 .absence-component .list .context {
@@ -165,13 +165,13 @@ body {
 .absence-component .list .period {
     width: 300px;
     text-align: center;
-    color: #666;
+    color: var(--color-black-2);
 }
 
 .absence-component .list .wdate {
     width: 160px;
     text-align: center;
-    color: #666;
+    color: var(--color-black-2);
 }
 
 .absence-component .list .status {
@@ -180,7 +180,7 @@ body {
 }
 
 .absence-component .list .item .status {
-    color: #C51230;
+    color: var(--color-red-1);
     font-weight: bold;
 }
 
@@ -190,8 +190,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 240px;
-    border-bottom: 1px solid #ccc;
-    color: #333;
+    border-bottom: 1px solid var(--color-white-2);
+    color: var(--color-black-1);
 }
 
 .absence-component .list .no-item img {
@@ -203,9 +203,9 @@ body {
     margin-bottom: 12px;
     padding: 12px;
     padding-top: 24px;
-    background: #fff;
-    border: 1px solid #DDDDDD;
-    border-top: 4px solid #C51230;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
 }
 
 .form-absence-component>.header {
@@ -227,7 +227,7 @@ body {
 }
 
 .form-absence-component .form .input-wrap {
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     border-width: 1px 0px 0px 1px;
     margin-bottom: 16px;
 }
@@ -244,7 +244,7 @@ body {
 .form-absence-component .form .td {
     padding: 12px;
     height: 60px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     border-width: 0px 1px 1px 0px;
 }
 
@@ -291,10 +291,10 @@ body {
 .form-absence-component .form .td input {
     flex: 1;
     padding: 8px 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     outline: none;
     font-family: "Pretendard";
-    color: #333;
+    color: var(--color-black-1);
 }
 
 .form-absence-component .form .td textarea {
@@ -302,7 +302,7 @@ body {
     width: 100%;
     height: 100%;
     padding: 8px 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-white-2);
     font-family: "Pretendard";
     outline: none;
     resize: none;
@@ -310,7 +310,7 @@ body {
 
 .form-absence-component .form .td input:focus,
 .form-absence-component .form .td textarea:focus {
-    border: 2px solid #C51230;
+    border: 2px solid var(--color-red-1);
 }
 
 .form-absence-component .form .func-wrap {
@@ -325,13 +325,13 @@ body {
     padding: 16px 24px;
     font-size: 16px;
     font-weight: bold;
-    background: #fff;
-    border: 1px solid #ccc;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-2);
 }
 
 .form-absence-component .form .func-wrap .submit {
-    background: #C51230;
-    color: #fff;
+    background: var(--color-red-1);
+    color: var(--color-white-0);
     margin-right: 8px;
 }
 

@@ -20,11 +20,10 @@
     padding: 12px;
     border: 1px solid gray;
     border-top: 2px solid red;
-    background:rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.65);
 }
 
-.admin_absent_content
-.top-th {
+.admin_absent_content .top-th {
     text-align: center;
     font-size: 24px;
     display: grid;
@@ -34,8 +33,7 @@
     color: gray;
 }
 
-.admin_absent_content
-.top {
+.admin_absent_content .top {
     padding: 12px;
     text-align: center;
     display: grid;
@@ -43,19 +41,16 @@
     width: 100%;
 }
 
-.admin_absent_content
-.top p a:hover{
+.admin_absent_content .top p a:hover {
     color: #3a4d8f;
 }
 
-.admin_absent_content
-.top:hover {
+.admin_absent_content .top:hover {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.1);
 }
 
-.admin_absent_content
-.top p{
+.admin_absent_content .top p {
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -79,8 +74,7 @@
     background: rgba(0, 0, 0, 0.65);
 }
 
-.popup_access_background_hide
-.popup_access {
+.popup_access_background_hide .popup_access {
     display: flex;
     flex-direction: column;
     width: max-content;
@@ -90,7 +84,7 @@
     border-left: 2px solid #3a4d8f;
     border-right: 2px solid #3a4d8f;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: var(--color-white-0);
     transition: 0.5s;
 }
 
