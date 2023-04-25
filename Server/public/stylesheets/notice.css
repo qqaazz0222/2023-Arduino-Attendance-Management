@@ -121,6 +121,7 @@ body {
 }
 
 .notice-component .content .content-body {
+    width: 100%;
     padding: 20px;
 }
 
@@ -135,6 +136,14 @@ body {
     border-width: 1px 0px 1px 0px;
     font-size: 14px;
     color: #666;
+}
+
+.notice-component .content .content-footer .func {
+    margin-right: 8px;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .notice-component .content .content-footer .pre,
@@ -165,4 +174,363 @@ body {
     margin-bottom: 20px;
     padding: 16px 20px;
     border: 1px solid #ccc;
+}
+
+.form-notice-component {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    padding-top: 24px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    border-top: 4px solid #C51230;
+}
+
+.form-notice-component>.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-notice-component>.header a {
+    font-size: 14px;
+}
+
+.form-notice-component .form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-notice-component .form .input-wrap {
+    border: 1px solid #ccc;
+    border-width: 1px 0px 0px 1px;
+    margin-bottom: 16px;
+}
+
+.form-notice-component .form .row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-notice-component .form .th,
+.form-notice-component .form .td {
+    padding: 12px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-width: 0px 1px 1px 0px;
+}
+
+.form-notice-component .form .large {
+    flex-direction: column;
+    height: 300px;
+}
+
+.form-notice-component .form .th {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 120px;
+    font-weight: bold;
+}
+
+.form-notice-component .form .th span {
+    width: 100%;
+    text-align: justify;
+}
+
+.form-notice-component .form .td {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-notice-component .form .td-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-notice-component .form .td span {
+    margin: 0px 8px;
+}
+
+.form-notice-component .form .td input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-family: "Pretendard";
+    color: #333;
+}
+
+.form-notice-component .form .td textarea {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    font-family: "Pretendard";
+    outline: none;
+    resize: none;
+}
+
+.form-notice-component .form .td textarea+div {
+    width: 100%;
+}
+
+.form-notice-component .form .td input:focus,
+.form-notice-component .form .td textarea:focus {
+    border: 2px solid #C51230;
+}
+
+.form-notice-component .form .func-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.form-notice-component .form .func-wrap .btn {
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.form-notice-component .form .func-wrap .submit {
+    background: #C51230;
+    color: #fff;
+    margin-right: 8px;
+}
+
+.manage-page {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    min-height: calc(100vh - 60px);
+}
+
+.manage-page>.navbar {
+    width: 280px;
+    min-height: calc(100vh - 60px);
+    background: #C51230;
+}
+
+.manage-page>.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+}
+
+
+.manage-notice-component {
+    width: 100%;
+    max-width: 1600px;
+    padding: 12px;
+    padding-top: 24px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    border-top: 4px solid #C51230;
+}
+
+.manage-notice-component .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.manage-notice-component .header a {
+    padding: 12px 20px;
+    background: #C51230;
+    border: 1px solid #ccc;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.manage-notice-component .option-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #F8F8F8;
+    border: 1px solid #ccc;
+}
+
+.manage-notice-component .option-wrap .title {
+    padding: 0 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.manage-notice-component .option-wrap .option {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 20px;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+}
+
+.manage-notice-component .option span {
+    margin: 0 8px;
+}
+
+.manage-notice-component .option .opt {
+    margin: 0;
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+.manage-notice-component .option input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-family: "Pretendard";
+    color: #333;
+}
+
+.manage-notice-component .option .ls {
+    margin-right: 20px;
+}
+
+.manage-notice-component .option button {
+    padding: 8px 12px;
+    background: #C51130;
+    border: 1px solid #ccc;
+    outline: none;
+    color: #fff;
+}
+
+.manage-notice-component .list {
+    display: flex;
+    flex-direction: column;
+}
+
+.manage-notice-component .list .itemh {
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.manage-notice-component .list .item {
+    padding: 20px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.manage-notice-component .list .title {
+    flex: 1;
+    color: #333;
+}
+
+.manage-notice-component .list .wdate {
+    width: 120px;
+    text-align: center;
+}
+
+.manage-notice-component .list .view {
+    width: 80px;
+    text-align: center;
+}
+
+.manage-notice-component .list .item .wdate,
+.manage-notice-component .list .item .view {
+    color: #999;
+}
+
+.manage-notice-component .list .item .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.manage-notice-component .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.manage-notice-component .content .content-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 20px 12px;
+    width: 100%;
+    border-top: 2px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.manage-notice-component .content .content-header .title {
+    margin-bottom: 12px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.manage-notice-component .content .content-header .info-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.manage-notice-component .content .content-body {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.manage-notice-component .content .content-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    width: 100%;
+}
+
+.manage-notice-component .content .func {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    border: 1px solid #ccc;
+    margin-right: 8px;
+}
+
+.manage-notice-component .list .no-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 240px;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+
+.manage-notice-component .list .no-item img {
+    margin-bottom: 20px;
 }

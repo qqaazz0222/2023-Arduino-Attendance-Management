@@ -13,6 +13,12 @@
         <link rel="stylesheet" href="/stylesheets/notice.css" />
     </head>
     <body>
+        <style>
+            .tox-tinymce {
+                border: none;
+                border-radius: 0px;
+            }
+        </style>
         <%- include ./header.ejs%>
         <div class="main-page">
             <div class="notice-component">
@@ -35,7 +41,11 @@
                         </div>
                     </div>
                     <div class="content-body">
-                        <div id="detail"><%= notice[1].detail %></div>
+                        <div id="detail">
+                            <textarea id="tiny-viewer" name="detail">
+                                <%= notice[1].detail %>
+                            </textarea>
+                        </div>
                     </div>
                     <div class="content-footer">
                         <% if(notice[0] === undefined){%>
@@ -71,12 +81,12 @@
             </div>
         </div>
     </body>
-    <script>
-        // var detail = "<%= notice.detail %>";
-        // const parser = new DOMParser();
-        // const doc = parser.parseFromString(unescape(detail), "text/html");
-        // var target = document.getElementById("detail");
-        // target.innerHTML = doc.body;
-        // console.log(doc.body);
-    </script>
+    <script
+        type="application/javascript"
+        src="/tinymce/tinymce.min.js"
+    ></script>
+    <script
+        type="application/javascript"
+        src="/javascripts/tiny-viewer-config.js"
+    ></script>
 </html>

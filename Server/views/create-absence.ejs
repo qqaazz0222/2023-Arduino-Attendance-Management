@@ -30,6 +30,16 @@
         </div>
         <%- include ./header.ejs%>
         <div class="main-page">
+            <style>
+                .tox-tinymce {
+                    border: 1px solid #ccc;
+                    border-radius: 0px;
+                }
+
+                .tox-tinymce:focus {
+                    border: 2px solid #c51230;
+                }
+            </style>
             <div class="form-absence-component">
                 <img
                     src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico04.gif"
@@ -88,10 +98,10 @@
                                 <span>결석 사유</span>
                             </div>
                             <div class="td td-editor large">
-                                <textarea name="reason"></textarea>
-                                <!-- <div id="editor" onchange="get_text()">
-                                    <p>Hello World!</p>
-                                </div> -->
+                                <textarea
+                                    id="tiny-editor"
+                                    name="reason"
+                                ></textarea>
                             </div>
                         </div>
                     </div>
@@ -110,19 +120,19 @@
             </div>
         </div>
     </body>
-    <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+    <script
+        type="application/javascript"
+        src="/tinymce/tinymce.min.js"
+    ></script>
+    <script
+        type="application/javascript"
+        src="/javascripts/tiny-editor-config.js"
+    ></script>
     <script>
-        // var quill = new Quill("#editor", {
-        //     theme: "snow",
-        // });
         function block_double_click() {
             var target = document.getElementById("loading");
             target.style.display = "flex";
         }
-        // function get_text() {
-        //     var content = quill.getContents();
-        //     console.log(1234);
-        // }
     </script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </html>

@@ -273,6 +273,10 @@ body {
     align-items: center;
 }
 
+.form-absence-component .form .td textarea+div {
+    width: 100%;
+}
+
 .form-absence-component .form .td-editor {
     flex: 1;
     display: flex;

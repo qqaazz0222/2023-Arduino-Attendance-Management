@@ -143,4 +143,120 @@ router.post("/deleteuser", async (req, res, next) => {
     }
 });
 
+// 공지사항 관리 페이지
+router.get("/manage/notice", async (req, res, next) => {
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        data.uid = req.session.uid;
+        data.uname = req.session.uname;
+        const notice = await pool.query("SELECT * FROM notice;");
+        return res.render("manage-notice", {
+            data: data,
+            notice: notice[0],
+            options: {},
+        });
+    }
+});
+
+router.post("/manage/notice", async (req, res, next) => {
+    const { keyword, s_date, e_date } = req.body;
+    let notice = {};
+    let options = {};
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        data.uid = req.session.uid;
+        data.uname = req.session.uname;
+        if (keyword != "" && s_date != "" && s_date != "") {
+            notice = await pool.query(
+                "SELECT * FROM notice WHERE title LIKE ? AND wdate BETWEEN ? AND ? ORDER BY wdate desc, no;",
+                ["%" + keyword + "%", s_date, e_date]
+            );
+            options.keyword = keyword;
+            options.s_date = s_date;
+            options.e_date = e_date;
+        } else {
+            if (keyword != "") {
+                notice = await pool.query(
+                    "SELECT * FROM notice WHERE title LIKE ? ORDER BY wdate desc, no;;",
+                    ["%" + keyword + "%"]
+                );
+                options.keyword = keyword;
+            } else {
+                if (s_date != "" && e_date != "") {
+                    notice = await pool.query(
+                        "SELECT * FROM notice WHERE wdate BETWEEN ? AND ? ORDER BY wdate desc, no;;",
+                        [s_date, e_date]
+                    );
+                    options.s_date = s_date;
+                    options.e_date = e_date;
+                } else {
+                    res.redirect("/admin/manage/notice");
+                }
+            }
+        }
+        return res.render("manage-notice", {
+            data: data,
+            notice: notice[0],
+            options: options,
+        });
+    }
+});
+
+router.get("/manage/notice/:no", async (req, res, next) => {
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        data.uid = req.session.uid;
+        data.uname = req.session.uname;
+        const notice = await pool.query("SELECT * FROM notice WHERE no = ?;", [
+            req.params.no,
+        ]);
+        return res.render("manage-notice-detail", {
+            data: data,
+            notice: notice[0],
+            options: {},
+        });
+    }
+});
+
+router.post("/manage/notice/del", async (req, res, next) => {
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        data.uid = req.session.uid;
+        data.uname = req.session.uname;
+        const notice = await pool.query("DELETE FROM notice WHERE no = ?;", [
+            req.body.no,
+        ]);
+        res.redirect("/admin/manage/notice");
+    }
+});
+
+router.get("/create/notice/", async (req, res, next) => {
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        data.uid = req.session.uid;
+        data.uname = req.session.uname;
+        return res.render("create-notice", {
+            data: data,
+        });
+    }
+});
+
+router.post("/create/notice/", async (req, res, next) => {
+    const { title, detail } = req.body;
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        const notice = await pool.query(
+            "INSERT INTO notice VALUES (null, ?, ?, ?, 0);",
+            [title, detail, new Date()]
+        );
+        return res.redirect("/admin/manage/notice");
+    }
+});
+
 module.exports = router;

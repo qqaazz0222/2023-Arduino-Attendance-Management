@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/notice.css" />
+        <link rel="stylesheet" href="/stylesheets/admin.css" />
+    </head>
+    <body>
+        <%- include ./header.ejs%>
+        <div class="manage-page">
+            <div class="navbar">fixed</div>
+            <div class="content">
+                <div class="manage-notice-component">
+                    <img
+                        src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico31.gif"
+                        alt=""
+                        class="icon"
+                    />
+                    <div class="header">
+                        <h2>공지사항 관리</h2>
+                        <a href="/admin/create/notice">공지 작성</a>
+                    </div>
+                    <div class="option-wrap">
+                        <div class="title">검색 옵션</div>
+                        <form
+                            class="option"
+                            action="/admin/manage/notice"
+                            method="post"
+                        >
+                            <span class="opt">제목</span>
+                            <% if(options.keyword !== undefined) { %>
+                            <input
+                                class="ls"
+                                type="text"
+                                value="<%= options.keyword %>"
+                                name="keyword"
+                            />
+                            <% } else { %>
+                            <input class="ls" type="text" name="keyword" />
+                            <% } %> <% if(options.s_date !== undefined) { %>
+                            <span class="opt">작성일</span>
+                            <input
+                                type="date"
+                                name="s_date"
+                                value="<%= options.s_date %>"
+                            />
+                            <span> ~ </span>
+                            <input
+                                class="ls"
+                                type="date"
+                                name="e_date"
+                                value="<%= options.e_date %>"
+                            />
+                            <% } else { %>
+                            <span class="opt">작성일</span>
+                            <input type="date" name="s_date" />
+                            <span> ~ </span>
+                            <input class="ls" type="date" name="e_date" />
+                            <% } %>
+                            <button type="submit">검색</button>
+                        </form>
+                    </div>
+
+                    <div class="list">
+                        <div class="itemh">
+                            <span class="title">제목</span>
+                            <span class="wdate">작성일</span>
+                            <span class="view">조회수</span>
+                        </div>
+                        <% if (notice.length == 0) { %>
+                        <div class="no-item">
+                            <img
+                                src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico21.gif"
+                                alt=""
+                                srcset=""
+                            />
+                            헤당 조건을 만족하는 데이터가 없습니다.
+                        </div>
+                        <% } else { %> <% notice.forEach((e) => { %>
+                        <div class="item">
+                            <a
+                                href="/admin/manage/notice/<%= e.no%>"
+                                class="title"
+                                ><%= e.title %></a
+                            >
+                            <span class="wdate"><%= e.wdate %></span>
+                            <span class="view"><%= e.view %></span>
+                        </div>
+                        <% })}; %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

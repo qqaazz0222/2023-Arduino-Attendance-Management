@@ -13,32 +13,25 @@ a:visited {
     height: 100vh;
 }
 
-.admin_frmae_grid
-.admin_panel {
+.admin_frmae_grid .admin_panel {
     display: flex;
     flex-direction: column;
     background-color: #9a041c;
 }
 
-.admin_frmae_grid
-.admin_panel 
-.admin_panel_top {
+.admin_frmae_grid .admin_panel .admin_panel_top {
     padding: 20px;
     text-align: center;
 }
 
-.admin_frmae_grid
-.admin_panel 
-.admin_panel_top span:first-child {
+.admin_frmae_grid .admin_panel .admin_panel_top span:first-child {
     display: block;
     color: #fff;
     font-size: 24px;
     font-weight: 700;
 }
 
-.admin_frmae_grid
-.admin_panel 
-.admin_panel_top span:last-child {
+.admin_frmae_grid .admin_panel .admin_panel_top span:last-child {
     display: inline-block;
     color: #e3bbbc;
     font-size: 20px;
@@ -46,18 +39,15 @@ a:visited {
 }
 
 
-.admin_frmae_grid
-.admin_panel nav {
+.admin_frmae_grid .admin_panel nav {
     color: #e4babc;
 }
 
-.admin_frmae_grid
-.admin_panel nav ul {
+.admin_frmae_grid .admin_panel nav ul {
     list-style: none;
 }
 
-.admin_frmae_grid
-.admin_panel nav ul li{
+.admin_frmae_grid .admin_panel nav ul li {
     /* vertical-align: middle; */
     padding: 12px;
     text-align: left;
@@ -68,28 +58,23 @@ a:visited {
     text-decoration: none;
 }
 
-.admin_frmae_grid
-.admin_panel nav ul li:hover{
+.admin_frmae_grid .admin_panel nav ul li:hover {
     color: #fff;
     background-color: #88011a;
 }
 
-.admin_frmae_grid
-.admin_panel nav ul li span{
+.admin_frmae_grid .admin_panel nav ul li span {
     padding: 8px;
 }
 
-.admin_frmae_grid
-.admin_content {
+.admin_frmae_grid .admin_content {
     width: 100%;
     height: 100%;
     background-color: #f1f1f1;
 }
 
 /* 메인보드 */
-.admin_frmae_grid
-.admin_content
-.admin_content_main_grid {
+.admin_frmae_grid .admin_content .admin_content_main_grid {
     width: 100%;
     height: 100%;
     display: grid;
@@ -97,16 +82,14 @@ a:visited {
     grid-gap: 5%;
 }
 
-.admin_content_main_grid
-.admin_content_main_header {
+.admin_content_main_grid .admin_content_main_header {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 12px;
     padding: 12px;
 }
 
-.admin_content_main_header
-.header_contents {
+.admin_content_main_header .header_contents {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -115,14 +98,12 @@ a:visited {
     background-color: #fff;
 }
 
-.admin_content_main_header
-.header_contents p:first-child {
+.admin_content_main_header .header_contents p:first-child {
     font-size: 24px;
     font-weight: 700;
 }
 
-.admin_content_main_header
-.header_contents p:last-child {
+.admin_content_main_header .header_contents p:last-child {
     color: #c20124;
     font-size: 36px;
     font-weight: 700;
@@ -143,29 +124,25 @@ a:visited {
     grid-template-rows: 10% 90%;
 }
 
-.admin_content_user_grid
-.admin_content_user_header {
+.admin_content_user_grid .admin_content_user_header {
     display: grid;
     grid-template-columns: 10% 20%;
     grid-gap: 30px;
 }
 
-.admin_content_user_grid
-.admin_content_user_header p {
+.admin_content_user_grid .admin_content_user_header p {
     display: flex;
     align-items: flex-end;
     font-size: 36px;
     font-weight: 700;
 }
 
-.admin_content_user_grid
-.admin_content_user_header div {
+.admin_content_user_grid .admin_content_user_header div {
     display: flex;
     align-items: flex-end;
 }
 
-.admin_content_user_grid
-.admin_content_user_header div button {
+.admin_content_user_grid .admin_content_user_header div button {
     width: max-content;
     height: max-content;
     padding: 16px;
@@ -188,7 +165,7 @@ a:visited {
     width: 100%;
     font-size: 24px;
     color: #a3aab9;
-    
+
 }
 
 .admin_content_user_cont table tbody td {
@@ -204,8 +181,7 @@ a:visited {
     align-items: center;
 }
 
-.status_
-.status_ok {
+.status_ .status_ok {
     width: max-content;
     height: max-content;
     padding: 16px;
@@ -214,8 +190,7 @@ a:visited {
     background-color: #d2ebd4;
 }
 
-.status_
-.status_deny {
+.status_ .status_deny {
     width: max-content;
     height: max-content;
     padding: 16px;
@@ -250,8 +225,7 @@ a:visited {
 }
 
 /* 유고결석 관리 */
-.admin_content_absent_grid {
-}
+.admin_content_absent_grid {}
 
 .panel_select_absent_hide {
     height: 100%;
@@ -259,8 +233,7 @@ a:visited {
 }
 
 /* 공지사항 관리 */
-.admin_content_notice_grid {
-}
+.admin_content_notice_grid {}
 
 .panel_select_notice_hide {
     height: 100%;
@@ -281,8 +254,7 @@ a:visited {
     background: rgba(0, 0, 0, 0.65);
 }
 
-.popup_okay_background_hide
-.popup_okay {
+.popup_okay_background_hide .popup_okay {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -317,6 +289,7 @@ a:visited {
     background: rgba(0, 0, 0, 0.65);
 
 }
+
 .popup_edit_background_hide {
     position: fixed;
     display: none;
@@ -329,6 +302,7 @@ a:visited {
     z-index: 1000;
     background: rgba(0, 0, 0, 0.65);
 }
+
 .popup_adduser_hide {
     /* display: none; */
     /* position: absolute; */
@@ -405,6 +379,7 @@ a:visited {
     color: #fff;
     background-color: #3a4d8f;
 }
+
 .user_popup_edit_password_footer button:last-child {
     background-color: #848484;
 }

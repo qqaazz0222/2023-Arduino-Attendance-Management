@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Quill Text Editor -->
+        <link
+            href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/notice.css" />
+    </head>
+    <body>
+        <style>
+            .tox-tinymce {
+                border: 1px solid #ccc;
+                border-radius: 0px;
+            }
+
+            .tox-tinymce:focus {
+                border: 2px solid #c51230;
+            }
+        </style>
+        <div id="loading">
+            <lottie-player
+                src="/lottie/loading.json"
+                background="transparent"
+                speed="1"
+                style="width: 240px; height: 240px"
+                loop
+                autoplay
+            ></lottie-player>
+        </div>
+        <%- include ./header.ejs%>
+        <div class="main-page">
+            <div class="form-notice-component">
+                <img
+                    src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico04.gif"
+                    alt=""
+                    class="icon"
+                />
+                <div class="header">
+                    <h2>공지작성</h2>
+                </div>
+                <form class="form" action="" method="post">
+                    <div class="input-wrap">
+                        <div class="row">
+                            <div class="th">
+                                <span>제 목</span>
+                            </div>
+                            <div class="td">
+                                <input type="text" name="title" value="" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="th large">
+                                <span>내 용</span>
+                            </div>
+                            <div class="td td-editor large">
+                                <textarea
+                                    id="tiny-editor"
+                                    name="detail"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="func-wrap">
+                        <button
+                            id="submit"
+                            class="btn submit"
+                            type="submit"
+                            onclick="block_double_click();"
+                        >
+                            작성하기
+                        </button>
+                        <a href="/admin/manage/notice" class="btn">목록</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script
+        type="application/javascript"
+        src="/tinymce/tinymce.min.js"
+    ></script>
+    <script
+        type="application/javascript"
+        src="/javascripts/tiny-editor-config.js"
+    ></script>
+    <script>
+        function block_double_click() {
+            var target = document.getElementById("loading");
+            target.style.display = "flex";
+        }
+    </script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</html>
