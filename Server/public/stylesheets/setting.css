@@ -90,7 +90,7 @@ header .profile {
     margin-right: 20px;
 }
 
-header .profile a {
+header .profile a:first-child {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -110,6 +110,148 @@ header .profile span {
 header .profile img {
     margin-right: 8px;
 }
+
+/* dropdown button */
+header .profile {
+    position: relative;
+}
+
+header .profile .user_popup {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    width: max-content;
+    padding: 8px 14px;
+    margin-top: 2px;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    display: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+header .profile .user_popup ul {
+    list-style: none;
+}
+
+header .profile .user_popup ul li {
+    padding: 10px 15px 10px 10px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .profile .user_popup ul li:hover {
+    color: gray;
+    transition: 0.5s;
+}
+
+header .profile .user_popup ul li:last-child {
+    border-bottom: 0;
+}
+
+/* end dropdown button */
+
+
+/* Dropdown -> Edit user password popup */
+.user_popup_edit_password {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 550px;
+    height: 425px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-bottom: 2px solid #3a4d8f;
+    border-left: 2px solid #3a4d8f;
+    border-right: 2px solid #3a4d8f;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.user_popup_edit_password h4 {
+    justify-content: flex-start;
+    padding: 20px;
+    color: #fff;
+    border-radius: 5px 5px 0 0;
+    background-color: #3a4d8f;
+}
+
+.user_popup_edit_password_content {
+    display: flex;
+    flex-wrap: wrap;
+    /* align-content: center; */
+    justify-content: center;
+    align-items: center;
+}
+
+.user_popup_edit_password_pwd {
+    margin-top: 20px;
+    width: 512px;
+    height: 120px;
+    border-top: 2px solid #3a4d8e;
+    border-bottom: 1px solid #3a4d8e;
+    background: #f1f1f6;
+}
+
+.user_popup_edit_password_pwd div {
+    width: 100%;
+    margin: 6px 4px;
+}
+
+.user_popup_edit_password_pwd div p {
+    display: inline-block;
+    width: 120px;
+    margin-left: 4px;
+}
+
+.user_popup_edit_password_pwd div input {
+    border: 0;
+    border-radius: 5px;
+    width: 370px;
+    height: 30px;
+}
+
+.user_popup_edit_password_cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 40px;
+    width: 512px;
+    height: 120px;
+    background-color: #f3f3f3;
+    border-bottom: 1px solid #d7dbdf;
+}
+
+.user_popup_edit_password_cont p {
+    margin: 8px 12px;
+}
+
+.user_popup_edit_password_footer {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.user_popup_edit_password_footer button {
+    cursor: pointer;
+    margin: 0 8px;
+    padding: 12px 12px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #3a4d8f;
+}
+
+.user_popup_edit_password_footer button:last-child {
+    background-color: #848484;
+}
+
+/* end edit user password popup */
 
 .icon {
     width: 32px;

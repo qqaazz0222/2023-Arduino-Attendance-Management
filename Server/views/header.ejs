@@ -4,9 +4,25 @@
         융합연구소출석관리서비스
     </a>
     <div class="profile">
-        <a href="/sign">
+        <a onclick="userPopupShow()">
             <img src="/images/setting.png" alt="" srcset="" />
             <%= data.uname %>
         </a>
+        <div class="user_popup">
+            <ul>
+                <li>
+                    <span class="material-icons"> verified_user </span>
+                    <a href="/admin">관리자페이지</a>
+                </li>
+                <li>
+                    <span class="material-icons"> password </span>
+                    <a href="#" onclick="userPopupEditPwd()">비밀번호변경</a>
+                </li>
+                <li>
+                    <span class="material-icons"> logout </span>
+                    <a href="/sign">로그아웃</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </header>
