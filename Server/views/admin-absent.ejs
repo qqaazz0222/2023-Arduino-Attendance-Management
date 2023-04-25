@@ -1,0 +1,102 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <head>
+         <title><%= data.title %></title>
+         <link rel="favicon" href="/images/favicon.ico" />
+         <!-- Google Materual Icons -->
+         <link
+             href="https://fonts.googleapis.com/icon?family=Material+Icons"
+             rel="stylesheet"
+         />
+         <!-- Local CSS Theme -->
+         <link rel="stylesheet" href="/stylesheets/setting.css" />
+         <link rel="stylesheet" href="/stylesheets/main.css" />
+         <link rel="stylesheet" href="/stylesheets/admin.css" />
+         <link rel="stylesheet" href="/stylesheets/admin-absent.css" />
+     </head>
+ </head>
+ <body>
+     <%- include ./header %>
+     <!-- grid frame -->
+     <div class="admin_frmae_grid">
+         <%- include ./admin-nav.ejs %>
+         <div class="admin_content">
+             <!-- 유고결석 관리 -->
+            <div class="admin_content_absent_grid">
+                <div class="admin_absent_header">
+                    <p> 유고결석 명단 </p>
+                </div>
+                <div class="admin_absent_content">
+                    <div class="top-th">
+                        <p>학번</p><p>이름</p><p>내용</p><p>요청일자</p><p>상태</p><p>승인여부</p><p>첨부파일</p>
+                    </div>
+                    <form method="get">
+                        <% for(var i = 0; i < bodydata.length; i++) { %>
+                            <div class="top">
+                                <p><%= bodydata[i].uid %></p>
+                                <p><%= bodydata[i].uname %></p>
+                                <p><%= bodydata[i].context %></p>
+                                <p><%= bodydata[i].wdate %></p>
+                                <p><%= bodydata[i].status %></p>
+                                <p onclick="popup_access_background_show('<%= bodydata[i].no %>')"><a>상세보기</a></p>
+                                <p><a href="<%= bodydata[i].file %>" download>다운로드</a></p>
+                            </div>
+                            <hr>
+                        <% } %>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 사용자 삭제 팝업 -->
+    <div class="popup_access_background_hide">
+        <form method="post">
+            <div class="popup_access">
+                <input id="no" name="no" style="display: none;" value="">
+                <p>해당 사용자의 유고 결석을 승인/거절 할 수 있습니다.</p>
+                <div>
+                    <button type="submit" onclick="javascript: form.action='/admin/accessabsent';">
+                        승인
+                    </button>
+                    <button type="submit" onclick="javascript: form.action='/admin/denyabsent';">
+                        거절
+                    </button>
+                    <button type="button" onclick="popup_access_background_hide()">
+                        닫기
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        function userPopupShow() {
+            var target = document.querySelector(`.user_popup`);
+            if (target.style.display == "none" || target.style.display == "") {
+                target.style.display = "block";
+            } else {
+                target.style.display = "none";
+            }
+        }
+
+        function userPopupEditPwd() {
+            var target = document.querySelector(`.user_popup_edit_password`);
+            if (target.style.display == "none" || target.style.display == "") {
+                target.style.display = "block";
+            }
+        }
+
+        function userPopupEditPwdClose() {
+            var target = document.querySelector(`.user_popup_edit_password`).style.display = "none";
+        }
+        function popup_access_background_show(no) {
+            document.querySelector(`.popup_access_background_hide`).style.display = "flex";
+            document.querySelector(`#no`).value = no;
+        }
+        function popup_access_background_hide() {
+            document.querySelector(`.popup_access_background_hide`).style.display = "none";
+        }
+    </script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+ </body>
+ </html>

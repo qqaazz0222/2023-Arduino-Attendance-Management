@@ -1,0 +1,24 @@
+<div class="admin_panel">
+    <div class="admin_panel_top">
+        <span>융합연구소 관리자 페이지</span>
+        <span><span class="material-icons">
+            verified_user
+            </span> <%= data.uname %>님, 환영합니다</span>
+    </div>
+    <nav>
+        <ul>
+            <a href="/admin" id="panel_select_main" onclick="panel_changed(this)"><li><span class="material-icons">
+                grid_view
+            </span> 메인</li></a>
+            <a href="/admin/admin-user" id="panel_select_user" onclick="panel_changed(this)"><li><span class="material-icons">
+                group
+            </span> 연구원 관리</li></a>
+            <a href="/admin/admin-absent" id="panel_select_absent" onclick="panel_changed(this)"><li><span class="material-icons">
+                menu_book
+            </span> 유고결석 관리</li></a>
+            <a href="" id="panel_select_notice" onclick="panel_changed(this)"><li><span class="material-icons">
+                notifications
+            </span> 공지사항 관리</li></a>
+        </ul>
+    </nav>
+</div>

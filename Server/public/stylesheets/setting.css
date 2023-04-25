@@ -270,3 +270,76 @@ header .profile .user_popup ul li:last-child {
     background: rgba(0, 0, 0, 0.6);
     z-index: 1000;
 }
+
+.admin_frmae_grid {
+    display: grid;
+    grid-template-columns: minmax(280px, auto) 1fr;
+    width: 100vw;
+    height: 100vh;
+}
+
+.admin_frmae_grid
+.admin_panel {
+    display: flex;
+    flex-direction: column;
+    background-color: #9a041c;
+}
+
+.admin_frmae_grid
+.admin_panel 
+.admin_panel_top {
+    padding: 20px;
+    text-align: center;
+}
+
+.admin_frmae_grid
+.admin_panel 
+.admin_panel_top span:first-child {
+    display: block;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.admin_frmae_grid
+.admin_panel 
+.admin_panel_top span:last-child {
+    display: inline-block;
+    color: #e3bbbc;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.admin_frmae_grid
+.admin_panel nav {
+    color: #e4babc;
+}
+
+.admin_frmae_grid
+.admin_panel nav ul {
+    list-style: none;
+}
+
+.admin_frmae_grid
+.admin_panel nav ul li{
+    /* vertical-align: middle; */
+    padding: 12px;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 600;
+    height: 60px;
+    color: #e4babc;
+    text-decoration: none;
+}
+
+.admin_frmae_grid
+.admin_panel nav ul li:hover{
+    color: #fff;
+    background-color: #88011a;
+}
+
+.admin_frmae_grid
+.admin_panel nav ul li span{
+    padding: 8px;
+}
