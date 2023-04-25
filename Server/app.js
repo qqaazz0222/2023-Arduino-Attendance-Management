@@ -11,6 +11,7 @@ var signRouter = require("./routes/sign");
 var checkRouter = require("./routes/check");
 var absenceRouter = require("./routes/absence");
 var noticeRouter = require("./routes/notice");
+var adminRouter = require("./routes/admin");
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use("/sign", signRouter);
 app.use("/check", checkRouter);
 app.use("/absence", absenceRouter);
 app.use("/notice", noticeRouter);
+app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
