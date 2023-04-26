@@ -23,12 +23,6 @@
                 />
                 <h2>출석현황</h2>
                 <div class="header">
-                    <!-- <div class="btn prevDay">
-                        <span class="material-icons"> arrow_back </span>
-                    </div> -->
-                    <!-- <div class="btn nextDay">
-                        <span class="material-icons"> arrow_forward </span>
-                    </div> -->
                     <h3 class="dateTitle"></h3>
                     <div class="info">
                         <span class="in"></span>입실 시간
@@ -212,17 +206,6 @@
             console.log(target.innerHTML);
             target.innerHTML += `<span>${d.getHours()}시 ${d.getMinutes()}분</span>`;
         });
-
-        // // 이전달 이동
-        // document.querySelector(`.prevDay`).onclick = () => {
-        //     makeCalendar(new Date(date.setMonth(date.getMonth() - 1)));
-        // };
-
-        // // 다음달 이동
-        // document.querySelector(`.nextDay`).onclick = () => {
-        //     makeCalendar(new Date(date.setMonth(date.getMonth() + 1)));
-        // };
-        
         function userPopupShow() {
             var target = document.querySelector(`.user_popup`);
             if (target.style.display == "none" || target.style.display == "") {
