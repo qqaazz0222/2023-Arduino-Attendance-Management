@@ -3,6 +3,7 @@
     --color-red-2: #C20625;
     --color-red-3: #730516;
     --color-red-4: #870319;
+    --color-red-5: #9B021D;
     --color-black-1: #333;
     --color-black-2: #666;
     --color-gray-1: #999;
@@ -348,7 +349,7 @@ header .profile .user_popup ul li:last-child {
 .admin_panel {
     display: flex;
     flex-direction: column;
-    background-color: #9a041c;
+    background-color: var(--color-red-5);
 }
 
 .admin_panel .admin_panel_top {
@@ -358,16 +359,16 @@ header .profile .user_popup ul li:last-child {
 
 .admin_panel .admin_panel_top span:first-child {
     display: block;
+    margin-bottom: 8px;
     color: var(--color-white-0);
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 12px;
 }
 
 .admin_panel .admin_panel_top span:last-child {
     display: inline-block;
-    color: #e3bbbc;
+    color: #fff;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 
@@ -380,11 +381,13 @@ header .profile .user_popup ul li:last-child {
 }
 
 .admin_panel nav ul li {
-    /* vertical-align: middle; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 12px;
     text-align: left;
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: bold;
     height: 60px;
     color: #e4babc;
     text-decoration: none;
@@ -392,9 +395,9 @@ header .profile .user_popup ul li:last-child {
 
 .admin_panel nav ul li:hover {
     color: var(--color-white-0);
-    background-color: #88011a;
+    background-color: #870119;
 }
 
-.admin_panel nav ul li span {
+.admin_panel nav ul li img {
     padding: 8px;
 }
