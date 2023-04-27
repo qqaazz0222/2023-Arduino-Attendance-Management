@@ -10,10 +10,12 @@
         </a>
         <div class="user_popup">
             <ul>
+                <% if(data.isAdmin) {%>
                 <li>
                     <img src="/images/secure.png" alt="" srcset="" />
                     <a href="/admin">관리자페이지</a>
                 </li>
+                <% } %>
                 <li>
                     <img src="/images/password.png" alt="" srcset="" />
                     <a href="#" onclick="userPopupEditPwd()">비밀번호변경</a>

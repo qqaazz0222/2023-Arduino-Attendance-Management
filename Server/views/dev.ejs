@@ -18,7 +18,7 @@
         <div class="manage-page">
             <%- include ./admin-nav %>
             <div class="content">
-                <form class="dev-component" action="/dev/save" method="post" >
+                <div class="dev-component">
                     <img
                         src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico31.gif"
                         alt=""
@@ -26,10 +26,10 @@
                     />
                     <div class="header">
                         <h2>출석 인원 관리</h2>
-                        <div class="option-wrap">
+                        <form class="option-wrap" action="/dev/chgdate" method="post" >
                             <input class="set-date" type="date" name="date">
-                            <button type="submit">저장</button>
-                        </div>
+                            <button type="submit">변경</button>
+                        </form>
                         
                     </div>
                     <div class="list">
@@ -40,13 +40,23 @@
                             <span class="outtime">퇴실 시간</span>
                             
                         </div>
-                        <% for(var i = 0; i < 10; i++) { %>
-                        <div class="item">
-                            <span class="no">20000000</span>
-                            <span class="name">홍길동</span>
-                            <input class="intime" type="time" name="intime"/>
-                            <input class="outtime" type="time" name="outtime"/>
-                        </div>
+                        <% for(var i = 0; i < check_in.length; i++) { %>
+                        <form class="item" action="/dev/save" method="post" >
+                            <span class="no"><%= check_in[i].uid %></span>
+                            <span class="name"><%= check_in[i].uname %></span>
+                            <input type="hidden" name="uid" value="<%= check_in[i].uid %>">
+                            <% if(check_in[i].date === null) { %>
+                                <input class="intime" type="time" name="intime"/>
+                            <% } else { %>
+                            <input class="intime" type="time" name="intime" value="<%= check_in[i].date.substring(11,16) %>"/>
+                            <% } %>
+                            <% if(check_out[i].date === null) { %>
+                                <input class="outtime" type="time" name="outtime"/>
+                            <% } else { %>
+                                <input class="outtime" type="time" name="outtime" value="<%= check_out[i].date.substring(11,16) %>"/>
+                            <% } %>
+                            <button type="submit">저장</button>
+                        </form>
                         <% } %>
                     </div>
                 </ㄹ>

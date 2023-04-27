@@ -19,6 +19,7 @@ router.get("/", async (req, res, next) => {
         );
         data.uid = req.session.uid;
         data.uname = req.session.uname;
+        data.isAdmin = req.session.isAdmin;
         res.render("notice", { data: data, notice: notice[0] });
     }
 });
@@ -51,6 +52,7 @@ router.get("/:no", async (req, res, next) => {
         console.log(notice_list[2]);
         data.uid = req.session.uid;
         data.uname = req.session.uname;
+        data.isAdmin = req.session.isAdmin;
         res.render("notice-detail", { data: data, notice: notice_list });
     }
 });

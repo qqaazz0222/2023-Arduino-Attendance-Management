@@ -31,6 +31,7 @@ router.get("/", async (req, res, next) => {
         });
         data.uid = req.session.uid;
         data.uname = req.session.uname;
+        data.isAdmin = req.session.isAdmin;
         res.render("absence", {
             data: data,
             absence: absence[0],
@@ -47,6 +48,7 @@ router.get("/create", async (req, res, next) => {
         data.uid = req.session.uid;
         data.uname = req.session.uname;
         data.seat = req.session.seat;
+        data.isAdmin = req.session.isAdmin;
         res.render("create-absence", { data: data });
     }
 });

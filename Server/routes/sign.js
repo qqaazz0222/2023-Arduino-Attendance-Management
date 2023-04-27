@@ -16,6 +16,7 @@ router.get("/", async (req, res, next) => {
             delete req.session.uid;
             delete req.session.uname;
             delete req.session.isLogined;
+            delete req.session.isAdmin;
             delete req.session.seat;
             req.session.save(function () {
                 res.redirect("/");
@@ -34,6 +35,15 @@ router.post("/", async (req, res, next) => {
         const user = await pool.query("SELECT * FROM user WHERE uid = ?", [id]);
         if (user[0].length > 0) {
             if (pw === user[0][0].upw) {
+                const admin = await pool.query(
+                    "SELECT * FROM admin WHERE aid = ?",
+                    [id]
+                );
+                if (admin[0] != 0) {
+                    req.session.isAdmin = true;
+                } else {
+                    req.session.isAdmin = false;
+                }
                 req.session.uid = user[0][0].uid;
                 req.session.uname = user[0][0].uname;
                 req.session.seat = user[0][0].seat;

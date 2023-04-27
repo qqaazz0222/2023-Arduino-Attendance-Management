@@ -47,6 +47,7 @@ router.get("/:year/:month", async (req, res, next) => {
             "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m') = ? AND uid = ?;",
             [String(year) + "-" + mm, req.session.uid]
         );
+        data.isAdmin = req.session.isAdmin;
         data.uid = req.session.uid;
         data.uname = req.session.uname;
         res.render("check", {

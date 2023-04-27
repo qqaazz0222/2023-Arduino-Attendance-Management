@@ -163,6 +163,16 @@
     color: var(--color-black-1);
 }
 
+.dev-component .list .item button {
+    margin-left: 8px;
+    padding: 14px 20px;
+    background-color: var(--color-red-1);
+    border: none;
+    color: var(--color-white-0);
+    font-family: "Pretendard";
+    font-weight: bold;
+}
+
 .dev-component .content {
     display: flex;
     flex-direction: column;
