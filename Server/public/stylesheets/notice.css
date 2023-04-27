@@ -122,7 +122,11 @@ body {
 
 .notice-component .content .content-body {
     width: 100%;
-    padding: 20px;
+    padding: 20px 0;
+}
+
+.notice-component .content .iframe {
+    height: 100%;
 }
 
 .notice-component .content .content-footer {
@@ -228,7 +232,7 @@ body {
 
 .form-notice-component .form .large {
     flex-direction: column;
-    height: 300px;
+    height: 900px;
 }
 
 .form-notice-component .form .th {
