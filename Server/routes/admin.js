@@ -17,10 +17,51 @@ let header_data = {
     attendedUsers: 0,
     absentedUsers: 0,
     unapprovedExcused: 0,
-    date: moment().format("YYYY년 MM월 DD일")
+    date: moment().format("YYYY년 MM월 DD일"),
+    weekData: [],
+    start: 0,
+    end: 0
 };
 
-
+const getWeek = async (gap) => {
+    // 이번주 날짜 구하기
+    let startInit = new Date();
+    let endInit = new Date();
+    startInit.setDate(startInit.getDate() - startInit.getDay() + (gap * 7));
+    endInit.setDate(endInit.getDate() - endInit.getDay() + (gap * 7) + 6);
+    start = startInit.getFullYear() + "-" + ("0" + (startInit.getMonth()+1)).slice(-2) + "-" + ("0" + startInit.getDate()).slice(-2);
+    end = endInit.getFullYear() + "-" + ("0" + (endInit.getMonth()+1)).slice(-2) + "-" + ("0" + (endInit.getDate())).slice(-2);
+    header_data.start = start;
+    header_data.end = end;
+    // Algorithm for Attendances a week
+    const getUsers = await pool.query(
+        "SELECT uid, uname from user"
+    );
+    let attendancesWeek = {}
+    getUsers[0].forEach((e) => {
+        attendancesWeek[e.uid]={
+            "name": [e.uname], 
+            "6": "미출석", "0": "미출석", "1": "미출석", "2": "미출석", "3": "미출석", "4": "미출석", "5": "미출석", 
+            "clr" : {"6": "#666", "0": "#666", "1": "#666", "2": "#666", "3": "#666", "4": "#666", "5": "#666"}
+        }
+    });
+    const getWeeks = await pool.query(
+        "SELECT a.uid, a.uname, a.upw, a.seat, b.date, DATE_FORMAT(b.date, '%m/%d') AS cd, c.date, WEEKDAY(b.date) AS day, TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND b.date BETWEEN ? AND ? LEFT JOIN check_out AS c ON a.uid = c.uid AND c.date BETWEEN ? AND ? ORDER BY uid ASC;",
+        [start, end, start, end]
+    );
+    getWeeks[0].forEach((e) => {
+        if (e.day !== null) {
+            if (e.hour >= 4) {
+                attendancesWeek[e.uid][e.day] = "출석";
+                attendancesWeek[e.uid]['clr'][e.day] = "#4169E1";
+            } else {
+                attendancesWeek[e.uid][e.day] = "시간미달";
+                attendancesWeek[e.uid]['clr'][e.day] = "#fee600";
+            }
+        }
+    });
+    return attendancesWeek
+}
 
 // 관리자페이지 GET
 router.get("/", async (req, res, next) => {
@@ -30,6 +71,7 @@ router.get("/", async (req, res, next) => {
         try {
             data.uid = req.session.uid;
             data.uname = req.session.uname;
+            var currentNumber = req.query.currentNumber || 0;
             // 관리자 페이지 메인 탭 Header에 들어갈 데이터 가져오기
             // 전체 연구원 수, 출석 연구원 수, 미출석 연구원 수, 미승인 유고결석 개수
             // 전체 연구원 수
@@ -49,10 +91,11 @@ router.get("/", async (req, res, next) => {
                 "SELECT COUNT(*) AS 'unapproved' FROM excused_absence WHERE status = ?",
                 ["승인 대기중"]
             );
-            header_data.unapprovedExcused =
-                getUnapprovedExcused[0][0].unapproved;
-
+            header_data.unapprovedExcused = getUnapprovedExcused[0][0].unapproved;
+            
+            header_data.weekData = await getWeek(currentNumber);
             return res.render("admin", {
+                current_number: currentNumber,
                 data: data,
                 header_data: header_data,
             });

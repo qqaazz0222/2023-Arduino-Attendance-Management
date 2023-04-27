@@ -14,12 +14,24 @@
         <link rel="stylesheet" href="/stylesheets/admin.css" />
     </head>
     <body>
+        <div id="admin-loading">
+            <lottie-player
+                src="/lottie/admin-loading.json"
+                background="transparent"
+                speed="1"
+                style="width: 240px; height: 240px"
+                loop
+                autoplay
+            ></lottie-player>
+        </div>
+        <input id="currentNumber" style="display:none;" value="<%= current_number %>">
         <%- include ./header %>
         <div class="board-page">
             <%- include ./admin-nav %>
             <div class="content">
-                <div class="content-top">
-                    <div class="content-top-head">
+                <!-- 금일 현황 대시보드 -->
+                <div class="content-container">
+                    <div class="content-container-title">
                         <img
                             class="icon"
                             src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico45.gif"
@@ -27,7 +39,7 @@
                         />
                         <p><%= header_data.date %></p>
                     </div>
-                    <div class="content-top-body">
+                    <div class="content-container-body">
                         <!-- Header Component 1 -->
                         <div class="circle">
                             <div class="top"><%= header_data.users %>명</div>
@@ -54,9 +66,65 @@
                         </div>
                     </div>
                 </div>
+                <div class="content-container">
+                    <div class="content-container-title">
+                        <img
+                            class="icon"
+                            src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico08.gif"
+                            alt=""
+                        />
+                        <p>주간 출석 현황</p>
+                    </div>
+                    <div class="content-container-body-second">
+                        <div class="control-panel">
+                            <a onclick="weekchange(1); block_double_click()">지난주</a>
+                            <p><%= header_data.start %>(일) ~ <%= header_data.end %>(월)</p>
+                            <a onclick="weekchange(-1); block_double_click()">다음주</a>
+                        </div>
+                        <div class="grid-date">
+                            <p>이름(학번)</p>
+                            <p>일</p><p>월</p><p>화</p><p>수</p><p>목</p><p>금</p><p>토</p>
+                        </div>
+                        <div class="flex-absent">
+                            <% for(var key in header_data.weekData) { %>
+                                <div class="grid-body">
+                                    <p><%= header_data.weekData[key]['name'] %>(<%= key %>)</p>
+                                    <p class="absentData" style="--i:<%= header_data.weekData[key]['clr']['6'] %>"><%= header_data.weekData[key]['6'] %></p>
+                                    <p class="absentData" style="--i:<%= header_data.weekData[key]['clr']['0'] %>"><%= header_data.weekData[key]['0'] %></p>
+                                    <p class="absentData" style="--i:<%= header_data.weekData[key]['clr']['1'] %>"><%= header_data.weekData[key]['1'] %></p>
+                                    <p class="absentData" style="--i:<%= header_data.weekData[key]['clr']['2'] %>"><%= header_data.weekData[key]['2'] %></p>
+                                    <p class="absentData" style="--i:<%= header_data.weekData[key]['clr']['3'] %>"><%= header_data.weekData[key]['3'] %></p>
+                                    <p class="absentData" style="--i:<%= header_data.weekData[key]['clr']['4'] %>"><%= header_data.weekData[key]['4'] %></p>
+                                    <p class="absentData" style="--i:<%= header_data.weekData[key]['clr']['5'] %>"><%= header_data.weekData[key]['5'] %></p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script>
+            function block_double_click() {
+                var target = document.getElementById("admin-loading");
+                target.style.display = "flex";
+            }
+
+            function weekchange(target) {
+                var currentNumber = (document.getElementById('currentNumber').value) * 1;
+                currentNumber -= target
+                let form = document.createElement('form');
+                form.setAttribute('method', 'get');	
+                form.setAttribute('action', '/admin?key=' + currentNumber);
+                document.charset = 'utf-8';
+                let hiddenField = document.createElement('input');
+                hiddenField.setAttribute('type', 'hidden');
+                hiddenField.setAttribute('name', 'currentNumber');
+                hiddenField.setAttribute('value', currentNumber);
+                form.appendChild(hiddenField);
+                document.body.appendChild(form);
+                form.submit();
+            }
+
             function userPopupShow() {
                 var target = document.querySelector(`.user_popup`);
                 if (
@@ -89,5 +157,6 @@
         </script>
         <!-- JQuery -->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     </body>
 </html>

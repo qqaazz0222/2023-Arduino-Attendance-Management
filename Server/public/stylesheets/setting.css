@@ -12,6 +12,9 @@
     --color-white-1: #ddd;
     --color-white-2: #ccc;
     --color-pink-1: #f0e1dd;
+    --color-green-1: #bbd6a9;
+    --color-green-2: #004b1d;
+    --color-yellow-1: #fee600;
 }
 
 @font-face {
@@ -284,6 +287,19 @@ header .profile .user_popup ul li:last-child {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+}
+#admin-loading
+{
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background: transparent;
     z-index: 1000;
 }
 

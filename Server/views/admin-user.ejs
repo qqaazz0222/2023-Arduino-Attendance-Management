@@ -153,7 +153,7 @@
         function calOnChange(e) {
             var selectedDate = e.target.value;
             let form = document.createElement('form');
-            form.setAttribute('method', 'get');	// post 메소드 적용
+            form.setAttribute('method', 'get');
             form.setAttribute('action', '/admin/admin-user?key=' + selectedDate);
             document.charset = 'utf-8';
             let hiddenField = document.createElement('input');
