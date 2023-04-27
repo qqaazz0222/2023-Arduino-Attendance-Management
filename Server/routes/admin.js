@@ -17,7 +17,10 @@ let header_data = {
     attendedUsers: 0,
     absentedUsers: 0,
     unapprovedExcused: 0,
+    date: moment().format("YYYY년 MM월 DD일")
 };
+
+
 
 // 관리자페이지 GET
 router.get("/", async (req, res, next) => {

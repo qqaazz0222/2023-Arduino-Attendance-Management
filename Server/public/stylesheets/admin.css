@@ -7,7 +7,7 @@
     height: 200px;
     border-radius: 100%;
     color: var(--color-white-0);
-    background: var(--color-red-1);
+    background: var(--color-red-4);
 }
 
 .circle
@@ -64,11 +64,9 @@
     padding: 16px;
 }
 
-
-.board-component {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    place-items: center;
+.content-top {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: 1600px;
     padding: 12px;
@@ -76,4 +74,30 @@
     background: var(--color-white-0);
     border: 1px solid var(--color-white-1);
     border-top: 4px solid var(--color-red-1);
+
+}
+
+.content-top
+.content-top-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    text-align: center;
+}
+
+.content-top
+.content-top-head p{
+    margin-left: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-black-2);
+}
+
+.content-top 
+.content-top-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    width: 100%;
 }

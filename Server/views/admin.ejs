@@ -18,30 +18,40 @@
         <div class="board-page">
             <%- include ./admin-nav %>
             <div class="content">
-                <div class="board-component">
-                    <!-- Header Component 1 -->
-                    <div class="circle">
-                        <div class="top"><%= header_data.users %>명</div>
-                        <div class="mid"><hr></div>
-                        <div class="bottom">총 연구원</div>
+                <div class="content-top">
+                    <div class="content-top-head">
+                        <img
+                            class="icon"
+                            src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico45.gif"
+                            alt=""
+                        />
+                        <p><%= header_data.date %></p>
                     </div>
-                    <!-- Header Component 2 -->
-                    <div class="circle">
-                        <div class="top"><%= header_data.attendedUsers %>명</div>
-                        <div class="mid"><hr></div>
-                        <div class="bottom">금일 출석</div>
-                    </div>
-                    <!-- Header Component 3 -->
-                    <div class="circle">
-                        <div class="top"><%= header_data.absentedUsers %>명</div>
-                        <div class="mid"><hr></div>
-                        <div class="bottom">금일 미출석</div>
-                    </div>
-                    <!-- Header Component 4 -->
-                    <div class="circle">
-                        <div class="top"><%= header_data.unapprovedExcused %>건</div>
-                        <div class="mid"><hr></div>
-                        <div class="bottom">미승인 유고결석</div>
+                    <div class="content-top-body">
+                        <!-- Header Component 1 -->
+                        <div class="circle">
+                            <div class="top"><%= header_data.users %>명</div>
+                            <div class="mid"><hr></div>
+                            <div class="bottom">총 연구원</div>
+                        </div>
+                        <!-- Header Component 2 -->
+                        <div class="circle">
+                            <div class="top"><%= header_data.attendedUsers %>명</div>
+                            <div class="mid"><hr></div>
+                            <div class="bottom">금일 출석</div>
+                        </div>
+                        <!-- Header Component 3 -->
+                        <div class="circle">
+                            <div class="top"><%= header_data.absentedUsers %>명</div>
+                            <div class="mid"><hr></div>
+                            <div class="bottom">금일 미출석</div>
+                        </div>
+                        <!-- Header Component 4 -->
+                        <div class="circle">
+                            <div class="top"><%= header_data.unapprovedExcused %>건</div>
+                            <div class="mid"><hr></div>
+                            <div class="bottom">미승인 유고결석</div>
+                        </div>
                     </div>
                 </div>
             </div>

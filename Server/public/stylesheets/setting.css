@@ -11,6 +11,7 @@
     --color-white-0: #fff;
     --color-white-1: #ddd;
     --color-white-2: #ccc;
+    --color-pink-1: #f0e1dd;
 }
 
 @font-face {
@@ -349,6 +350,7 @@ header .profile .user_popup ul li:last-child {
 .admin_panel {
     display: flex;
     flex-direction: column;
+    min-width: 240px;
     background-color: var(--color-red-5);
 }
 
