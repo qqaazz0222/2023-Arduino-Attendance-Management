@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <!-- Google Materual Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <!-- Local CSS Theme -->
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/dev.css" />
+        <link rel="stylesheet" href="/stylesheets/admin.css" />
+    </head>
+    <body>
+        <%- include ./header.ejs%>
+        <div class="manage-page">
+            <%- include ./admin-nav %>
+            <div class="content">
+                <form class="dev-component" action="/dev/save" method="post" >
+                    <img
+                        src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico31.gif"
+                        alt=""
+                        class="icon"
+                    />
+                    <div class="header">
+                        <h2>출석 인원 관리</h2>
+                        <div class="option-wrap">
+                            <input class="set-date" type="date" name="date">
+                            <button type="submit">저장</button>
+                        </div>
+                        
+                    </div>
+                    <div class="list">
+                        <div class="itemh">
+                            <span class="no">학번</span>
+                            <span class="name"> 이름</span>
+                            <span class="intime">출석 시간</span>
+                            <span class="outtime">퇴실 시간</span>
+                            
+                        </div>
+                        <% for(var i = 0; i < 10; i++) { %>
+                        <div class="item">
+                            <span class="no">20000000</span>
+                            <span class="name">홍길동</span>
+                            <input class="intime" type="time" name="intime"/>
+                            <input class="outtime" type="time" name="outtime"/>
+                        </div>
+                        <% } %>
+                    </div>
+                </ㄹ>
+            </div>
+        </div>
+    </body>
+    <script src="/javascripts/profile-drop.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        function dateFormat(date) {
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+            let hour = date.getHours();
+            let minute = date.getMinutes();
+            let second = date.getSeconds();
+
+            month = month >= 10 ? month : '0' + month;
+            day = day >= 10 ? day : '0' + day;
+            hour = hour >= 10 ? hour : '0' + hour;
+            minute = minute >= 10 ? minute : '0' + minute;
+            second = second >= 10 ? second : '0' + second;
+
+            return date.getFullYear() + '-' + month + '-' + day;
+}
+
+        var today = new Date();
+        $('.set-date').attr('value', dateFormat(today));
+    </script>
+</html>

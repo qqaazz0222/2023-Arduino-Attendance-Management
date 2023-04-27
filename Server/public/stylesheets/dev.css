@@ -1,0 +1,231 @@
+.manage-page {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    min-height: calc(100vh - 60px);
+}
+
+/* .manage-page>.navbar {
+    width: 280px;
+    min-height: calc(100vh - 60px);
+    background: var(--color-red-1);
+} */
+
+.manage-page>.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+}
+
+
+.dev-component {
+    width: 100%;
+    max-width: 1600px;
+    padding: 12px;
+    padding-top: 24px;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
+}
+
+.dev-component .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dev-component .header a {
+    padding: 12px 20px;
+    background: var(--color-red-1);
+    border: 1px solid var(--color-white-2);
+    color: var(--color-white-0);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.dev-component .option-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 48px;
+}
+
+.dev-component .option-wrap .set-date {
+    padding: 12px 20px;
+    font-weight: bold;
+    border: 1px solid var(--color-white-2);
+    outline: none;
+    color: var(--color-black-1);
+}
+
+.dev-component .option-wrap .set-date:focus {
+    border: 2px solid var(--color-red-1);
+}
+
+.dev-component .option-wrap button {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 8px;
+    padding: 14px 20px;
+    background-color: var(--color-red-1);
+    border: none;
+    color: var(--color-white-0);
+    font-family: "Pretendard";
+    font-weight: bold;
+}
+
+.dev-component .option span {
+    margin: 0 8px;
+}
+
+.dev-component .option .opt {
+    margin: 0;
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+.dev-component .option input {
+    padding: 8px 12px;
+    border: 1px solid var(--color-white-2);
+    outline: none;
+    font-family: "Pretendard";
+    color: var(--color-black-1);
+}
+
+.dev-component .option .ls {
+    margin-right: 20px;
+}
+
+.dev-component .option button {
+    padding: 8px 12px;
+    background: #C51130;
+    border: 1px solid var(--color-white-2);
+    outline: none;
+    color: var(--color-white-0);
+}
+
+.dev-component .list {
+    display: flex;
+    flex-direction: column;
+}
+
+.dev-component .list .itemh {
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-white-2);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dev-component .list .item {
+    padding: 20px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-white-2);
+}
+
+.dev-component .list .no {
+    width: 200px;
+    text-align: center;
+}
+
+.dev-component .list .name {
+    flex: 1;
+}
+
+.dev-component .list .intime,
+.dev-component .list .outtime {
+    width: 200px;
+    margin-left: 12px;
+    text-align: center;
+}
+
+.dev-component .list .item .intime,
+.dev-component .list .item .outtime {
+    width: 200px;
+    margin-left: 12px;
+    text-align: center;
+    padding: 8px 20px;
+    font-weight: bold;
+    border: 1px solid var(--color-white-2);
+    outline: none;
+    color: var(--color-black-1);
+}
+
+.dev-component .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dev-component .content .content-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 20px 12px;
+    width: 100%;
+    border-top: 2px solid var(--color-black-1);
+    border-bottom: 1px solid var(--color-black-1);
+}
+
+.dev-component .content .content-header .title {
+    margin-bottom: 12px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.dev-component .content .content-header .info-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--color-black-2);
+}
+
+.dev-component .content .content-body {
+    padding: 20px;
+    border-bottom: 1px solid var(--color-white-2);
+}
+
+.dev-component .content .content-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    width: 100%;
+}
+
+.dev-component .content .func {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    border: 1px solid var(--color-white-2);
+    margin-right: 8px;
+}
+
+.dev-component .list .no-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 240px;
+    border-bottom: 1px solid var(--color-white-2);
+    color: var(--color-black-1);
+}
+
+.dev-component .list .no-item img {
+    margin-bottom: 20px;
+}
