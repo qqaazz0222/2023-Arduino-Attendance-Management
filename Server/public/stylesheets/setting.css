@@ -350,6 +350,7 @@ header .profile .user_popup ul li:last-child {
 .admin_panel {
     display: flex;
     flex-direction: column;
+    width: 240px;
     background-color: var(--color-red-5);
 }
 
