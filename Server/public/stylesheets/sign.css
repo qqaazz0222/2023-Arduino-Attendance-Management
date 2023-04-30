@@ -1,3 +1,7 @@
+body {
+    background: var(--color-white-0);
+}
+
 .title {
     font-weight: bold;
     font-size: 24px;

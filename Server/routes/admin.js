@@ -59,6 +59,7 @@ router.get("/", async (req, res, next) => {
                 });
             } catch (error) {
                 console.log(error);
+                res.redirect("/error");
             }
         }
     }
@@ -94,7 +95,7 @@ router.get("/admin-user", async (req, res, next) => {
                 });
             } catch (error) {
                 console.log(error);
-                return res.redirect("/error");
+                res.redirect("/error");
             }
         }
     }
@@ -159,7 +160,8 @@ router.post("/adduser", async (req, res, next) => {
                         "<script>alert('사용자를 추가했습니다.'); location.href='/admin/admin-user';</script>"
                     );
                 } catch (error) {
-                    return res.redirect("/");
+                    console.log(error);
+                    res.redirect("/error");
                 }
             }
         }
@@ -174,16 +176,21 @@ router.post("/edituser", async (req, res, next) => {
         if (req.session.isAdmin != true) {
             res.redirect("/");
         } else {
-            const {
-                body: { studentcode, username, userupw, userseat },
-            } = req;
-            const editUser = await pool.query(
-                "UPDATE user SET uid = ?, upw = ?, uname = ?, seat = ? WHERE uid = ?",
-                [studentcode, userupw, username, userseat, req.session.uid]
-            );
-            return res.send(
-                "<script>alert('사용자 수정을 완료했습니다.'); location.href='/admin/admin-user';</script>"
-            );
+            try {
+                const {
+                    body: { studentcode, username, userupw, userseat },
+                } = req;
+                const editUser = await pool.query(
+                    "UPDATE user SET uid = ?, upw = ?, uname = ?, seat = ? WHERE uid = ?",
+                    [studentcode, userupw, username, userseat, req.session.uid]
+                );
+                return res.send(
+                    "<script>alert('사용자 수정을 완료했습니다.'); location.href='/admin/admin-user';</script>"
+                );
+            } catch (error) {
+                console.log(error);
+                res.redirect("/error");
+            }
         }
     }
 });
@@ -210,7 +217,8 @@ router.post("/deleteuser", async (req, res, next) => {
                     "<script>alert('사용자를 삭제했습니다.'); location.href='/admin/admin-user';</script>"
                 );
             } catch (error) {
-                return res.redirect("/error");
+                console.log(error);
+                res.redirect("/error");
             }
         }
     }
@@ -236,7 +244,8 @@ router.post("/accessabsent", async (req, res, next) => {
                     "<script>alert('유고결석을 승인했습니다.'); location.href='/admin/admin-absent';</script>"
                 );
             } catch (error) {
-                return res.redirect("/error");
+                console.log(error);
+                res.redirect("/error");
             }
         }
     }
@@ -261,7 +270,8 @@ router.post("/denyabsent", async (req, res, next) => {
                     "<script>alert('유고결석을 거절했습니다.'); location.href='/admin/admin-absent';</script>"
                 );
             } catch (error) {
-                return res.redirect("/error");
+                console.log(error);
+                res.redirect("/error");
             }
         }
     }
@@ -272,18 +282,23 @@ router.get("/manage/notice", async (req, res, next) => {
     if (req.session.isLogined == undefined) {
         res.redirect("/sign");
     } else {
-        if (req.session.isAdmin != true) {
-            res.redirect("/");
-        } else {
-            data.uid = req.session.uid;
-            data.uname = req.session.uname;
-            data.isAdmin = req.session.isAdmin;
-            const notice = await pool.query("SELECT * FROM notice;");
-            return res.render("manage-notice", {
-                data: data,
-                notice: notice[0],
-                options: {},
-            });
+        try {
+            if (req.session.isAdmin != true) {
+                res.redirect("/");
+            } else {
+                data.uid = req.session.uid;
+                data.uname = req.session.uname;
+                data.isAdmin = req.session.isAdmin;
+                const notice = await pool.query("SELECT * FROM notice;");
+                return res.render("manage-notice", {
+                    data: data,
+                    notice: notice[0],
+                    options: {},
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            res.redirect("/error");
         }
     }
 });
@@ -298,42 +313,47 @@ router.post("/manage/notice", async (req, res, next) => {
         if (req.session.isAdmin != true) {
             res.redirect("/");
         } else {
-            data.uid = req.session.uid;
-            data.uname = req.session.uname;
-            data.isAdmin = req.session.isAdmin;
-            if (keyword != "" && s_date != "" && s_date != "") {
-                notice = await pool.query(
-                    "SELECT * FROM notice WHERE title LIKE ? AND wdate BETWEEN ? AND ? ORDER BY wdate desc, no;",
-                    ["%" + keyword + "%", s_date, e_date]
-                );
-                options.keyword = keyword;
-                options.s_date = s_date;
-                options.e_date = e_date;
-            } else {
-                if (keyword != "") {
+            try {
+                data.uid = req.session.uid;
+                data.uname = req.session.uname;
+                data.isAdmin = req.session.isAdmin;
+                if (keyword != "" && s_date != "" && s_date != "") {
                     notice = await pool.query(
-                        "SELECT * FROM notice WHERE title LIKE ? ORDER BY wdate desc, no;;",
-                        ["%" + keyword + "%"]
+                        "SELECT * FROM notice WHERE title LIKE ? AND wdate BETWEEN ? AND ? ORDER BY wdate desc, no;",
+                        ["%" + keyword + "%", s_date, e_date]
                     );
                     options.keyword = keyword;
+                    options.s_date = s_date;
+                    options.e_date = e_date;
                 } else {
-                    if (s_date != "" && e_date != "") {
+                    if (keyword != "") {
                         notice = await pool.query(
-                            "SELECT * FROM notice WHERE wdate BETWEEN ? AND ? ORDER BY wdate desc, no;;",
-                            [s_date, e_date]
+                            "SELECT * FROM notice WHERE title LIKE ? ORDER BY wdate desc, no;;",
+                            ["%" + keyword + "%"]
                         );
-                        options.s_date = s_date;
-                        options.e_date = e_date;
+                        options.keyword = keyword;
                     } else {
-                        res.redirect("/admin/manage/notice");
+                        if (s_date != "" && e_date != "") {
+                            notice = await pool.query(
+                                "SELECT * FROM notice WHERE wdate BETWEEN ? AND ? ORDER BY wdate desc, no;;",
+                                [s_date, e_date]
+                            );
+                            options.s_date = s_date;
+                            options.e_date = e_date;
+                        } else {
+                            res.redirect("/admin/manage/notice");
+                        }
                     }
                 }
+                return res.render("manage-notice", {
+                    data: data,
+                    notice: notice[0],
+                    options: options,
+                });
+            } catch (error) {
+                console.log(error);
+                res.redirect("/error");
             }
-            return res.render("manage-notice", {
-                data: data,
-                notice: notice[0],
-                options: options,
-            });
         }
     }
 });
@@ -368,14 +388,19 @@ router.post("/manage/notice/del", async (req, res, next) => {
         if (req.session.isAdmin != true) {
             res.redirect("/");
         } else {
-            data.uid = req.session.uid;
-            data.uname = req.session.uname;
-            data.isAdmin = req.session.isAdmin;
-            const notice = await pool.query(
-                "DELETE FROM notice WHERE no = ?;",
-                [req.body.no]
-            );
-            res.redirect("/admin/manage/notice");
+            try {
+                data.uid = req.session.uid;
+                data.uname = req.session.uname;
+                data.isAdmin = req.session.isAdmin;
+                const notice = await pool.query(
+                    "DELETE FROM notice WHERE no = ?;",
+                    [req.body.no]
+                );
+                res.redirect("/admin/manage/notice");
+            } catch (error) {
+                console.log(error);
+                res.redirect("/error");
+            }
         }
     }
 });
@@ -387,12 +412,17 @@ router.get("/create/notice/", async (req, res, next) => {
         if (req.session.isAdmin != true) {
             res.redirect("/");
         } else {
-            data.uid = req.session.uid;
-            data.uname = req.session.uname;
-            data.isAdmin = req.session.isAdmin;
-            return res.render("create-notice", {
-                data: data,
-            });
+            try {
+                data.uid = req.session.uid;
+                data.uname = req.session.uname;
+                data.isAdmin = req.session.isAdmin;
+                return res.render("create-notice", {
+                    data: data,
+                });
+            } catch (error) {
+                console.log(error);
+                res.redirect("/error");
+            }
         }
     }
 });
@@ -405,11 +435,16 @@ router.post("/create/notice/", async (req, res, next) => {
         if (req.session.isAdmin != true) {
             res.redirect("/");
         } else {
-            const notice = await pool.query(
-                "INSERT INTO notice VALUES (null, ?, ?, ?, 0);",
-                [title, detail, new Date()]
-            );
-            return res.redirect("/admin/manage/notice");
+            try {
+                const notice = await pool.query(
+                    "INSERT INTO notice VALUES (null, ?, ?, ?, 0);",
+                    [title, detail, new Date()]
+                );
+                return res.redirect("/admin/manage/notice");
+            } catch (error) {
+                console.log(error);
+                res.redirect("/error");
+            }
         }
     }
 });

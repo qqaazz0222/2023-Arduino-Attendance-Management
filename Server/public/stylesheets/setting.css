@@ -59,6 +59,7 @@
 body {
     font: 16px "Pretendard";
     color: var(--color-black-1);
+    background: #f8f8f8;
 }
 
 a {

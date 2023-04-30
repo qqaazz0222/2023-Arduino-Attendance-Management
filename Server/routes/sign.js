@@ -25,7 +25,8 @@ router.get("/", async (req, res, next) => {
             res.render("sign", { data: data });
         }
     } catch (error) {
-        return res.redirect("/error");
+        console.log(error);
+        res.redirect("/error");
     }
 });
 
@@ -60,6 +61,7 @@ router.post("/", async (req, res, next) => {
             res.render("sign", { data: data });
         }
     } catch (error) {
+        console.log(error);
         res.redirect("/error");
     }
 });
