@@ -16,55 +16,61 @@
  </head>
  <body>
     <%- include ./header %>
-     <div class="admin_frmae_grid">
-        <%- include ./admin-nav.ejs %>
-         <div class="admin_content">
-             <!-- 사용자 관리 -->
-             <div class="admin_content_user_grid" >
-                <div class="admin_content_user_header">
-                    <p> Members </p>
+     <div class="user-page">
+        <%- include ./admin-nav %>
+        <div class="content">
+            <div class="content-container">
+                <div class="content-container-title">
+                    <div>
+                        <img
+                        class="icon"
+                        src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico05.gif"
+                        alt=""
+                        />
+                        <p>연구원 관리</p>
+                    </div>
                     <div>
                         <input id="currentDate" type="date" value="<%= key %>" onchange="calOnChange(event)">
                         <button onclick="popup_adduser_show()">사용자 추가</button>
                         <button>엑셀 다운로드(준비중)</button>
                     </div>
-                    
                 </div>
-                <div class="admin_content_user_cont">
-                    <div class="top-th">
+                <div class="content-container-body">
+                    <div class="grid-head">
                         <p>학번</p><p>이름</p><p>전화번호</p><p>좌석</p><p>상태</p><p>입실</p><p>퇴실</p><p>operation</p>
                     </div>
-                    <% for(var i = 0; i < bodydata.length; i++) { %>
-                        <div class="top">
-                            <p><%= bodydata[i].uid %></p>
-                            <p><%= bodydata[i].uname %></p>
-                            <p>010-0000-0000</p>
-                            <p><%= bodydata[i].seat %>번</p>
-                            <% if ( bodydata[i].in ) { %>
-                                <div class="status_ok">
-                                    출석
-                                </div>
-                            <% } else { %>
-                                <div class="status_deny">
-                                    미출석
+                    <div class="flex-data">
+                        <div class="grid-body">
+                            <% for(var i = 0; i < bodydata.length; i++) { %>
+                                <p><%= bodydata[i].uid %></p>
+                                <p><%= bodydata[i].uname %></p>
+                                <p>010-0000-0000</p>
+                                <p><%= bodydata[i].seat %>번</p>
+                                <% if ( bodydata[i].in ) { %>
+                                    <div class="status_ok">
+                                        출석
+                                    </div>
+                                <% } else { %>
+                                    <div class="status_deny">
+                                        미출석
+                                    </div>
+                                <% } %>
+                                <p><%= bodydata[i].in %></p>
+                                <p><%= bodydata[i].out %></p>
+                                <div class="operation_div">
+                                    <button class="operation_button" onclick="popup_edituser_show('<%= bodydata[i].uid %>', '<%= bodydata[i].uname %>', '<%= bodydata[i].upw %>', '<%= bodydata[i].seat %>')"><span class="material-icons">
+                                        mode_edit
+                                        </span></button>
+                                    <button class="operation_button" onclick="popup_deleteuser_show('<%= bodydata[i].uid %>')"><span class="material-icons">
+                                        delete
+                                        </span></button>
                                 </div>
                             <% } %>
-                            <p><%= bodydata[i].in %></p>
-                            <p><%= bodydata[i].out %></p>
-                            <div class="operation_div">
-                                <button class="operation_button" onclick="popup_edituser_show('<%= bodydata[i].uid %>', '<%= bodydata[i].uname %>', '<%= bodydata[i].upw %>', '<%= bodydata[i].seat %>')"><span class="material-icons">
-                                    mode_edit
-                                    </span></button>
-                                <button class="operation_button" onclick="popup_deleteuser_show('<%= bodydata[i].uid %>')"><span class="material-icons">
-                                    delete
-                                    </span></button>
-                            </div>
                         </div>
-                        <hr>
-                    <% } %>
+                    </div>
                 </div>
-            </div>
-         </div>
+            </div> 
+        </div>
      </div>
  
      <!-- 사용자 추가 -->
@@ -108,7 +114,7 @@
                      <div class="user_popup_edit_password_pwd">
                          <div>
                              <p>학번</p>
-                             <input type="number" id="edit_studentcode" name="studentcode" autocomplete="off">
+                             <input type="number" id="edit_studentcode" name="studentcode" autocomplete="off" readonly>
                          </div>
                          <div>
                              <p>이름</p>
@@ -153,7 +159,7 @@
         function calOnChange(e) {
             var selectedDate = e.target.value;
             let form = document.createElement('form');
-            form.setAttribute('method', 'get');	// post 메소드 적용
+            form.setAttribute('method', 'get');
             form.setAttribute('action', '/admin/admin-user?key=' + selectedDate);
             document.charset = 'utf-8';
             let hiddenField = document.createElement('input');
