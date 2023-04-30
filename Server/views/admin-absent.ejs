@@ -17,49 +17,56 @@
      </head>
  </head>
  <body>
-     <%- include ./header %>
-     <!-- grid frame -->
-     <div class="admin_frmae_grid">
-         <%- include ./admin-nav.ejs %>
-         <div class="admin_content">
-             <!-- 유고결석 관리 -->
-            <div class="admin_content_absent_grid">
-                <div class="admin_absent_header">
-                    <p> 유고결석 명단 </p>
-                </div>
-                <div class="admin_absent_content">
-                    <div class="top-th">
-                        <p>학번</p><p>이름</p><p>내용</p><p>요청일자</p><p>상태</p><p>승인여부</p><p>첨부파일</p>
+    <input id="no" style="display:none;" value="">
+    <%- include ./header %>
+    <div class="absent-page">
+        <%- include ./admin-nav %>
+        <div class="content">
+            <div class="content-container">
+                    <div class="content-container-title">
+                        <img
+                            class="icon"
+                            src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico45.gif"
+                            alt=""
+                        />
+                        <p>유고결석관리</p>
                     </div>
-                    <form method="get">
-                        <% for(var i = 0; i < bodydata.length; i++) { %>
-                            <div class="top">
-                                <p><%= bodydata[i].uid %></p>
-                                <p><%= bodydata[i].uname %></p>
-                                <p><%= bodydata[i].context %></p>
-                                <p><%= bodydata[i].wdate %></p>
-                                <p><%= bodydata[i].status %></p>
-                                <p onclick="popup_access_background_show('<%= bodydata[i].no %>')"><a>상세보기</a></p>
-                                <p><a href="<%= bodydata[i].file %>" download>다운로드</a></p>
+                <div class="content-container-body">
+                    <div class="grid-head">
+                        <p>학번</p><p>이름</p><p>상태</p><p>요청일자</p>
+                    </div>
+                    <div class="grid-body">
+                        <% bodydata.forEach((e) => { %>
+                            <div class="grid-data" onclick="popup_access_background_show('<%= e.no %>', '<%= e.context %>', '<%= e.period %>', '<%= e.file %>')">
+                                <p><%= e.uid %></p>
+                                <p><%= e.uname %></p>
+                                <p><%= e.status %></p>
+                                <p><%= e.wdate %></p>
                             </div>
-                            <hr>
-                        <% } %>
-                    </form>
+                        <% }) %>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 사용자 삭제 팝업 -->
-    <div class="popup_access_background_hide">
-        <form method="post">
-            <div class="popup_access">
-                <input id="no" name="no" style="display: none;" value="">
-                <p>해당 사용자의 유고 결석을 승인/거절 할 수 있습니다.</p>
-                <div>
-                    <button type="submit" onclick="javascript: form.action='/admin/accessabsent';">
+    <div class="popup_hide">
+        <div class="popup">
+            <div class="body-col">
+                <div class="body-top">
+                    유고결석 신청서
+                </div>
+                <div class="body-mid">
+                    <p id="popup-period"></p>
+                    <input id="popup-context" readonly>
+                </div>
+                <div class="body-foot">
+                    <a id ="download" href="" download>
+                        <button>첨부파일</button>
+                    </a>
+                    <button type="button" onclick="access()">
                         승인
                     </button>
-                    <button type="submit" onclick="javascript: form.action='/admin/denyabsent';">
+                    <button type="button" onclick="deny()">
                         거절
                     </button>
                     <button type="button" onclick="popup_access_background_hide()">
@@ -67,7 +74,7 @@
                     </button>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
     <script>
         function userPopupShow() {
@@ -89,13 +96,49 @@
         function userPopupEditPwdClose() {
             var target = document.querySelector(`.user_popup_edit_password`).style.display = "none";
         }
-        function popup_access_background_show(no) {
-            document.querySelector(`.popup_access_background_hide`).style.display = "flex";
+
+        function popup_access_background_show(no, context, period, file) {
+            document.querySelector(`.popup_hide`).style.display = "flex";
             document.querySelector(`#no`).value = no;
+            document.querySelector(`#popup-context`).value = context;
+            document.querySelector(`#popup-period`).innerHTML = "유고결석기간: " + period
+            document.querySelector(`#download`).href = file;
         }
+
         function popup_access_background_hide() {
-            document.querySelector(`.popup_access_background_hide`).style.display = "none";
+            document.querySelector(`.popup_hide`).style.display = "none";
         }
+
+        function access() {
+            var no = document.querySelector(`#no`).value;
+            let form = document.createElement('form');
+            form.setAttribute('method', 'post');	
+            form.setAttribute('action', '/admin/accessabsent?no=' + no);
+            document.charset = 'utf-8';
+            let hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'no');
+            hiddenField.setAttribute('value', no);
+            form.appendChild(hiddenField);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function deny() {
+            var no = document.querySelector(`#no`).value;
+            let form = document.createElement('form');
+            form.setAttribute('method', 'post');	
+            form.setAttribute('action', '/admin/denyabsent?no=' + no);
+            document.charset = 'utf-8';
+            let hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'no');
+            hiddenField.setAttribute('value', no);
+            form.appendChild(hiddenField);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
     </script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
  </body>

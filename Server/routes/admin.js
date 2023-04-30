@@ -69,7 +69,6 @@ router.get("/", async (req, res, next) => {
         res.redirect("/sign");
     } else {
         try {
-            data.uid = req.session.uid;
             data.uname = req.session.uname;
             var currentNumber = req.query.currentNumber || 0;
             // 관리자 페이지 메인 탭 Header에 들어갈 데이터 가져오기
@@ -120,7 +119,7 @@ router.get("/admin-user", async (req, res, next) => {
             // 관리자 페이지 연구원 관리 탭에 들어갈 데이터 가져오기
             // 전체 연구원, 출석 상태 확인을 위한 오늘 날짜의 출석 데이터
             const getAllMember = await pool.query(
-                "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out' FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ?;",
+                "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out' FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
                 [key, key]
             );
             // console.log(getAllMember[0].length)
@@ -146,7 +145,7 @@ router.get("/admin-absent", async (req, res, next) => {
             data.uname = req.session.uname;
             // 유고결석 테이블 데이터 가져오기
             const getAbsentData = await pool.query(
-                "SELECT a.no, a.uid, b.uname, a.status, a.wdate, a.context, a.file FROM excused_absence AS a LEFT JOIN user AS b ON a.uid = b.uid ORDER BY no DESC"
+                "SELECT a.no, a.uid, b.uname, a.status, a.wdate, a.context, a.file, a.period FROM excused_absence AS a LEFT JOIN user AS b ON a.uid = b.uid ORDER BY no DESC"
             );
             return res.render("admin-absent", {
                 data: data,
@@ -241,9 +240,8 @@ router.post("/accessabsent", async (req, res, next) => {
         res.redirect("/sign");
     } else {
         try {
-            const {
-                body: { no },
-            } = req;
+            let no = req.query.no;
+            console.log(no)
             const updateStatus = await pool.query(
                 "UPDATE excused_absence SET status = '승인 완료' WHERE no = ?",
                 [no]
@@ -262,9 +260,7 @@ router.post("/denyabsent", async (req, res, next) => {
         res.redirect("/sign");
     } else {
         try {
-            const {
-                body: { no },
-            } = req;
+            let no = req.query.no;
             const updateStatus = await pool.query(
                 "UPDATE excused_absence SET status = '승인 거절' WHERE no = ?",
                 [no]
