@@ -10,6 +10,7 @@ let data = {
     uname: "",
 };
 
+// 세션 사용 정의
 router.use(
     session({
         secret: "sessionkey",
@@ -19,11 +20,14 @@ router.use(
     })
 );
 
+// 메인 페이지 접속
 router.get("/", async (req, res, next) => {
+    // 로그인 정보가 없을 때, 로그인 페이지로 이동
     if (req.session.isLogined == undefined) {
         res.redirect("/sign");
     } else {
         try {
+            // 메인 페이지 달력에 들어갈 출석 정보 받아오기
             let searchPeriod = ["", ""];
             const date = new Date();
             const year = date.getFullYear();
@@ -41,14 +45,17 @@ router.get("/", async (req, res, next) => {
             if (m2.length == 1) {
                 m2 = "0" + m2;
             }
+            // DB에서 기간에 해당하는 출석 정보 가져오기
             const check_in = await pool.query(
                 "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m') BETWEEN ? AND ? AND uid = ?;",
                 [String(year) + "-" + m1, yy + "-" + m2, req.session.uid]
             );
+            // DB에서 기간에 해당하는 퇴실 정보 가져오기
             const check_out = await pool.query(
                 "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m') BETWEEN ? AND ? AND uid = ?;",
                 [String(year) + "-" + m1, yy + "-" + m2, req.session.uid]
             );
+            // DB에서 메인 페이지 좌측 하단에 표시할 공지 정보 가져오기
             const notice = await pool.query(
                 "SELECT * FROM notice ORDER BY no DESC LIMIT 4;"
             );
