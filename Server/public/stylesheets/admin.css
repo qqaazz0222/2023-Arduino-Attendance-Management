@@ -1,46 +1,170 @@
-.admin_frmae_grid .admin_content {
-    width: 100%;
-    max-width: 1600px;
-    height: 100%;
+/**
+ * Circle Styles
+ */
+.circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px #444;
+    color: var(--color-white-0);
+    background: var(--color-red-4);
 }
 
-/* 메인보드 */
-.admin_frmae_grid .admin_content .admin_content_main_grid {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-rows: 1fr 2fr 1fr;
-    grid-gap: 5%;
+.circle .top {
+    position: absolute;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: 700;
 }
 
-.admin_content_main_grid .admin_content_main_header {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 12px;
-    padding: 12px;
+.circle .mid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 20%);
+    color: var(--color-black-1);
 }
 
-.admin_content_main_header .header_contents {
+.circle .bottom {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+    color: var(--color-gray-1);
+}
+
+/* End Circle */
+
+.board-page {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    min-height: calc(100vh - 60px);
+}
+
+.board-page>.navbar {
+    width: 280px;
+    min-height: calc(100vh - 60px);
+    background: var(--color-red-1);
+}
+
+.board-page>.content {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
-    border: 1px solid var(--color-white-2);
-    background-color: var(--color-white-0);
+    padding: 16px;
+    gap: 20px 0;
 }
 
-.admin_content_main_header .header_contents p:first-child {
+/* Material Of Admin Page */
+.content-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1600px;
+    padding: 12px;
+    padding-top: 24px;
+    background: var(--color-white-0);
+    border: 1px solid var(--color-white-1);
+    border-top: 4px solid var(--color-red-1);
+}
+
+.content-container .content-container-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    text-align: center;
+}
+
+.content-container .content-container-title p {
+    margin-left: 8px;
     font-size: 24px;
     font-weight: 700;
+    color: var(--color-black-2);
 }
 
-.admin_content_main_header .header_contents p:last-child {
-    color: #c20124;
-    font-size: 36px;
+.content-container .content-container-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    width: 100%;
+}
+
+/* End(Material Of Admin Page) */
+
+/* 주간 출석 현황 */
+.content-container-body-second {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 24px;
+}
+
+.content-container-body-second .control-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 24px 0 24px;
+}
+
+.content-container-body-second .grid-date {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    place-items: center;
+    width: 100%;
+}
+
+.content-container-body-second .grid-date p {
+    font-size: 18px;
     font-weight: 700;
 }
 
-.panel_select_main_hide {
-    height: 100%;
-    display: block;
+.content-container-body-second .flex-absent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* gap: 24px 0; */
 }
+
+.content-container-body-second .grid-body {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    place-items: center;
+    width: 100%;
+    /* gap: 24px 0; */
+}
+
+.content-container-body-second .grid-body:first-child {
+    border-top: 4px solid var(--color-red-1);
+}
+
+.content-container-body-second .grid-body p:first-child {
+    text-align: center;
+    font-weight: 700;
+}
+
+.content-container-body-second .grid-body p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--i);
+    padding: 12px;
+    border: 1px solid var(--color-white-1);
+    width: 100%;
+    height: 100%;
+    min-width: 143px;
+}
+
+
+
+/* End(주간 출석 현황) */
