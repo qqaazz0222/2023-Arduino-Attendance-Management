@@ -158,47 +158,57 @@ router.post("/check/:type", async (req, res, next) => {
         const type = req.params.type;
         const uid = req.body.id;
 
-        if (type == "in") {
-            // 현재 입실 상태 확인
-            const getTodayCheckIn = await pool.query(
-                "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
-                [uid]
-            )
-            // 예외처리
-            if (getTodayCheckIn[0].length > 0) {
-                return res.send(
-                    "<script>alert('이미 입실하셨습니다.'); location.href='/dev/check';</script>"
-                );
-            } else {
-                // 입실 상태 추가
-                const SetCheckIn = await pool.query(
-                    "INSERT INTO check_in VALUES(null, ?, ?)",
-                    [date, uid]
-                )
-                return res.send(
-                    "<script>alert('입실처리 되었습니다. 공부 열심히하세요!'); location.href='/';</script>"
-                );
-            }
-        // isCheckIn이 true이면 현재 사용자는 출석버튼을 누른 상태
+        const isUser = await pool.query(
+            "SELECT * FROM user WHERE uid = ?",
+            [uid]
+        )
+        if (isUser[0].length == 0) {
+            return res.send(
+                "<script>alert('AI+X 융합연구소 연구원이 아닙니다.'); location.href='/dev/check';</script>"
+            );
         } else {
-            // 현재 퇴실 상태 확인
-            const getTodayCheckOut = await pool.query(
-                "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
-                [uid]
-            )
-            if (getTodayCheckOut[0].length > 0) {
-                return res.send(
-                    "<script>alert('이미 퇴실하셨습니다.'); location.href='/dev/check';</script>"
-                );
-            } else {
-                // 퇴실 상태 추가
-                const SetCheckOut = await pool.query(
-                    "INSERT INTO check_out VALUES(null, ?, ?)",
-                    [date, uid]
+            if (type == "in") {
+                // 현재 입실 상태 확인
+                const getTodayCheckIn = await pool.query(
+                    "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
+                    [uid]
                 )
-                return res.send(
-                    "<script>alert('퇴실처리 되었습니다. 오늘도 수고하셨습니다!'); location.href='/';</script>"
-                );
+                // 예외처리
+                if (getTodayCheckIn[0].length > 0) {
+                    return res.send(
+                        "<script>alert('이미 입실하셨습니다.'); location.href='/dev/check';</script>"
+                    );
+                } else {
+                    // 입실 상태 추가
+                    const SetCheckIn = await pool.query(
+                        "INSERT INTO check_in VALUES(null, ?, ?)",
+                        [date, uid]
+                    )
+                    return res.send(
+                        "<script>alert('입실처리 되었습니다. 공부 열심히하세요!'); location.href='/dev/check';</script>"
+                    );
+                }
+            // isCheckIn이 true이면 현재 사용자는 출석버튼을 누른 상태
+            } else {
+                // 현재 퇴실 상태 확인
+                const getTodayCheckOut = await pool.query(
+                    "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
+                    [uid]
+                )
+                if (getTodayCheckOut[0].length > 0) {
+                    return res.send(
+                        "<script>alert('이미 퇴실하셨습니다.'); location.href='/dev/check';</script>"
+                    );
+                } else {
+                    // 퇴실 상태 추가
+                    const SetCheckOut = await pool.query(
+                        "INSERT INTO check_out VALUES(null, ?, ?)",
+                        [date, uid]
+                    )
+                    return res.send(
+                        "<script>alert('퇴실처리 되었습니다. 오늘도 수고하셨습니다!'); location.href='/dev/check';</script>"
+                    );
+                }
             }
         }
     } catch (error) {
