@@ -161,8 +161,6 @@ router.get("/check", async (req, res, next) => {
             data.isAdmin = req.session.isAdmin;
             res.render("dev-check", {
                 data: data,
-                check_in: check_in[0],
-                check_out: check_out[0],
             });
         } catch (error) {
             console.log(error);

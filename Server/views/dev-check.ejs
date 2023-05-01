@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data.title %></title>
+        <link rel="favicon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="/stylesheets/setting.css" />
+        <link rel="stylesheet" href="/stylesheets/dev.css" />
+    </head>
+    <body>
+        <div class="dev-check-page">
+            <div class="dev-check-component">
+                <div class="info-wrap">
+                    <div class="icon">
+                        <img
+                            src="https://www.dongseo.ac.kr/kr/_Img/login01.png"
+                            alt=""
+                        />
+                    </div>
+                    <div class="title">이용안내</div>
+                    <div class="info">
+                        <ul>
+                            <li>
+                                우측 아이디에 학번을 입력하시고<br />
+                                출석 또는 퇴실을 눌러주세요.
+                            </li>
+                            <li>
+                                문제 발생시,
+                                <strong>개발자(김현수, 김준현)</strong>에게
+                                <br />문의 바랍니다.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dev-check-wrap">
+                    <div class="title">임시 출석/퇴실 체크</div>
+                    <div class="subtitle">출석 및 퇴실 입력이 가능합니다.</div>
+                    <div class="form">
+                        <form method="post">
+                            <div class="userdata">
+                                <input
+                                    type="text"
+                                    name="id"
+                                    placeholder="학번을 입력하세요."
+                                />
+                            </div>
+                            <div class="row">
+                                <button
+                                    type="submit"
+                                    onclick="javascript: form.action='/dev/check/in';"
+                                >
+                                    출석
+                                </button>
+                                <button
+                                    type="submit"
+                                    onclick="javascript: form.action='/dev/check/out';"
+                                >
+                                    퇴실
+                                </button>
+                            </div>
+                        </form>
+                        <% if (data.errMsg != "") { %>
+                        <span class="err"><%= data.errMsg %></span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
