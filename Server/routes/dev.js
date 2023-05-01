@@ -165,7 +165,7 @@ router.post("/check/:type", async (req, res, next) => {
                 [uid]
             )
             // 예외처리
-            if (getTodayCheckIn[0].length == 0) {
+            if (getTodayCheckIn[0].length > 0) {
                 return res.send(
                     "<script>alert('이미 입실하셨습니다.'); location.href='/dev/check';</script>"
                 );
@@ -186,7 +186,7 @@ router.post("/check/:type", async (req, res, next) => {
                 "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
                 [uid]
             )
-            if (getTodayCheckOut[0].length == 0) {
+            if (getTodayCheckOut[0].length > 0) {
                 return res.send(
                     "<script>alert('이미 퇴실하셨습니다.'); location.href='/dev/check';</script>"
                 );
