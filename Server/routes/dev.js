@@ -33,7 +33,7 @@ router.get("/", async (req, res, next) => {
                 }
                 let dd = String(day);
 
-                // DB에서 출석 정보 가져오기 
+                // DB에서 출석 정보 가져오기
                 const check_in = await pool.query(
                     "WITH TEMP_TABLE as (SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = ?) SELECT user.uid, user.uname, TEMP_TABLE.no, TEMP_TABLE.date FROM user LEFT JOIN TEMP_TABLE ON user.uid = TEMP_TABLE.uid ORDER BY user.uid;",
                     [yyyy + "-" + mm + "-" + dd]
@@ -94,7 +94,7 @@ router.post("/save", async (req, res, next) => {
                             check_in_already[0][0].no,
                         ]
                     );
-                // 저장되어 있는 출석 시간이 없을 때 처리
+                    // 저장되어 있는 출석 시간이 없을 때 처리
                 } else {
                     // DB에 새로 입력받은 출석 시간을 삽입
                     const add_in_time = await pool.query(
@@ -120,7 +120,7 @@ router.post("/save", async (req, res, next) => {
                             check_out_already[0][0].no,
                         ]
                     );
-                // 저장되어 있는 퇴실 시간이 없을 때 처리
+                    // 저장되어 있는 퇴실 시간이 없을 때 처리
                 } else {
                     // DB에 새로 입력받은 퇴실 시간을 삽입
                     const add_out_time = await pool.query(
@@ -133,6 +133,37 @@ router.post("/save", async (req, res, next) => {
                 }
             }
             res.redirect("/dev");
+        } catch (error) {
+            console.log(error);
+            res.redirect("/error");
+        }
+    }
+});
+
+router.get("/check", async (req, res, next) => {
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        try {
+            // 오늘 날짜 받아와 yyyy-mm-dd 형식으로 변경
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            let yyyy = String(year);
+            let mm = String(month);
+            if (mm.length == 1) {
+                mm = "0" + mm;
+            }
+            let dd = String(day);
+            data.uid = req.session.uid;
+            data.uname = req.session.uname;
+            data.isAdmin = req.session.isAdmin;
+            res.render("dev-check", {
+                data: data,
+                check_in: check_in[0],
+                check_out: check_out[0],
+            });
         } catch (error) {
             console.log(error);
             res.redirect("/error");
