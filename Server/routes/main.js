@@ -24,7 +24,9 @@ router.use(
 router.get("/", async (req, res, next) => {
     // 로그인 정보가 없을 때, 로그인 페이지로 이동
     if (req.session.isLogined == undefined) {
-        res.redirect("/sign");
+        // 임시 기능 페이지 이동
+        res.redirect("/dev/check");
+        // res.redirect("/sign");
     } else {
         try {
             // 메인 페이지 달력에 들어갈 출석 정보 받아오기
