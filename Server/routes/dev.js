@@ -4,7 +4,7 @@ const pool = require("../db/db");
 const sessionStore = require("../db/session");
 
 let data = {
-    title: "융합연구소출석관리서비스 | 로그인",
+    title: "융합연구소출석관리서비스 | 임시 출석 기능",
     uid: "",
     uname: "",
     errMsg: "",
@@ -140,32 +140,70 @@ router.post("/save", async (req, res, next) => {
     }
 });
 
+
 router.get("/check", async (req, res, next) => {
-    if (req.session.isLogined == undefined) {
-        res.redirect("/sign");
-    } else {
-        try {
-            // 오늘 날짜 받아와 yyyy-mm-dd 형식으로 변경
-            const date = new Date();
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            let yyyy = String(year);
-            let mm = String(month);
-            if (mm.length == 1) {
-                mm = "0" + mm;
+    try {
+        res.render("dev-check", {
+            data: data,
+        });
+    } catch (error) {
+        console.log(error);
+        res.redirect("/error");
+    }
+})
+
+router.post("/check/:type", async (req, res, next) => {
+    try {
+        const date = new Date();
+        const type = req.params.type;
+        const uid = req.body.id;
+
+        if (type == "in") {
+            // 현재 입실 상태 확인
+            const getTodayCheckIn = await pool.query(
+                "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
+                [uid]
+            )
+            // 예외처리
+            if (getTodayCheckIn[0].length == 0) {
+                return res.send(
+                    "<script>alert('이미 입실하셨습니다.'); location.href='/dev/check';</script>"
+                );
+            } else {
+                // 입실 상태 추가
+                const SetCheckIn = await pool.query(
+                    "INSERT INTO check_in VALUES(null, ?, ?)",
+                    [date, uid]
+                )
+                return res.send(
+                    "<script>alert('입실처리 되었습니다. 공부 열심히하세요!'); location.href='/';</script>"
+                );
             }
-            let dd = String(day);
-            data.uid = req.session.uid;
-            data.uname = req.session.uname;
-            data.isAdmin = req.session.isAdmin;
-            res.render("dev-check", {
-                data: data,
-            });
-        } catch (error) {
-            console.log(error);
-            res.redirect("/error");
+        // isCheckIn이 true이면 현재 사용자는 출석버튼을 누른 상태
+        } else {
+            // 현재 퇴실 상태 확인
+            const getTodayCheckOut = await pool.query(
+                "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
+                [uid]
+            )
+            if (getTodayCheckOut[0].length == 0) {
+                return res.send(
+                    "<script>alert('이미 퇴실하셨습니다.'); location.href='/dev/check';</script>"
+                );
+            } else {
+                // 퇴실 상태 추가
+                const SetCheckOut = await pool.query(
+                    "INSERT INTO check_out VALUES(null, ?, ?)",
+                    [date, uid]
+                )
+                return res.send(
+                    "<script>alert('퇴실처리 되었습니다. 오늘도 수고하셨습니다!'); location.href='/';</script>"
+                );
+            }
         }
+    } catch (error) {
+        console.log(error);
+        res.redirect("/error");
     }
 });
 module.exports = router;
