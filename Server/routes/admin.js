@@ -17,6 +17,72 @@ let header_data = {
     attendedUsers: 0,
     absentedUsers: 0,
     unapprovedExcused: 0,
+    date: moment().format("YYYY년 MM월 DD일"),
+    weekData: [],
+    start: 0,
+    end: 0,
+};
+
+const getWeek = async (gap) => {
+    // 이번주 날짜 구하기
+    let startInit = new Date();
+    let endInit = new Date();
+    startInit.setDate(startInit.getDate() - startInit.getDay() + gap * 7);
+    endInit.setDate(endInit.getDate() - endInit.getDay() + gap * 7 + 6);
+    start =
+        startInit.getFullYear() +
+        "-" +
+        ("0" + (startInit.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + startInit.getDate()).slice(-2);
+    end =
+        endInit.getFullYear() +
+        "-" +
+        ("0" + (endInit.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + endInit.getDate()).slice(-2);
+    header_data.start = start;
+    header_data.end = end;
+    // Algorithm for Attendances a week
+    const getUsers = await pool.query("SELECT uid, uname from user");
+    let attendancesWeek = {};
+    getUsers[0].forEach((e) => {
+        attendancesWeek[e.uid] = {
+            name: [e.uname],
+            6: "미출석",
+            0: "미출석",
+            1: "미출석",
+            2: "미출석",
+            3: "미출석",
+            4: "미출석",
+            5: "미출석",
+            clr: {
+                6: "#666",
+                0: "#666",
+                1: "#666",
+                2: "#666",
+                3: "#666",
+                4: "#666",
+                5: "#666",
+            },
+        };
+    });
+    const getWeeks = await pool.query(
+        "SELECT a.uid, a.uname, a.upw, a.seat, b.date, DATE_FORMAT(b.date, '%m/%d') AS cd, c.date, WEEKDAY(b.date) AS day, TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND b.date BETWEEN ? AND ? LEFT JOIN check_out AS c ON a.uid = c.uid AND c.date BETWEEN ? AND ? ORDER BY uid ASC;",
+        [start, end, start, end]
+    );
+    getWeeks[0].forEach((e) => {
+        if (e.day !== null) {
+            if (e.hour >= 4) {
+                attendancesWeek[e.uid][e.day] = "출석";
+                attendancesWeek[e.uid]["clr"][e.day] = "#4169E1";
+            } else {
+                attendancesWeek[e.uid][e.day] = "시간미달";
+                attendancesWeek[e.uid]["clr"][e.day] = "#fee600";
+            }
+        }
+    });
+    return attendancesWeek;
 };
 
 // 관리자페이지 GET
@@ -28,8 +94,8 @@ router.get("/", async (req, res, next) => {
             res.redirect("/");
         } else {
             try {
-                data.uid = req.session.uid;
                 data.uname = req.session.uname;
+                var currentNumber = req.query.currentNumber || 0;
                 // 관리자 페이지 메인 탭 Header에 들어갈 데이터 가져오기
                 // 전체 연구원 수, 출석 연구원 수, 미출석 연구원 수, 미승인 유고결석 개수
                 // 전체 연구원 수
@@ -52,14 +118,14 @@ router.get("/", async (req, res, next) => {
                 header_data.unapprovedExcused =
                     getUnapprovedExcused[0][0].unapproved;
 
-                data.isAdmin = req.session.isAdmin;
+                header_data.weekData = await getWeek(currentNumber);
                 return res.render("admin", {
+                    current_number: currentNumber,
                     data: data,
                     header_data: header_data,
                 });
             } catch (error) {
                 console.log(error);
-                res.redirect("/error");
             }
         }
     }
@@ -83,11 +149,10 @@ router.get("/admin-user", async (req, res, next) => {
                 // 관리자 페이지 연구원 관리 탭에 들어갈 데이터 가져오기
                 // 전체 연구원, 출석 상태 확인을 위한 오늘 날짜의 출석 데이터
                 const getAllMember = await pool.query(
-                    "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out' FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ?;",
+                    "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out' FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
                     [key, key]
                 );
                 // console.log(getAllMember[0].length)
-                data.isAdmin = req.session.isAdmin;
                 return res.render("admin-user", {
                     data: data,
                     bodydata: getAllMember[0],
@@ -112,10 +177,9 @@ router.get("/admin-absent", async (req, res, next) => {
             try {
                 data.uid = req.session.uid;
                 data.uname = req.session.uname;
-                data.isAdmin = req.session.isAdmin;
                 // 유고결석 테이블 데이터 가져오기
                 const getAbsentData = await pool.query(
-                    "SELECT a.no, a.uid, b.uname, a.status, a.wdate, a.context, a.file FROM excused_absence AS a LEFT JOIN user AS b ON a.uid = b.uid ORDER BY no DESC"
+                    "SELECT a.no, a.uid, b.uname, a.status, a.wdate, a.context, a.file, a.period FROM excused_absence AS a LEFT JOIN user AS b ON a.uid = b.uid ORDER BY no DESC"
                 );
                 return res.render("admin-absent", {
                     data: data,
@@ -233,9 +297,8 @@ router.post("/accessabsent", async (req, res, next) => {
             res.redirect("/");
         } else {
             try {
-                const {
-                    body: { no },
-                } = req;
+                let no = req.query.no;
+                console.log(no);
                 const updateStatus = await pool.query(
                     "UPDATE excused_absence SET status = '승인 완료' WHERE no = ?",
                     [no]
@@ -259,9 +322,7 @@ router.post("/denyabsent", async (req, res, next) => {
             res.redirect("/");
         } else {
             try {
-                const {
-                    body: { no },
-                } = req;
+                let no = req.query.no;
                 const updateStatus = await pool.query(
                     "UPDATE excused_absence SET status = '승인 거절' WHERE no = ?",
                     [no]

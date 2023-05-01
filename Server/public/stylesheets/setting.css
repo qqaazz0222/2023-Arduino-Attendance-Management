@@ -288,6 +288,19 @@ header .profile .user_popup ul li:last-child {
     z-index: 1000;
 }
 
+#admin-loading {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background: transparent;
+    z-index: 1000;
+}
+
 #loading>#check {
     display: flex;
     flex-direction: column;
