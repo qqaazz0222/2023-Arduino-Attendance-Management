@@ -186,7 +186,7 @@ router.post("/check/:type", async (req, res, next) => {
                         [uid]
                     );
                     return res.send(
-                        `<script>alert('${hh}:${mm} 입실처리 되었습니다. 공부 열심히하세요!'); location.href='/dev/check';</script>`
+                        `<script>alert('${hh}시 ${mm}분에 입실처리 되었습니다. 공부 열심히하세요!'); location.href='/dev/check';</script>`
                     );
                 }
                 // isCheckIn이 true이면 현재 사용자는 출석버튼을 누른 상태
@@ -216,7 +216,7 @@ router.post("/check/:type", async (req, res, next) => {
                         [uid]
                     );
                     return res.send(
-                        "<script>alert('퇴실처리 되었습니다. 오늘도 수고하셨습니다!'); location.href='/dev/check';</script>"
+                        `<script>alert('${hh}시 ${mm}분에 퇴실처리 되었습니다. 오늘도 수고하셨습니다!'); location.href='/dev/check';</script>`
                     );
                 }
             }
