@@ -442,6 +442,30 @@ router.get("/manage/notice/:no", async (req, res, next) => {
     }
 });
 
+router.post("/manage/notice/modify/:no", async (req, res, next) => {
+    const { content } = req.body;
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        if (req.session.isAdmin != true) {
+            res.redirect("/");
+        } else {
+            try {
+                const noticeModify = await pool.query(
+                    "UPDATE notice SET detail = ? WHERE no = ?;",
+                    [content, req.params.no]
+                );
+                return res.send(
+                    `<script>alert('수정되었습니다.'); location.href='/admin/manage/notice/${req.params.no}' ;</script>`
+                );
+            } catch (error) {
+                console.log(error);
+                res.redirect("/error");
+            }
+        }
+    }
+});
+
 router.post("/manage/notice/del", async (req, res, next) => {
     if (req.session.isLogined == undefined) {
         res.redirect("/sign");

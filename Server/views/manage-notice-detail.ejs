@@ -16,8 +16,12 @@
     <body>
         <style>
             .tox-tinymce {
-                border: none;
+                border: 1px solid var(--color-white-2);
                 border-radius: 0px;
+            }
+
+            .tox-tinymce:focus {
+                border: 2px solid var(--color-red-1);
             }
         </style>
         <div id="loading">
@@ -52,7 +56,11 @@
                     <div class="header">
                         <h2>공지사항 관리</h2>
                     </div>
-                    <div class="content">
+                    <form
+                        class="content"
+                        action="/admin/manage/notice/modify/<%= notice[0].no %>"
+                        method="post"
+                    >
                         <div class="content-header">
                             <div class="title"><%= notice[0].title %></div>
                             <div class="info-wrap">
@@ -66,19 +74,17 @@
                         </div>
                         <div class="content-body">
                             <div id="detail">
-                                <textarea id="tiny-viewer" name="detail">
+                                <div class="td-editor large">
+                                    <textarea id="tiny-editor" name="content">
                                     <%= notice[0].detail %>
-                                </textarea>
+                                    </textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="content-footer">
-                            <div
-                                id="update"
-                                class="func"
-                                href="/admin/manage/notice"
-                            >
+                            <button id="update" class="func" type="submit">
                                 수정
-                            </div>
+                            </button>
                             <div
                                 id="delete"
                                 class="func"
@@ -89,7 +95,7 @@
                             </div>
                             <a class="func" href="/admin/manage/notice">목록</a>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -100,7 +106,7 @@
     ></script>
     <script
         type="application/javascript"
-        src="/javascripts/tiny-viewer-config.js"
+        src="/javascripts/tiny-editor-config.js"
     ></script>
     <script>
         function del_check() {

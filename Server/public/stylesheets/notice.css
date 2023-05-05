@@ -463,7 +463,7 @@ body {
 
 .manage-notice-component .list .item .wdate,
 .manage-notice-component .list .item .view {
-    color: var(--color-gray-1);
+    color: var(--color-gray-2);
 }
 
 .manage-notice-component .list .item .title {
