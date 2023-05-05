@@ -140,7 +140,6 @@ router.post("/save", async (req, res, next) => {
     }
 });
 
-
 router.get("/check", async (req, res, next) => {
     try {
         res.render("dev-check", {
@@ -150,18 +149,20 @@ router.get("/check", async (req, res, next) => {
         console.log(error);
         res.redirect("/error");
     }
-})
+});
 
 router.post("/check/:type", async (req, res, next) => {
     try {
         const date = new Date();
+        const hh = date.getHours();
+        const mm = date.getMinutes();
         const type = req.params.type;
         const uid = req.body.id;
+        console.log(date);
 
-        const isUser = await pool.query(
-            "SELECT * FROM user WHERE uid = ?",
-            [uid]
-        )
+        const isUser = await pool.query("SELECT * FROM user WHERE uid = ?", [
+            uid,
+        ]);
         if (isUser[0].length == 0) {
             return res.send(
                 "<script>alert('AI+X 융합연구소 연구원이 아닙니다.'); location.href='/dev/check';</script>"
@@ -172,7 +173,7 @@ router.post("/check/:type", async (req, res, next) => {
                 const getTodayCheckIn = await pool.query(
                     "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
                     [uid]
-                )
+                );
                 // 예외처리
                 if (getTodayCheckIn[0].length > 0) {
                     return res.send(
@@ -181,30 +182,39 @@ router.post("/check/:type", async (req, res, next) => {
                 } else {
                     // 입실 상태 추가
                     const SetCheckIn = await pool.query(
-                        "INSERT INTO check_in VALUES(null, ?, ?)",
-                        [date, uid]
-                    )
+                        "INSERT INTO check_in VALUES(null, NOW(), ?)",
+                        [uid]
+                    );
                     return res.send(
-                        "<script>alert('입실처리 되었습니다. 공부 열심히하세요!'); location.href='/dev/check';</script>"
+                        `<script>alert('${hh}:${mm} 입실처리 되었습니다. 공부 열심히하세요!'); location.href='/dev/check';</script>`
                     );
                 }
-            // isCheckIn이 true이면 현재 사용자는 출석버튼을 누른 상태
+                // isCheckIn이 true이면 현재 사용자는 출석버튼을 누른 상태
             } else {
+                // 현재 입실 상태 확인
+                const getTodayCheckIn = await pool.query(
+                    "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
+                    [uid]
+                );
                 // 현재 퇴실 상태 확인
                 const getTodayCheckOut = await pool.query(
                     "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
                     [uid]
-                )
-                if (getTodayCheckOut[0].length > 0) {
+                );
+                if (getTodayCheckIn[0].length == 0) {
+                    return res.send(
+                        "<script>alert('아직 입실하지 않았습니다.'); location.href='/dev/check';</script>"
+                    );
+                } else if (getTodayCheckOut[0].length > 0) {
                     return res.send(
                         "<script>alert('이미 퇴실하셨습니다.'); location.href='/dev/check';</script>"
                     );
                 } else {
                     // 퇴실 상태 추가
                     const SetCheckOut = await pool.query(
-                        "INSERT INTO check_out VALUES(null, ?, ?)",
-                        [date, uid]
-                    )
+                        "INSERT INTO check_out VALUES(null, NOW(), ?)",
+                        [uid]
+                    );
                     return res.send(
                         "<script>alert('퇴실처리 되었습니다. 오늘도 수고하셨습니다!'); location.href='/dev/check';</script>"
                     );
