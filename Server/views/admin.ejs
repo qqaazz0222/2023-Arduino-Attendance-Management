@@ -1,234 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title><%= data.title %></title>
-        <link rel="favicon" href="/images/favicon.ico" />
-        <!-- Google Materual Icons -->
-        <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
-        />
-        <!-- Local CSS Theme -->
-        <link rel="stylesheet" href="/stylesheets/setting.css" />
-        <link rel="stylesheet" href="/stylesheets/main.css" />
-        <link rel="stylesheet" href="/stylesheets/admin.css" />
-    </head>
-    <body>
-        <div id="admin-loading">
-            <lottie-player
-                src="/lottie/admin-loading.json"
-                background="transparent"
-                speed="1"
-                style="width: 240px; height: 240px"
-                loop
-                autoplay
-            ></lottie-player>
-        </div>
-        <input
-            id="currentNumber"
-            style="display: none"
-            value="<%= current_number %>"
-        />
-        <%- include ./header %>
-        <div class="board-page">
-            <%- include ./admin-nav %>
-            <div class="content">
-                <!-- 금일 현황 대시보드 -->
-                <div class="content-container">
-                    <div class="content-container-title">
-                        <img
-                            class="icon"
-                            src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico45.gif"
-                            alt=""
-                        />
-                        <p><%= header_data.date %></p>
-                    </div>
-                    <div class="content-container-body">
-                        <!-- Header Component 1 -->
-                        <div class="circle">
-                            <div class="top"><%= header_data.users %>명</div>
-                            <div class="mid"><hr /></div>
-                            <div class="bottom">총 연구원</div>
-                        </div>
-                        <!-- Header Component 2 -->
-                        <div class="circle">
-                            <div class="top">
-                                <%= header_data.attendedUsers %>명
-                            </div>
-                            <div class="mid"><hr /></div>
-                            <div class="bottom">금일 출석</div>
-                        </div>
-                        <!-- Header Component 3 -->
-                        <div class="circle">
-                            <div class="top">
-                                <%= header_data.absentedUsers %>명
-                            </div>
-                            <div class="mid"><hr /></div>
-                            <div class="bottom">금일 미출석</div>
-                        </div>
-                        <!-- Header Component 4 -->
-                        <div class="circle">
-                            <div class="top">
-                                <%= header_data.unapprovedExcused %>건
-                            </div>
-                            <div class="mid"><hr /></div>
-                            <div class="bottom">미승인 유고결석</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-container">
-                    <div class="content-container-title">
-                        <img
-                            class="icon"
-                            src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico08.gif"
-                            alt=""
-                        />
-                        <p>주간 출석 현황</p>
-                    </div>
-                    <div class="content-container-body-second">
-                        <div class="control-panel">
-                            <a onclick="weekchange(1); block_double_click()"
-                                >지난주</a
-                            >
-                            <p>
-                                <%= header_data.start %>(일) ~ <%=
-                                header_data.end %>(월)
-                            </p>
-                            <a onclick="weekchange(-1); block_double_click()"
-                                >다음주</a
-                            >
-                        </div>
-                        <div class="grid-date">
-                            <p>이름(학번)</p>
-                            <p>일</p>
-                            <p>월</p>
-                            <p>화</p>
-                            <p>수</p>
-                            <p>목</p>
-                            <p>금</p>
-                            <p>토</p>
-                        </div>
-                        <div class="flex-absent">
-                            <% for(var key in header_data.weekData) { %>
-                            <div class="grid-body">
-                                <p>
-                                    <%= header_data.weekData[key]['name'] %><br />(<%=
-                                    key %>)
-                                </p>
-                                <p
-                                    style="
-                                        --i: <%= header_data.weekData[key][
-                                            'clr'][ '6'] %>;
-                                    "
-                                >
-                                    <%= header_data.weekData[key]['6'] %>
-                                </p>
-                                <p
-                                    style="
-                                        --i: <%= header_data.weekData[key][
-                                            'clr'][ '0'] %>;
-                                    "
-                                >
-                                    <%= header_data.weekData[key]['0'] %>
-                                </p>
-                                <p
-                                    style="
-                                        --i: <%= header_data.weekData[key][
-                                            'clr'][ '1'] %>;
-                                    "
-                                >
-                                    <%= header_data.weekData[key]['1'] %>
-                                </p>
-                                <p
-                                    style="
-                                        --i: <%= header_data.weekData[key][
-                                            'clr'][ '2'] %>;
-                                    "
-                                >
-                                    <%= header_data.weekData[key]['2'] %>
-                                </p>
-                                <p
-                                    style="
-                                        --i: <%= header_data.weekData[key][
-                                            'clr'][ '3'] %>;
-                                    "
-                                >
-                                    <%= header_data.weekData[key]['3'] %>
-                                </p>
-                                <p
-                                    style="
-                                        --i: <%= header_data.weekData[key][
-                                            'clr'][ '4'] %>;
-                                    "
-                                >
-                                    <%= header_data.weekData[key]['4'] %>
-                                </p>
-                                <p
-                                    style="
-                                        --i: <%= header_data.weekData[key][
-                                            'clr'][ '5'] %>;
-                                    "
-                                >
-                                    <%= header_data.weekData[key]['5'] %>
-                                </p>
-                            </div>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
+  <head>
+    <title><%= data.title %></title>
+    <link rel="favicon" href="/images/favicon.ico" />
+    <!-- Google Materual Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Local CSS Theme -->
+    <link rel="stylesheet" href="/stylesheets/setting.css" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link rel="stylesheet" href="/stylesheets/admin.css" />
+  </head>
+  <body>
+    <div id="admin-loading">
+      <lottie-player src="/lottie/admin-loading.json" background="transparent" speed="1" style="width: 240px; height: 240px" loop autoplay></lottie-player>
+    </div>
+    <input id="currentNumber" style="display: none" value="<%= current_number %>" />
+    <%- include ./header %>
+    <div class="board-page">
+      <%- include ./admin-nav %>
+      <div class="content">
+        <!-- 금일 현황 대시보드 -->
+        <div class="content-container">
+          <div class="content-container-title">
+            <img class="icon" src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico45.gif" alt="" />
+            <p><%= header_data.date %></p>
+          </div>
+          <div class="content-container-body">
+            <!-- Header Component 1 -->
+            <div class="circle">
+              <div class="top"><%= header_data.users %>명</div>
+              <div class="mid"><hr /></div>
+              <div class="bottom">총 연구원</div>
             </div>
+            <!-- Header Component 2 -->
+            <div class="circle">
+              <div class="top"><%= header_data.attendedUsers %>명</div>
+              <div class="mid"><hr /></div>
+              <div class="bottom">금일 출석</div>
+            </div>
+            <!-- Header Component 3 -->
+            <div class="circle">
+              <div class="top"><%= header_data.absentedUsers %>명</div>
+              <div class="mid"><hr /></div>
+              <div class="bottom">금일 미출석</div>
+            </div>
+            <!-- Header Component 4 -->
+            <div class="circle">
+              <div class="top"><%= header_data.unapprovedExcused %>건</div>
+              <div class="mid"><hr /></div>
+              <div class="bottom">미승인 유고결석</div>
+            </div>
+          </div>
         </div>
-        <script>
-            function block_double_click() {
-                var target = document.getElementById("admin-loading");
-                target.style.display = "flex";
-            }
-            function weekchange(target) {
-                var currentNumber =
-                    document.getElementById("currentNumber").value * 1;
-                currentNumber -= target;
-                let form = document.createElement("form");
-                form.setAttribute("method", "get");
-                form.setAttribute("action", "/admin?key=" + currentNumber);
-                document.charset = "utf-8";
-                let hiddenField = document.createElement("input");
-                hiddenField.setAttribute("type", "hidden");
-                hiddenField.setAttribute("name", "currentNumber");
-                hiddenField.setAttribute("value", currentNumber);
-                form.appendChild(hiddenField);
-                document.body.appendChild(form);
-                form.submit();
-            }
-            function userPopupShow() {
-                var target = document.querySelector(`.user_popup`);
-                if (
-                    target.style.display == "none" ||
-                    target.style.display == ""
-                ) {
-                    target.style.display = "block";
-                } else {
-                    target.style.display = "none";
-                }
-            }
-            function userPopupEditPwd() {
-                var target = document.querySelector(
-                    `.user_popup_edit_password`
-                );
-                if (
-                    target.style.display == "none" ||
-                    target.style.display == ""
-                ) {
-                    target.style.display = "block";
-                }
-            }
-            function userPopupEditPwdClose() {
-                var target = (document.querySelector(
-                    `.user_popup_edit_password`
-                ).style.display = "none");
-            }
-        </script>
-        <!-- JQuery -->
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    </body>
+        <div class="content-container">
+          <div class="content-container-title">
+            <img class="icon" src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico08.gif" alt="" />
+            <p>주간 출석 현황</p>
+          </div>
+          <div class="content-container-body-second">
+            <div class="control-panel">
+              <a onclick="weekchange(1); block_double_click()">지난주</a>
+              <p><%= header_data.start %>(월) ~ <%= header_data.end %>(금)</p>
+              <a onclick="weekchange(-1); block_double_click()">다음주</a>
+            </div>
+            <div class="grid-date">
+              <p>이름(학번)</p>
+              <p>월</p>
+              <p>화</p>
+              <p>수</p>
+              <p>목</p>
+              <p>금</p>
+            </div>
+            <div class="flex-absent">
+              <% for(var key in header_data.weekData) { %>
+              <div class="grid-body">
+                <p><%= header_data.weekData[key]['name'] %><br />(<%= key %>)</p>
+                <p style="--i: <%= header_data.weekData[key][ 'clr'][ '0'] %>">
+                  <%= header_data.weekData[key]['0'] %><br /><span><%= header_data.weekData[key]['hour']['0'] %>시간</span>
+                </p>
+                <p style="--i: <%= header_data.weekData[key][ 'clr'][ '1'] %>">
+                  <%= header_data.weekData[key]['1'] %><br /><span><%= header_data.weekData[key]['hour']['1'] %>시간</span>
+                </p>
+                <p style="--i: <%= header_data.weekData[key][ 'clr'][ '2'] %>">
+                  <%= header_data.weekData[key]['2'] %><br /><span><%= header_data.weekData[key]['hour']['2'] %>시간</span>
+                </p>
+                <p style="--i: <%= header_data.weekData[key][ 'clr'][ '3'] %>">
+                  <%= header_data.weekData[key]['3'] %><br /><span><%= header_data.weekData[key]['hour']['3'] %>시간</span>
+                </p>
+                <p style="--i: <%= header_data.weekData[key][ 'clr'][ '4'] %>">
+                  <%= header_data.weekData[key]['4'] %><br /><span><%= header_data.weekData[key]['hour']['4'] %>시간</span>
+                </p>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function block_double_click() {
+        var target = document.getElementById("admin-loading");
+        target.style.display = "flex";
+      }
+      function weekchange(target) {
+        var currentNumber = document.getElementById("currentNumber").value * 1;
+        currentNumber -= target;
+        let form = document.createElement("form");
+        form.setAttribute("method", "get");
+        form.setAttribute("action", "/admin?key=" + currentNumber);
+        document.charset = "utf-8";
+        let hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "currentNumber");
+        hiddenField.setAttribute("value", currentNumber);
+        form.appendChild(hiddenField);
+        document.body.appendChild(form);
+        form.submit();
+      }
+      function userPopupShow() {
+        var target = document.querySelector(`.user_popup`);
+        if (target.style.display == "none" || target.style.display == "") {
+          target.style.display = "block";
+        } else {
+          target.style.display = "none";
+        }
+      }
+      function userPopupEditPwd() {
+        var target = document.querySelector(`.user_popup_edit_password`);
+        if (target.style.display == "none" || target.style.display == "") {
+          target.style.display = "block";
+        }
+      }
+      function userPopupEditPwdClose() {
+        var target = (document.querySelector(`.user_popup_edit_password`).style.display = "none");
+      }
+    </script>
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  </body>
 </html>

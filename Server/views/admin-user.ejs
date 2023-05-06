@@ -1,345 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title><%= data.title %></title>
-        <link rel="favicon" href="/images/favicon.ico" />
-        <!-- Google Materual Icons -->
-        <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
-        />
-        <!-- Local CSS Theme -->
-        <link rel="stylesheet" href="/stylesheets/setting.css" />
-        <link rel="stylesheet" href="/stylesheets/main.css" />
-        <link rel="stylesheet" href="/stylesheets/admin-user.css" />
-    </head>
-    <body>
-        <%- include ./header %>
-        <div class="user-page">
-            <%- include ./admin-nav %>
-            <div class="content">
-                <div class="content-container">
-                    <div class="content-container-title">
-                        <div>
-                            <img
-                                class="icon"
-                                src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico05.gif"
-                                alt=""
-                            />
-                            <p>연구원 관리</p>
-                        </div>
-                        <div>
-                            <input
-                                id="currentDate"
-                                type="date"
-                                value="<%= key %>"
-                                onchange="calOnChange(event)"
-                            />
-                            <button onclick="popup_adduser_show()">
-                                사용자 추가
-                            </button>
-                            <button>엑셀 다운로드(준비중)</button>
-                        </div>
-                    </div>
-                    <div class="content-container-body">
-                        <div class="grid-head">
-                            <p>학번</p>
-                            <p>이름</p>
-                            <p>전화번호</p>
-                            <p>좌석</p>
-                            <p>상태</p>
-                            <p>입실</p>
-                            <p>퇴실</p>
-                            <p>operation</p>
-                        </div>
-                        <div class="flex-data">
-                            <div class="grid-body">
-                                <% for(var i = 0; i < bodydata.length; i++) { %>
-                                <p><%= bodydata[i].uid %></p>
-                                <p><%= bodydata[i].uname %></p>
-                                <p>010-0000-0000</p>
-                                <p><%= bodydata[i].seat %>번</p>
-                                <% if ( bodydata[i].in ) { %>
-                                <div class="status_ok">출석</div>
-                                <% } else { %>
-                                <div class="status_deny">미출석</div>
-                                <% } %>
-                                <p><%= bodydata[i].in %></p>
-                                <p><%= bodydata[i].out %></p>
-                                <div class="operation_div">
-                                    <button
-                                        class="operation_button"
-                                        onclick="popup_edituser_show('<%= bodydata[i].uid %>', '<%= bodydata[i].uname %>', '<%= bodydata[i].upw %>', '<%= bodydata[i].seat %>')"
-                                    >
-                                        <span class="material-icons">
-                                            mode_edit
-                                        </span>
-                                    </button>
-                                    <button
-                                        class="operation_button"
-                                        onclick="popup_deleteuser_show('<%= bodydata[i].uid %>')"
-                                    >
-                                        <span class="material-icons">
-                                            delete
-                                        </span>
-                                    </button>
-                                </div>
-                                <% } %>
-                            </div>
-                        </div>
-                    </div>
+  <head>
+    <title><%= data.title %></title>
+    <link rel="favicon" href="/images/favicon.ico" />
+    <!-- Google Materual Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Local CSS Theme -->
+    <link rel="stylesheet" href="/stylesheets/setting.css" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link rel="stylesheet" href="/stylesheets/admin-user.css" />
+  </head>
+  <body>
+    <%- include ./header %>
+    <div class="user-page">
+      <%- include ./admin-nav %>
+      <div class="content">
+        <div class="content-container">
+          <div class="content-container-title">
+            <div>
+              <img class="icon" src="https://www.dongseo.ac.kr/_Template/Main/demo/_Img/qpop_ico05.gif" alt="" />
+              <p>연구원 관리</p>
+            </div>
+            <div>
+              <input id="currentDate" type="date" value="<%= key %>" onchange="calOnChange(event)" />
+              <button onclick="popup_adduser_show()">사용자 추가</button>
+              <button onclick="excel()">엑셀 다운로드(준비중)</button>
+            </div>
+          </div>
+          <div class="content-container-body">
+            <div class="grid-head">
+              <p>학번</p>
+              <p>이름</p>
+              <p>전화번호</p>
+              <p>좌석</p>
+              <p>상태</p>
+              <p>입실</p>
+              <p>퇴실</p>
+              <p>출석시간</p>
+              <p>operation</p>
+            </div>
+            <div class="flex-data">
+              <div class="grid-body">
+                <% for(var i = 0; i < bodydata.length; i++) { %>
+                <p><%= bodydata[i].uid %></p>
+                <p><%= bodydata[i].uname %></p>
+                <p>010-0000-0000</p>
+                <p><%= bodydata[i].seat %>번</p>
+                <% if ( bodydata[i].in ) { %> <% if ( bodydata[i].hour >= 4) { %>
+                <div class="status_ok">출석</div>
+                <% } else { %>
+                <div class="status_in">시간부족</div>
+                <% } %> <% } else { %>
+                <div class="status_deny">미출석</div>
+                <% } %>
+                <p><%= bodydata[i].in %></p>
+                <p><%= bodydata[i].out %></p>
+                <% if (bodydata[i].hour) { %>
+                <p><%= bodydata[i].hour %>시간</p>
+                <% } else { %>
+                <p>-</p>
+                <% } %>
+                <div class="operation_div">
+                  <button
+                    class="operation_button"
+                    onclick="popup_edituser_show('<%= bodydata[i].uid %>', '<%= bodydata[i].uname %>', '<%= bodydata[i].upw %>', '<%= bodydata[i].seat %>')"
+                  >
+                    <span class="material-icons"> mode_edit </span>
+                  </button>
+                  <button class="operation_button" onclick="popup_deleteuser_show('<%= bodydata[i].uid %>')">
+                    <span class="material-icons"> delete </span>
+                  </button>
                 </div>
+                <% } %>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <!-- 사용자 추가 -->
-        <div class="popup_background_hide">
-            <div class="popup_adduser_hide">
-                <form method="post">
-                    <h4>사용자 추가</h4>
-                    <div class="popup_adduser_hide_content">
-                        <div class="user_popup_edit_password_pwd">
-                            <div>
-                                <p>학번</p>
-                                <input
-                                    type="number"
-                                    id="studentcode"
-                                    name="studentcode"
-                                    autocomplete="off"
-                                />
-                            </div>
-                            <div>
-                                <p>이름</p>
-                                <input
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    autocomplete="off"
-                                />
-                            </div>
-                            <div>
-                                <p>비밀번호</p>
-                                <input
-                                    type="password"
-                                    id="userupw"
-                                    name="userupw"
-                                    autocomplete="off"
-                                />
-                            </div>
-                            <div>
-                                <p>좌석</p>
-                                <input
-                                    type="number"
-                                    id="userseat"
-                                    name="userseat"
-                                    autocomplete="off"
-                                />
-                            </div>
-                        </div>
-                        <div class="user_popup_edit_password_footer">
-                            <button
-                                type="submit"
-                                class="user_popup_edit_save"
-                                onclick="javascript: form.action='/admin/adduser';"
-                            >
-                                추가
-                            </button>
-                            <button
-                                type="button"
-                                class="user_popup_edit_close"
-                                onclick="popup_adduser_hide()"
-                            >
-                                닫기
-                            </button>
-                        </div>
-                    </div>
-                </form>
+    <!-- 사용자 추가 -->
+    <div class="popup_background_hide">
+      <div class="popup_adduser_hide">
+        <form method="post">
+          <h4>사용자 추가</h4>
+          <div class="popup_adduser_hide_content">
+            <div class="user_popup_edit_password_pwd">
+              <div>
+                <p>학번</p>
+                <input type="number" id="studentcode" name="studentcode" autocomplete="off" />
+              </div>
+              <div>
+                <p>이름</p>
+                <input type="text" id="username" name="username" autocomplete="off" />
+              </div>
+              <div>
+                <p>비밀번호</p>
+                <input type="password" id="userupw" name="userupw" autocomplete="off" />
+              </div>
+              <div>
+                <p>좌석</p>
+                <input type="number" id="userseat" name="userseat" autocomplete="off" />
+              </div>
             </div>
-        </div>
-        <!-- 사용자 수정 -->
-        <div class="popup_edit_background_hide">
-            <div class="popup_adduser_hide">
-                <form method="post">
-                    <h4>사용자 수정</h4>
-                    <div class="popup_adduser_hide_content">
-                        <div class="user_popup_edit_password_pwd">
-                            <div>
-                                <p>학번</p>
-                                <input
-                                    type="number"
-                                    id="edit_studentcode"
-                                    name="studentcode"
-                                    autocomplete="off"
-                                    readonly
-                                />
-                            </div>
-                            <div>
-                                <p>이름</p>
-                                <input
-                                    type="text"
-                                    id="edit_username"
-                                    name="username"
-                                    autocomplete="off"
-                                />
-                            </div>
-                            <div>
-                                <p>비밀번호</p>
-                                <input
-                                    type="text"
-                                    id="edit_userupw"
-                                    name="userupw"
-                                    autocomplete="off"
-                                />
-                            </div>
-                            <div>
-                                <p>좌석</p>
-                                <input
-                                    type="number"
-                                    id="edit_userseat"
-                                    name="userseat"
-                                    autocomplete="off"
-                                />
-                            </div>
-                        </div>
-                        <div class="user_popup_edit_password_footer">
-                            <button
-                                type="submit"
-                                class="user_popup_edit_save"
-                                onclick="javascript: form.action='/admin/edituser';"
-                            >
-                                수정
-                            </button>
-                            <button
-                                type="button"
-                                class="user_popup_edit_close"
-                                onclick="popup_edituser_hide()"
-                            >
-                                닫기
-                            </button>
-                        </div>
-                    </div>
-                </form>
+            <div class="user_popup_edit_password_footer">
+              <button type="submit" class="user_popup_edit_save" onclick="javascript: form.action='/admin/adduser';">추가</button>
+              <button type="button" class="user_popup_edit_close" onclick="popup_adduser_hide()">닫기</button>
             </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- 사용자 수정 -->
+    <div class="popup_edit_background_hide">
+      <div class="popup_adduser_hide">
+        <form method="post">
+          <h4>사용자 수정</h4>
+          <div class="popup_adduser_hide_content">
+            <div class="user_popup_edit_password_pwd">
+              <div>
+                <p>학번</p>
+                <input type="number" id="edit_studentcode" name="studentcode" autocomplete="off" readonly />
+              </div>
+              <div>
+                <p>이름</p>
+                <input type="text" id="edit_username" name="username" autocomplete="off" />
+              </div>
+              <div>
+                <p>비밀번호</p>
+                <input type="text" id="edit_userupw" name="userupw" autocomplete="off" />
+              </div>
+              <div>
+                <p>좌석</p>
+                <input type="number" id="edit_userseat" name="userseat" autocomplete="off" />
+              </div>
+            </div>
+            <div class="user_popup_edit_password_footer">
+              <button type="submit" class="user_popup_edit_save" onclick="javascript: form.action='/admin/edituser';">수정</button>
+              <button type="button" class="user_popup_edit_close" onclick="popup_edituser_hide()">닫기</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- 사용자 삭제 팝업 -->
+    <div class="popup_okay_background_hide">
+      <form method="post">
+        <div class="popup_okay">
+          <input id="name_hide" name="studentcode" value="" style="display: none" />
+          <p>삭제하시겠습니까?</p>
+          <div>
+            <button type="submit" onclick="javascript: form.action='/admin/deleteuser';">예</button>
+            <button type="button" onclick="popup_deleteuser_hide()">아니요</button>
+          </div>
         </div>
-        <!-- 사용자 삭제 팝업 -->
-        <div class="popup_okay_background_hide">
-            <form method="post">
-                <div class="popup_okay">
-                    <input
-                        id="name_hide"
-                        name="studentcode"
-                        value=""
-                        style="display: none"
-                    />
-                    <p>삭제하시겠습니까?</p>
-                    <div>
-                        <button
-                            type="submit"
-                            onclick="javascript: form.action='/admin/deleteuser';"
-                        >
-                            예
-                        </button>
-                        <button type="button" onclick="popup_deleteuser_hide()">
-                            아니요
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <script>
-            function calOnChange(e) {
-                var selectedDate = e.target.value;
-                let form = document.createElement("form");
-                form.setAttribute("method", "get");
-                form.setAttribute(
-                    "action",
-                    "/admin/admin-user?key=" + selectedDate
-                );
-                document.charset = "utf-8";
-                let hiddenField = document.createElement("input");
-                hiddenField.setAttribute("type", "hidden");
-                hiddenField.setAttribute("name", "key");
-                hiddenField.setAttribute("value", selectedDate);
-                form.appendChild(hiddenField);
-                document.body.appendChild(form);
-                form.submit();
-            }
-            function userPopupShow() {
-                var target = document.querySelector(`.user_popup`);
-                if (
-                    target.style.display == "none" ||
-                    target.style.display == ""
-                ) {
-                    target.style.display = "block";
-                } else {
-                    target.style.display = "none";
-                }
-            }
+      </form>
+    </div>
+    <script>
+      function excel() {
+        $.ajax({
+          url: "http://localhost:3000/admin/downloadexcel",
+          type: "post",
+          data: {
+            key: "<%= key %>",
+          },
+          success: function (response) {
+            console.log("성공");
+          },
+        });
+      }
 
-            function userPopupEditPwd() {
-                var target = document.querySelector(
-                    `.user_popup_edit_password`
-                );
-                if (
-                    target.style.display == "none" ||
-                    target.style.display == ""
-                ) {
-                    target.style.display = "block";
-                }
-            }
+      function calOnChange(e) {
+        var selectedDate = e.target.value;
+        let form = document.createElement("form");
+        form.setAttribute("method", "get");
+        form.setAttribute("action", "/admin/admin-user?key=" + selectedDate);
+        document.charset = "utf-8";
+        let hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "key");
+        hiddenField.setAttribute("value", selectedDate);
+        form.appendChild(hiddenField);
+        document.body.appendChild(form);
+        form.submit();
+      }
+      function userPopupShow() {
+        var target = document.querySelector(`.user_popup`);
+        if (target.style.display == "none" || target.style.display == "") {
+          target.style.display = "block";
+        } else {
+          target.style.display = "none";
+        }
+      }
 
-            function userPopupEditPwdClose() {
-                var target = (document.querySelector(
-                    `.user_popup_edit_password`
-                ).style.display = "none");
-            }
+      function userPopupEditPwd() {
+        var target = document.querySelector(`.user_popup_edit_password`);
+        if (target.style.display == "none" || target.style.display == "") {
+          target.style.display = "block";
+        }
+      }
 
-            function popup_adduser_show() {
-                var target = (document.querySelector(
-                    `.popup_background_hide`
-                ).style.display = "flex");
-            }
+      function userPopupEditPwdClose() {
+        var target = (document.querySelector(`.user_popup_edit_password`).style.display = "none");
+      }
 
-            function popup_adduser_hide() {
-                var target = (document.querySelector(
-                    `.popup_background_hide`
-                ).style.display = "none");
-            }
+      function popup_adduser_show() {
+        var target = (document.querySelector(`.popup_background_hide`).style.display = "flex");
+      }
 
-            function popup_edituser_show(code, name, pw, seat) {
-                var target = (document.querySelector(
-                    `.popup_edit_background_hide`
-                ).style.display = "flex");
-                var code = (document.querySelector(`#edit_studentcode`).value =
-                    code);
-                var name = (document.querySelector(`#edit_username`).value =
-                    name);
-                var pw = (document.querySelector(`#edit_userupw`).value = pw);
-                var seat = (document.querySelector(`#edit_userseat`).value =
-                    seat);
-            }
+      function popup_adduser_hide() {
+        var target = (document.querySelector(`.popup_background_hide`).style.display = "none");
+      }
 
-            function popup_edituser_hide() {
-                var target = (document.querySelector(
-                    `.popup_edit_background_hide`
-                ).style.display = "none");
-            }
+      function popup_edituser_show(code, name, pw, seat) {
+        var target = (document.querySelector(`.popup_edit_background_hide`).style.display = "flex");
+        var code = (document.querySelector(`#edit_studentcode`).value = code);
+        var name = (document.querySelector(`#edit_username`).value = name);
+        var pw = (document.querySelector(`#edit_userupw`).value = pw);
+        var seat = (document.querySelector(`#edit_userseat`).value = seat);
+      }
 
-            function popup_deleteuser_show(studentcode) {
-                var target = (document.querySelector(
-                    `.popup_okay_background_hide`
-                ).style.display = "flex");
-                var hide_name = (document.querySelector(`#name_hide`).value =
-                    studentcode);
-            }
+      function popup_edituser_hide() {
+        var target = (document.querySelector(`.popup_edit_background_hide`).style.display = "none");
+      }
 
-            function popup_deleteuser_hide() {
-                var target = (document.querySelector(
-                    `.popup_okay_background_hide`
-                ).style.display = "none");
-            }
-        </script>
-        <!-- JQuery -->
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    </body>
+      function popup_deleteuser_show(studentcode) {
+        var target = (document.querySelector(`.popup_okay_background_hide`).style.display = "flex");
+        var hide_name = (document.querySelector(`#name_hide`).value = studentcode);
+      }
+
+      function popup_deleteuser_hide() {
+        var target = (document.querySelector(`.popup_okay_background_hide`).style.display = "none");
+      }
+    </script>
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  </body>
 </html>
