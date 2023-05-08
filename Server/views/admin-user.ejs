@@ -55,8 +55,10 @@
                 <% } %>
                 <p><%= bodydata[i].in %></p>
                 <p><%= bodydata[i].out %></p>
-                <% if (bodydata[i].hour) { %>
+                <% if (bodydata[i].out) { %>
                 <p><%= bodydata[i].hour %>시간</p>
+                <% } else if (bodydata[i].curhour || bodydata[i].curhour === 0) { %>
+                <p><%= bodydata[i].curhour %>시간</p>
                 <% } else { %>
                 <p>-</p>
                 <% } %>

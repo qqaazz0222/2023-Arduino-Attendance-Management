@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= data.title %></title>
+    <link rel="favicon" href="/images/favicon.ico" />
+    <!-- Google Materual Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Local CSS Theme -->
+    <link rel="stylesheet" href="/stylesheets/setting.css" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link rel="stylesheet" href="/stylesheets/admin-warn.css" />
+  </head>
+  <body>
+    <%- include ./header %>
+    <div class="board-page">
+      <%- include ./admin-nav %>
+      <div class="content"></div>
+    </div>
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  </body>
+</html>

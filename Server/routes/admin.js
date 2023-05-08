@@ -75,15 +75,22 @@ const getWeek = async (gap) => {
       },
     };
   });
+  // DATE_FORMAT(b.date, '%m/%d') AS today_in
   const getWeeks = await pool.query(
-    "SELECT a.uid, a.uname, a.upw, a.seat, b.date, DATE_FORMAT(b.date, '%m/%d') AS cd, c.date, WEEKDAY(b.date) AS day, TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND b.date BETWEEN ? AND ? LEFT JOIN check_out AS c ON a.uid = c.uid AND c.date BETWEEN ? AND ? ORDER BY uid ASC;",
+    "SELECT a.uid, a.uname, a.upw, a.seat, b.date AS today_in, c.date AS today_out, WEEKDAY(b.date) AS day, TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour, TIMESTAMPDIFF(HOUR, b.date, CURRENT_TIMESTAMP) AS curhour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND b.date BETWEEN ? AND ? LEFT JOIN check_out AS c ON a.uid = c.uid AND c.date BETWEEN ? AND ? ORDER BY uid ASC;",
     [start, end, start, end]
   );
+  console.log(getWeeks[0]);
   getWeeks[0].forEach((e) => {
     if (e.day !== null) {
-      if (e.hour > 0) {
-        attendancesWeek[e.uid]["hour"][e.day] = e.hour;
+      if (e.today_out === null) {
+        attendancesWeek[e.uid]["hour"][e.day] = e.curhour;
+      } else {
+        if (e.hour > 0) {
+          attendancesWeek[e.uid]["hour"][e.day] = e.hour;
+        }
       }
+
       if (e.hour >= 4) {
         attendancesWeek[e.uid][e.day] = "출석";
         attendancesWeek[e.uid]["clr"][e.day] = "#4169E1";
@@ -151,7 +158,7 @@ router.get("/admin-user", async (req, res, next) => {
         // 관리자 페이지 연구원 관리 탭에 들어갈 데이터 가져오기
         // 전체 연구원, 출석 상태 확인을 위한 오늘 날짜의 출석 데이터
         const getAllMember = await pool.query(
-          "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out', TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
+          "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out', TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour, TIMESTAMPDIFF(HOUR, b.date, CURRENT_TIMESTAMP) AS curhour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
           [key, key]
         );
         // console.log(getAllMember[0].length)
@@ -485,6 +492,26 @@ router.post("/create/notice/", async (req, res, next) => {
   }
 });
 
+// 연구원 경고 관리 페이지
+router.get("/warning", async (req, res, next) => {
+  if (req.session.isLogined == undefined) {
+    res.redirect("/sign");
+  } else {
+    if (req.session.isAdmin != true) {
+      res.redirect("/");
+    } else {
+      try {
+        return res.render("admin-warn", {
+          data: data,
+        });
+      } catch (error) {
+        console.log(error);
+        res.redirect("/error");
+      }
+    }
+  }
+});
+
 // 연구원 관리 엑셀 다운로드
 router.post("/downloadexcel", async (req, res, next) => {
   if (req.session.isLogined == undefined) {
@@ -501,7 +528,7 @@ router.post("/downloadexcel", async (req, res, next) => {
           "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out', TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
           [key, key]
         );
-        makeExcel(data[0]);
+        return res.send("<script>alert('현재 엑셀 다운로드 기능이 준비 중입니다.'); location.href='/admin/manage';</script>");
       } catch (error) {
         console.log(error);
         res.redirect("/error");

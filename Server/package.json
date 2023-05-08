@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "blob": "^0.1.0",

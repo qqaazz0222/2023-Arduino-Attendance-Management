@@ -1,43 +1,28 @@
 <div class="admin_panel">
-    <div class="admin_panel_top">
-        <span>융합연구소 관리자 페이지</span>
-        <span
-            ><span class="material-icons"> verified_user </span> <%= data.uname
-            %>님, 환영합니다</span
-        >
-    </div>
-    <nav>
-        <ul>
-            <a
-                href="/admin"
-                id="panel_select_main"
-                onclick="panel_changed(this)"
-                ><li><img src="/images/icon-admin-1.png" />메인</li></a
-            >
-            <a
-                href="/admin/admin-user"
-                id="panel_select_user"
-                onclick="panel_changed(this)"
-                ><li><img src="/images/icon-admin-2.png" />연구원 관리</li></a
-            >
-            <a
-                href="/admin/admin-absent"
-                id="panel_select_absent"
-                onclick="panel_changed(this)"
-                ><li><img src="/images/icon-admin-3.png" />유고결석 관리</li></a
-            >
-            <a
-                href="/admin/manage/notice"
-                id="panel_select_notice"
-                onclick="panel_changed(this)"
-                ><li><img src="/images/icon-admin-4.png" />공지사항 관리</li></a
-            >
-            <a
-                href="/dev"
-                id="panel_select_notice"
-                onclick="panel_changed(this)"
-                ><li><img src="/images/icon-admin-5.png" />출석 관리</li></a
-            >
-        </ul>
-    </nav>
+  <div class="admin_panel_top">
+    <span>융합연구소 관리자 페이지</span>
+    <span><span class="material-icons"> verified_user </span> <%= data.uname %>님, 환영합니다</span>
+  </div>
+  <nav>
+    <ul>
+      <a href="/admin" id="panel_select_main" onclick="panel_changed(this)"
+        ><li><img src="/images/icon-admin-1.png" />메인</li></a
+      >
+      <a href="/admin/admin-user" id="panel_select_user" onclick="panel_changed(this)"
+        ><li><img src="/images/icon-admin-2.png" />연구원 관리</li></a
+      >
+      <a href="/admin/admin-absent" id="panel_select_absent" onclick="panel_changed(this)"
+        ><li><img src="/images/icon-admin-3.png" />유고결석 관리</li></a
+      >
+      <a href="/admin/manage/notice" id="panel_select_notice" onclick="panel_changed(this)"
+        ><li><img src="/images/icon-admin-4.png" />공지사항 관리</li></a
+      >
+      <a href="/dev" id="panel_select_notice" onclick="panel_changed(this)"
+        ><li><img src="/images/icon-admin-5.png" />출석 관리</li></a
+      >
+      <a href="/admin/warning" id="panel_select_notice" onclick="panel_changed(this)"
+        ><li><img src="/images/icon-admin-5.png" />경고 대시보드(준비중)</li></a
+      >
+    </ul>
+  </nav>
 </div>
