@@ -44,63 +44,126 @@ const getWeek = async (gap) => {
   header_data.end = dend;
   // Algorithm for Attendances a week
   const getUsers = await pool.query("SELECT uid, uname from user");
-  let attendancesWeek = {};
+  // let attendancesWeek = {};
+  // getUsers[0].forEach((e) => {
+  //   attendancesWeek[e.uid] = {
+  //     name: [e.uname],
+  //     0: "미출석",
+  //     1: "미출석",
+  //     2: "미출석",
+  //     3: "미출석",
+  //     4: "미출석",
+  //     clr: {
+  //       0: "#666",
+  //       1: "#666",
+  //       2: "#666",
+  //       3: "#666",
+  //       4: "#666",
+  //     },
+  //     hour: {
+  //       0: 0,
+  //       1: 0,
+  //       2: 0,
+  //       3: 0,
+  //       4: 0,
+  //     },
+  //   };
+  // });
+  let attendancesWeek2 = {};
   getUsers[0].forEach((e) => {
-    attendancesWeek[e.uid] = {
+    attendancesWeek2[e.uid] = {
       name: [e.uname],
-      6: "미출석",
       0: "미출석",
       1: "미출석",
       2: "미출석",
       3: "미출석",
       4: "미출석",
-      5: "미출석",
       clr: {
-        6: "#666",
         0: "#666",
         1: "#666",
         2: "#666",
         3: "#666",
         4: "#666",
-        5: "#666",
       },
       hour: {
-        6: 0,
-        0: 0,
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
+        0: "",
+        1: "",
+        2: "",
+        3: "",
+        4: "",
+      },
+      checkin: {
+        0: null,
+        1: null,
+        2: null,
+        3: null,
+        4: null,
       },
     };
   });
   // DATE_FORMAT(b.date, '%m/%d') AS today_in
-  const getWeeks = await pool.query(
-    "SELECT a.uid, a.uname, a.upw, a.seat, b.date AS today_in, c.date AS today_out, WEEKDAY(b.date) AS day, TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour, TIMESTAMPDIFF(HOUR, b.date, CURRENT_TIMESTAMP) AS curhour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND b.date BETWEEN ? AND ? LEFT JOIN check_out AS c ON a.uid = c.uid AND c.date BETWEEN ? AND ? ORDER BY uid ASC;",
-    [start, end, start, end]
-  );
-  console.log(getWeeks[0]);
-  getWeeks[0].forEach((e) => {
-    if (e.day !== null) {
-      if (e.today_out === null) {
-        attendancesWeek[e.uid]["hour"][e.day] = e.curhour;
-      } else {
-        if (e.hour > 0) {
-          attendancesWeek[e.uid]["hour"][e.day] = e.hour;
-        }
-      }
+  // const getWeeks = await pool.query(
+  //   "SELECT a.uid, a.uname, a.upw, a.seat, b.date AS today_in, c.date AS today_out, WEEKDAY(b.date) AS day, TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour, TIMESTAMPDIFF(HOUR, b.date, CURRENT_TIMESTAMP) AS curhour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND b.date BETWEEN ? AND ? LEFT JOIN check_out AS c ON a.uid = c.uid AND c.date BETWEEN ? AND ? ORDER BY uid ASC;",
+  //   [dstart, dend, dstart, dend]
+  // );
 
-      if (e.hour >= 4) {
-        attendancesWeek[e.uid][e.day] = "출석";
-        attendancesWeek[e.uid]["clr"][e.day] = "#4169E1";
-      } else {
-        attendancesWeek[e.uid][e.day] = "시간미달";
-        attendancesWeek[e.uid]["clr"][e.day] = "#9B021D";
-      }
-    }
+  const get_checkIn = await pool.query("SELECT *, WEEKDAY(date) AS day FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') BETWEEN ? AND ? ORDER BY uid ASC;", [
+    dstart,
+    dend,
+  ]);
+
+  const get_checkOut = await pool.query(
+    "SELECT *, WEEKDAY(date) AS day  FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') BETWEEN ? AND ? ORDER BY uid ASC;",
+    [dstart, dend]
+  );
+
+  // console.log(get_checkIn[0]);
+  // console.log(get_checkOut[0]);
+
+  get_checkIn[0].forEach((e) => {
+    attendancesWeek2[e.uid][e.day] = "입실";
+    attendancesWeek2[e.uid]["hour"][e.day] = "";
+    attendancesWeek2[e.uid]["clr"][e.day] = "#4169E1";
+    attendancesWeek2[e.uid]["checkin"][e.day] = e.date;
   });
-  return attendancesWeek;
+
+  get_checkOut[0].forEach((e) => {
+    var chkin = new Date(attendancesWeek2[e.uid]["checkin"][e.day]);
+    var chkout = new Date(e.date);
+    var diff = Math.abs(parseInt((chkout.getTime() - chkin.getTime()) / (1000 * 60 * 60)));
+    if (diff >= 4) {
+      attendancesWeek2[e.uid][e.day] = "출석";
+      attendancesWeek2[e.uid]["clr"][e.day] = "#008000";
+    } else {
+      attendancesWeek2[e.uid][e.day] = "시간부족";
+      attendancesWeek2[e.uid]["clr"][e.day] = "#9B021D";
+    }
+    attendancesWeek2[e.uid]["hour"][e.day] = diff + "시간";
+  });
+
+  // console.log(getWeeks[0]);
+  // getWeeks[0].forEach((e) => {
+  //   if (e.day !== null) {
+  //     if (e.today_out === null) {
+  //       if (e.curhour < 18) {
+  //         attendancesWeek[e.uid]["hour"][e.day] = e.curhour;
+  //       }
+  //     } else {
+  //       if (Math.abs(e.hour) > 0) {
+  //         attendancesWeek[e.uid]["hour"][e.day] = Math.abs(e.hour);
+  //       }
+  //     }
+
+  //     if (e.hour >= 4) {
+  //       attendancesWeek[e.uid][e.day] = "출석";
+  //       attendancesWeek[e.uid]["clr"][e.day] = "#4169E1";
+  //     } else {
+  //       attendancesWeek[e.uid][e.day] = "시간미달";
+  //       attendancesWeek[e.uid]["clr"][e.day] = "#9B021D";
+  //     }
+  //   }
+  // });
+  return attendancesWeek2;
 };
 
 // 관리자페이지 GET
