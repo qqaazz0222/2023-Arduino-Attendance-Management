@@ -4,8 +4,9 @@ const pool = require("../db/db");
 const sessionStore = require("../db/session");
 
 const moment = require("moment");
-const Excel = require("exceljs");
-const Blob = require("node-blob");
+// const XlsxPopulate = require("xlsx-populate");
+const XLSX = require("xlsx");
+const fs = require("fs");
 
 let data = {
   title: "융합연구소출석관리서비스 | 출석체크",
@@ -44,31 +45,6 @@ const getWeek = async (gap) => {
   header_data.end = dend;
   // Algorithm for Attendances a week
   const getUsers = await pool.query("SELECT uid, uname from user");
-  // let attendancesWeek = {};
-  // getUsers[0].forEach((e) => {
-  //   attendancesWeek[e.uid] = {
-  //     name: [e.uname],
-  //     0: "미출석",
-  //     1: "미출석",
-  //     2: "미출석",
-  //     3: "미출석",
-  //     4: "미출석",
-  //     clr: {
-  //       0: "#666",
-  //       1: "#666",
-  //       2: "#666",
-  //       3: "#666",
-  //       4: "#666",
-  //     },
-  //     hour: {
-  //       0: 0,
-  //       1: 0,
-  //       2: 0,
-  //       3: 0,
-  //       4: 0,
-  //     },
-  //   };
-  // });
   let attendancesWeek2 = {};
   getUsers[0].forEach((e) => {
     attendancesWeek2[e.uid] = {
@@ -101,11 +77,6 @@ const getWeek = async (gap) => {
       },
     };
   });
-  // DATE_FORMAT(b.date, '%m/%d') AS today_in
-  // const getWeeks = await pool.query(
-  //   "SELECT a.uid, a.uname, a.upw, a.seat, b.date AS today_in, c.date AS today_out, WEEKDAY(b.date) AS day, TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour, TIMESTAMPDIFF(HOUR, b.date, CURRENT_TIMESTAMP) AS curhour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND b.date BETWEEN ? AND ? LEFT JOIN check_out AS c ON a.uid = c.uid AND c.date BETWEEN ? AND ? ORDER BY uid ASC;",
-  //   [dstart, dend, dstart, dend]
-  // );
 
   const get_checkIn = await pool.query("SELECT *, WEEKDAY(date) AS day FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') BETWEEN ? AND ? ORDER BY uid ASC;", [
     dstart,
@@ -116,9 +87,6 @@ const getWeek = async (gap) => {
     "SELECT *, WEEKDAY(date) AS day  FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') BETWEEN ? AND ? ORDER BY uid ASC;",
     [dstart, dend]
   );
-
-  // console.log(get_checkIn[0]);
-  // console.log(get_checkOut[0]);
 
   get_checkIn[0].forEach((e) => {
     attendancesWeek2[e.uid][e.day] = "입실";
@@ -140,29 +108,6 @@ const getWeek = async (gap) => {
     }
     attendancesWeek2[e.uid]["hour"][e.day] = diff + "시간";
   });
-
-  // console.log(getWeeks[0]);
-  // getWeeks[0].forEach((e) => {
-  //   if (e.day !== null) {
-  //     if (e.today_out === null) {
-  //       if (e.curhour < 18) {
-  //         attendancesWeek[e.uid]["hour"][e.day] = e.curhour;
-  //       }
-  //     } else {
-  //       if (Math.abs(e.hour) > 0) {
-  //         attendancesWeek[e.uid]["hour"][e.day] = Math.abs(e.hour);
-  //       }
-  //     }
-
-  //     if (e.hour >= 4) {
-  //       attendancesWeek[e.uid][e.day] = "출석";
-  //       attendancesWeek[e.uid]["clr"][e.day] = "#4169E1";
-  //     } else {
-  //       attendancesWeek[e.uid][e.day] = "시간미달";
-  //       attendancesWeek[e.uid]["clr"][e.day] = "#9B021D";
-  //     }
-  //   }
-  // });
   return attendancesWeek2;
 };
 
@@ -221,10 +166,10 @@ router.get("/admin-user", async (req, res, next) => {
         // 관리자 페이지 연구원 관리 탭에 들어갈 데이터 가져오기
         // 전체 연구원, 출석 상태 확인을 위한 오늘 날짜의 출석 데이터
         const getAllMember = await pool.query(
-          "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out', TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour, TIMESTAMPDIFF(HOUR, b.date, CURRENT_TIMESTAMP) AS curhour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
+          "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out', TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
           [key, key]
         );
-        // console.log(getAllMember[0].length)
+        console.log(getAllMember[0]);
         return res.render("admin-user", {
           data: data,
           bodydata: getAllMember[0],
@@ -587,11 +532,51 @@ router.post("/downloadexcel", async (req, res, next) => {
         // 다운로드할 데이터의 날짜 가져오기
         const key = req.body.key;
         // DB에서 해당 날짜 데이터 가져오기
-        const data = await pool.query(
+        const excelData = await pool.query(
           "SELECT a.uid, a.uname, a.upw, a.seat, DATE_FORMAT(b.date, '%H시%i분%s초') AS 'in', DATE_FORMAT(c.date, '%H시%i분%s초') AS 'out', TIMESTAMPDIFF(HOUR, b.date, c.date) AS hour FROM user AS a LEFT JOIN check_in AS b ON a.uid = b.uid AND DATE_FORMAT(b.date, '%Y-%m-%d') = ? LEFT JOIN check_out AS c ON a.uid = c.uid AND DATE_FORMAT(c.date, '%Y-%m-%d') = ? ORDER BY a.seat ASC;",
           [key, key]
         );
-        return res.send("<script>alert('현재 엑셀 다운로드 기능이 준비 중입니다.'); location.href='/admin/manage';</script>");
+
+        try {
+          // 엑셀 데이터 생성
+          const data = [[key], ["학번", "이름", "좌석", "입실시간", "퇴실시간", "출석시간"]];
+
+          for (const item of excelData[0]) {
+            data.push([item.uid, item.uname, item.seat, item.in, item.out, item.hour]);
+          }
+          const worksheet = XLSX.utils.aoa_to_sheet(data);
+          const workbook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+          // 엑셀 파일 저장
+          const excelFilePath = "excel.xlsx";
+          XLSX.writeFile(workbook, excelFilePath);
+
+          // 파일 다운로드
+          const fileStream = fs.createReadStream(excelFilePath);
+          fileStream.on("open", () => {
+            // key 를 문자형으로 변경
+            const filename = "attendence";
+            res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            res.setHeader("Content-Disposition", `attachment; filename=${filename}.xlsx`);
+            fileStream.pipe(res);
+          });
+          fileStream.on("error", (error) => {
+            console.error("파일 읽기 오류:", error);
+            res.status(500).send("파일 읽기 오류");
+          });
+          fileStream.on("end", () => {
+            // 다운로드 후 파일 삭제
+            fs.unlink(excelFilePath, (error) => {
+              if (error) {
+                console.error("파일 삭제 실패:", error);
+              }
+            });
+          });
+        } catch (error) {
+          console.error("엑셀 파일 생성 및 다운로드 실패:", error);
+          res.status(500).send("서버 오류");
+        }
       } catch (error) {
         console.log(error);
         res.redirect("/error");
@@ -599,98 +584,5 @@ router.post("/downloadexcel", async (req, res, next) => {
     }
   }
 });
-
-function makeExcel(data) {
-  // 엑셀 생성
-  const workbook = new Excel.Workbook();
-  // 생성자
-  workbook.creator = "작성자";
-
-  // 최종 수정자
-  workbook.lastModifiedBy = "최종 수정자";
-
-  // 생성일(현재 일자로 처리)
-  workbook.created = new Date();
-
-  // 수정일(현재 일자로 처리)
-  workbook.modified = new Date();
-
-  // addWorksheet() 함수를 사용하여 엑셀 시트를 추가한다.
-  // 엑셀 시트는 순차적으로 생성된다.
-  workbook.addWorksheet("Sheet One");
-
-  // 엑셀 시트를 접근하는 방법은 세 가지 방법이 존재한다.
-  // 1. getWorksheet() 함수에서 시트 명칭 전달
-  const sheetOne = workbook.getWorksheet("Sheet One");
-
-  // 컬럼 설정
-  // header: 엑셀에 표기되는 이름
-  // key: 컬럼을 접근하기 위한 key
-  // hidden: 숨김 여부
-  // width: 컬럼 넓이
-  sheetOne.columns = [
-    { header: "이름", key: "name", width: 40 },
-    { header: "성별", key: "gender", hidden: false, width: 30 },
-    { header: "부서코드", key: "deptCode", width: 60 },
-    {
-      header: "부서명",
-      key: "deptName",
-      width: 100,
-      // 스타일 설정
-      style: {
-        // Font 설정
-        font: { name: "Arial Black", size: 20 },
-        // Borders 설정
-        border: {
-          top: { style: "thin", color: { argb: "FF00FF00" } },
-          left: { style: "thin", color: { argb: "FF00FF00" } },
-          bottom: { style: "thin", color: { argb: "FF00FF00" } },
-          right: { style: "thin", color: { argb: "FF00FF00" } },
-        },
-        // Fills 설정
-        fill: {
-          type: "pattern",
-          fgColor: { argb: "FFFFFF00" },
-          bgColor: { argb: "FF0000FF" },
-        },
-      },
-    },
-  ];
-
-  const sampleData = [
-    { name: "홍길동", code: "A100", gender: "F", entryDate: "20200101", deptCode: "A1000", deptName: "금융팀" },
-    { name: "마이콜", code: "A200", gender: "F", entryDate: "20200201", deptCode: "A2000", deptName: "자산팀" },
-    { name: "둘리", code: "9999991234567", gender: "M", entryDate: "20200301", deptCode: "A1000", deptName: "금융팀" },
-    { name: "또치", code: "9999992234567", gender: "M", entryDate: "20200401", deptCode: "A2000", deptName: "자산팀" },
-  ];
-
-  const borderStyle = {
-    top: { style: "thin" },
-    left: { style: "thin" },
-    bottom: { style: "thin" },
-    right: { style: "thin" },
-  };
-
-  sampleData.map((item, index) => {
-    sheetOne.addRow(item);
-
-    // 추가된 행의 컬럼 설정(헤더와 style이 다를 경우)
-    for (let loop = 1; loop <= 4; loop++) {
-      const col = sheetOne.getRow(index + 2).getCell(loop);
-      col.border = borderStyle;
-      col.font = { name: "Arial Black", size: 40 };
-    }
-  });
-
-  workbook.xlsx.writeBuffer().then((dataq) => {
-    const blob = new Blob([dataq], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-    const url = window.URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `테스트.xlsx`;
-    anchor.click();
-    window.URL.revokeObjectURL(url);
-  });
-}
 
 module.exports = router;
