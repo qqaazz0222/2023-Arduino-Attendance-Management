@@ -65,18 +65,17 @@
                                 <% if ( bodydata[i].in ) { %> <% if (
                                 bodydata[i].hour >= 4) { %>
                                 <div class="status_ok">출석</div>
+                                <% } else if (bodydata[i].hour === null) { %>
+                                <div class="status_in">입실</div>
                                 <% } else { %>
                                 <div class="status_in">시간부족</div>
-                                <% } %> <% } else { %>
+                                <% }} else { %>
                                 <div class="status_deny">미출석</div>
                                 <% } %>
                                 <p><%= bodydata[i].in %></p>
                                 <p><%= bodydata[i].out %></p>
-                                <% if (bodydata[i].out) { %>
-                                <p><%= Math.abs(bodydata[i].hour) %>시간</p>
-                                <% } else if (bodydata[i].curhour ||
-                                bodydata[i].curhour === 0) { %>
-                                <p><%= bodydata[i].curhour %>시간</p>
+                                <% if (bodydata[i].hour) { %>
+                                <p><%= bodydata[i].hour %>시간</p>
                                 <% } else { %>
                                 <p>-</p>
                                 <% } %>
@@ -262,16 +261,35 @@
         </div>
         <script>
             function excel() {
-                $.ajax({
-                    url: "http://localhost:3000/admin/downloadexcel",
-                    type: "post",
-                    data: {
-                        key: "<%= key %>",
+                const key = "<%= key %>";
+
+                fetch("http://localhost:3000/admin/downloadexcel", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
                     },
-                    success: function (response) {
-                        console.log("성공");
-                    },
-                });
+                    body: JSON.stringify({ key }),
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.blob();
+                        } else {
+                            throw new Error("다운로드 요청 실패");
+                        }
+                    })
+                    .then((blob) => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = "excel.xlsx";
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    })
+                    .catch((error) => {
+                        console.error("다운로드 오류:", error);
+                    });
             }
 
             function calOnChange(e) {
