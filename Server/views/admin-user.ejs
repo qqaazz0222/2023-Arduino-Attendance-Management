@@ -38,9 +38,7 @@
                             <button onclick="popup_adduser_show()">
                                 사용자 추가
                             </button>
-                            <button onclick="excel()">
-                                엑셀 다운로드(준비중)
-                            </button>
+                            <button onclick="excel()">엑셀 다운로드</button>
                         </div>
                     </div>
                     <div class="content-container-body">
@@ -263,7 +261,7 @@
             function excel() {
                 const key = "<%= key %>";
 
-                fetch("http://localhost:3000/admin/downloadexcel", {
+                fetch("lab.dongseo.site/admin/downloadexcel", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
