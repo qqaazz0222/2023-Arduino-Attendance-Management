@@ -279,7 +279,7 @@
                         const url = window.URL.createObjectURL(blob);
                         const a = document.createElement("a");
                         a.href = url;
-                        a.download = "excel.xlsx";
+                        a.download = `${key}출석현황.xlsx`;
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
