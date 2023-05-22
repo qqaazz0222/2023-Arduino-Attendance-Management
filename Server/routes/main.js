@@ -24,9 +24,9 @@ router.use(
 router.get("/", async (req, res, next) => {
     // 로그인 정보가 없을 때, 로그인 페이지로 이동
     if (req.session.isLogined == undefined) {
-        // 임시 기능 페이지 이동
-        res.redirect("/dev/check");
-        // res.redirect("/sign");
+        // // 임시 기능 페이지 이동
+        // res.redirect("/dev/check");
+        res.redirect("/sign");
     } else {
         try {
             // 메인 페이지 달력에 들어갈 출석 정보 받아오기
@@ -208,62 +208,75 @@ router.post("/checkin", async (req, res, next) => {
 
 // 입실 및 퇴실 ( 아두이노 연동 )
 router.post("/checkin", async (req, res, next) => {
-  // isUserLogined (사용자 로그인 여부 확인 절차)
-  if (req.session.isLogined == undefined) {
-    res.redirect("/sign");
-  } else {
-    try {
-      // From Arduino
-      // Seat Type : 101 ~ 122 || 실제 좌석 번호 : 1 ~ 22
-      const { seat } = req.body;
-      seat_num = seat - 100;
+    // isUserLogined (사용자 로그인 여부 확인 절차)
+    if (req.session.isLogined == undefined) {
+        res.redirect("/sign");
+    } else {
+        try {
+            // From Arduino
+            // Seat Type : 101 ~ 122 || 실제 좌석 번호 : 1 ~ 22
+            const { seat } = req.body;
+            seat_num = seat - 100;
 
-      //  좌석 정보에 해당하는 사용자 정보 가져오기
-      const getUserData = await PoolConnection.query("SELECT * FROM user WHERE seat = ?", [seat_num]);
-      // 사용자 정보가 없을 때, 아두이노 서버로 에러 메시지 전송
-      if (getUserData[0].length === 0) {
-        return res.send({ result: "error" });
-      }
+            //  좌석 정보에 해당하는 사용자 정보 가져오기
+            const getUserData = await PoolConnection.query(
+                "SELECT * FROM user WHERE seat = ?",
+                [seat_num]
+            );
+            // 사용자 정보가 없을 때, 아두이노 서버로 에러 메시지 전송
+            if (getUserData[0].length === 0) {
+                return res.send({ result: "error" });
+            }
 
-      // 사용자 정보가 있을 때, 아두이노 서버로 사용자 정보 전송
-      // 오늘 날짜 받아와 yyyy-mm-dd 형식으로 변경
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      let yyyy = String(year);
-      let mm = String(month);
+            // 사용자 정보가 있을 때, 아두이노 서버로 사용자 정보 전송
+            // 오늘 날짜 받아와 yyyy-mm-dd 형식으로 변경
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            let yyyy = String(year);
+            let mm = String(month);
 
-      if (mm.length == 1) {
-        mm = "0" + mm;
-      }
-      let dd = String(day);
-      // 현재 입실 상태 확인
-      const getTodayCheckIn = await pool.query("SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?", [getUserData[0][0].uid]);
-      // 현재 입실한 상태이면 퇴실 처리
-      if (getTodayCheckIn[0].length > 0) {
-        // 퇴실 상태 확인
-        const getTodayCheckOut = await pool.query("SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?", [
-          getUserData[0][0].uid,
-        ]);
-        // 퇴실 상태라면 에러 메시지 전송
-        if (getTodayCheckOut[0].length > 0) {
-          return res.send({ result: "error" });
+            if (mm.length == 1) {
+                mm = "0" + mm;
+            }
+            let dd = String(day);
+            // 현재 입실 상태 확인
+            const getTodayCheckIn = await pool.query(
+                "SELECT * FROM check_in WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
+                [getUserData[0][0].uid]
+            );
+            // 현재 입실한 상태이면 퇴실 처리
+            if (getTodayCheckIn[0].length > 0) {
+                // 퇴실 상태 확인
+                const getTodayCheckOut = await pool.query(
+                    "SELECT * FROM check_out WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURDATE() AND uid = ?",
+                    [getUserData[0][0].uid]
+                );
+                // 퇴실 상태라면 에러 메시지 전송
+                if (getTodayCheckOut[0].length > 0) {
+                    return res.send({ result: "error" });
+                }
+                // 퇴실안한 상태라면 퇴실 처리
+                // 퇴실 상태 추가
+                const SetCheckOut = await pool.query(
+                    "INSERT INTO check_out VALUES(null, NOW(), ?)",
+                    [getUserData[0][0].uid]
+                );
+                return res.send({ result: "out" });
+            } else {
+                // 입실 상태 추가
+                const SetCheckIn = await pool.query(
+                    "INSERT INTO check_in VALUES(null, NOW(), ?)",
+                    [getUserData[0][0].uid]
+                );
+                return res.send({ result: "success" });
+            }
+        } catch (error) {
+            console.log(error);
+            res.redirect("/error");
         }
-        // 퇴실안한 상태라면 퇴실 처리
-        // 퇴실 상태 추가
-        const SetCheckOut = await pool.query("INSERT INTO check_out VALUES(null, NOW(), ?)", [getUserData[0][0].uid]);
-        return res.send({ result: "out" });
-      } else {
-        // 입실 상태 추가
-        const SetCheckIn = await pool.query("INSERT INTO check_in VALUES(null, NOW(), ?)", [getUserData[0][0].uid]);
-        return res.send({ result: "success" });
-      }
-    } catch (error) {
-      console.log(error);
-      res.redirect("/error");
     }
-  }
 });
 
 router.get("/error", async (req, res, next) => {
