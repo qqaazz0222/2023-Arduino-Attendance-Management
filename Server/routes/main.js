@@ -166,16 +166,16 @@ router.post("/checkin", async (req, res, next) => {
         ]);
         // 퇴실 상태라면 에러 메시지 전송
         if (getTodayCheckOut[0].length > 0) {
-          return res.send({ result: "error" });
+          return res.send({ result: "ErrorAlready" });
         }
         // 퇴실안한 상태라면 퇴실 처리
         // 퇴실 상태 추가
         const SetCheckOut = await pool.query("INSERT INTO check_out VALUES(null, NOW(), ?)", [getUserData[0][0].uid]);
-        return res.send({ result: "out" });
+        return res.send({ result: "SuccessOut" });
       } else {
         // 입실 상태 추가
         const SetCheckIn = await pool.query("INSERT INTO check_in VALUES(null, NOW(), ?)", [getUserData[0][0].uid]);
-        return res.send({ result: "success" });
+        return res.send({ result: "SuccessIn" });
       }
     } catch (error) {
       console.log(error);
